@@ -19,6 +19,18 @@ html=html
   .replace(" https://fonts.gstatic.com","")
   .replace(/<title>[\s\S]*?<\/title>/i,"<title>NUR</title>");
 
+const audioCatalog=html.match(/<script type="application\/json" id="nur-sound-catalog">([\s\S]*?)<\/script>/);
+if(audioCatalog){
+  const raw=resolve(root,"android/app/src/main/res/raw");
+  await mkdir(raw,{recursive:true});
+  for(const sound of JSON.parse(audioCatalog[1]).sounds){
+    if(!/^[a-z][a-z0-9_]*\.(mp3|wav|ogg)$/.test(sound.nativeFile)||!/^data:audio\/[a-z0-9-]+;base64,/.test(sound.preview))throw new Error("Geçersiz gömülü bildirim sesi");
+    await writeFile(resolve(raw,sound.nativeFile),Buffer.from(sound.preview.split(',')[1],'base64'));
+  }
+}
+const requirements=html.match(/<script type="application\/json" id="nur-native-requirements">([\s\S]*?)<\/script>/);
+if(requirements){const silent=JSON.parse(requirements[1]).silentAudio;if(silent)await writeFile(resolve(root,"android/app/src/main/res/raw/nur_silent.wav"),Buffer.from(silent.base64,'base64'));}
+
 const assets=resolve(root,"www/assets");
 await mkdir(assets,{recursive:true});
 for(const [name,source] of [["capacitor.js","@capacitor/core/dist/capacitor.js"],["capacitor-app.js","@capacitor/app/dist/plugin.js"],["capacitor-synapse.js","@capacitor/synapse/dist/synapse.js"],["capacitor-geolocation.js","@capacitor/geolocation/dist/plugin.js"]]){

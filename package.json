@@ -1,6 +1,6 @@
 {
   "name": "nur-namaz-uygulamasi",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "private": true,
   "description": "NUR Namaz Uygulaması Android ve iOS mobil kabuğu",
   "scripts": {
@@ -17,6 +17,7 @@
     "@capacitor/browser": "^8.0.0",
     "@capacitor/core": "^8.0.0",
     "@capacitor/geolocation": "^8.0.0",
+    "@capacitor/local-notifications": "^8.3.1",
     "@capacitor/preferences": "^8.0.0",
     "@fontsource/dm-sans": "^5.2.8",
     "@fontsource/noto-naskh-arabic": "^5.2.8",
