@@ -1,0 +1,21 @@
+{
+  "appId": "tr.com.nur.namaz",
+  "appName": "NUR",
+  "webDir": "www",
+  "loggingBehavior": "none",
+  "server": {
+    "androidScheme": "https",
+    "cleartext": false
+  },
+  "android": {
+    "allowMixedContent": false,
+    "captureInput": true,
+    "webContentsDebuggingEnabled": false,
+    "backgroundColor": "#fbf7ed"
+  },
+  "ios": {
+    "contentInset": "automatic",
+    "backgroundColor": "#fbf7ed",
+    "limitsNavigationsToAppBoundDomains": true
+  }
+}

@@ -1,0 +1,71 @@
+name: NUR Android APK
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: nur-android-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-debug-apk:
+    name: Debug APK oluştur
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Projeyi al
+        uses: actions/checkout@v4
+
+      - name: Node.js kur
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+
+      - name: Java kur
+        uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: "21"
+
+      - name: Gradle önbelleğini hazırla
+        uses: gradle/actions/setup-gradle@v4
+
+      - name: Android SDK hazırla
+        uses: android-actions/setup-android@v3
+
+      - name: Android 36 platformunu kur
+        run: sdkmanager "platform-tools" "platforms;android-36" "build-tools;35.0.0" "build-tools;36.0.0"
+
+      - name: Bağımlılıkları güvenli kilit dosyasından kur
+        run: npm ci --ignore-scripts
+
+      - name: Mobil web dosyalarını Android'e aktar
+        run: npm run sync
+
+      - name: Debug APK oluştur
+        working-directory: android
+        run: |
+          chmod +x gradlew
+          ./gradlew assembleDebug testDebugUnitTest lintDebug --no-daemon --stacktrace
+
+      - name: APK adını ve doğrulama dosyasını hazırla
+        run: |
+          mkdir -p dist
+          cp android/app/build/outputs/apk/debug/app-debug.apk dist/NUR-0.2.0-test.apk
+          cd dist
+          sha256sum NUR-0.2.0-test.apk > NUR-0.2.0-test.apk.sha256
+
+      - name: APK dosyasını indirilebilir hale getir
+        uses: actions/upload-artifact@v4
+        with:
+          name: NUR-debug-APK
+          path: dist/*
+          if-no-files-found: error
+          retention-days: 14

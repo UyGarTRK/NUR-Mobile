@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">NUR</string>
+    <string name="title_activity_main">NUR</string>
+    <string name="publisher_name">UyGar Medya</string>
+    <string name="package_name">tr.com.nur.namaz</string>
+    <string name="custom_url_scheme">tr.com.nur.namaz</string>
+</resources>
