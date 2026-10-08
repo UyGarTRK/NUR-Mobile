@@ -13,8 +13,8 @@ android {
         applicationId "tr.com.nur.namaz"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 4
-        versionName "0.3.1-test"
+        versionCode (System.getenv('NUR_VERSION_CODE') ?: '5').toInteger()
+        versionName "0.3.2-test"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         aaptOptions {
              // Files and dirs to omit from the packaged assets dir, modified to accommodate modern web apps.
@@ -58,6 +58,8 @@ repositories {
 }
 
 dependencies {
+    implementation "com.google.firebase:firebase-appdistribution-api:16.0.0-beta20"
+    debugImplementation "com.google.firebase:firebase-appdistribution:16.0.0-beta20"
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation "androidx.appcompat:appcompat:$androidxAppCompatVersion"
     implementation "androidx.coordinatorlayout:coordinatorlayout:$androidxCoordinatorLayoutVersion"
@@ -78,4 +80,15 @@ try {
     }
 } catch(Exception e) {
     logger.info("google-services.json not found, google-services plugin not applied. Push Notifications won't work")
+}
+
+// Existing installed test builds must retain their signing key.
+tasks.configureEach { task ->
+    if (task.name == 'validateSigningDebug') {
+        task.doFirst {
+            if (!rootProject.file('debug.keystore').exists()) {
+                throw new GradleException('Existing NUR signing key is missing. Restore it; do not generate a new key.')
+            }
+        }
+    }
 }

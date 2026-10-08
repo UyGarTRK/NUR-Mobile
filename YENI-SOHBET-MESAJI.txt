@@ -1,0 +1,5 @@
+Bu ZIP, NUR Namaz Uygulamamızın 8 Ekim 2026 tarihli güncel devir paketidir. Önce NUR-Mobile/BURADAN-DEVAM-ET.md, CHANGELOG.md ve TELEFON-TESTI.md dosyalarını oku. Tek esas kaynak NUR-Mobile/src/index.html; eski HTML/ZIP ile üzerine yazma.
+
+En son hikâyelerin dört grubunu tamamladık: Ayet, Hadis, Dua, Esmâül Hüsnâ. Her biri günlük üç içerik; AI arka plan, birleşik PNG paylaşımı ve yatay kaydırmayla doğrudan grup geçişi var. Güncel HTML kontrol dosyası paket kökünde. Bildirim, konum ve intro düzeltmeleri de kaynakta; bunlardan sonra yeni APK henüz derlenmedi. Telefonumdaki APK'nın sürüm ve imzasını doğrulamadan kaynak sürümünü kurulu sürüm sanma.
+
+Her geliştirme mobil uyumlu ve mevcut temaya uygun olsun. İstemediğim sürece yeni ZIP/HTML/APK üretme veya dosya adını değiştirme. Her APK tesliminde bir önceki APK'dan sonraki değişiklikleri ve gerçek cihazda doğrulanmayan hususları yaz. Bu paketle devam et; önce projeyi aldığını, çalışma durumunu ve sıradaki işleri kısaca özetle. Ben yeni talimat verene kadar APK derlemesini veya GitHub'a yüklemeyi başlatma.

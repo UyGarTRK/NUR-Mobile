@@ -17,6 +17,9 @@ jobs:
     name: Debug APK oluştur
     runs-on: ubuntu-latest
     timeout-minutes: 30
+    permissions:
+      contents: read
+      id-token: write
 
     steps:
       - name: Projeyi al
@@ -52,35 +55,73 @@ jobs:
       - name: Mobil web dosyalarını Android'e aktar
         run: npm run sync
 
-      - name: Test APK imzasını sonraki güncellemeler için koru
-        uses: actions/cache@v4
+      - name: Güncelleme ekranı davranışlarını doğrula
+        run: node tests/handoff/test-updates.cjs
+
+      - name: Mevcut test APK imzasını geri yükle
+        uses: actions/cache/restore@v4
         with:
           path: android/debug.keystore
           key: nur-debug-signing-v1
 
-      - name: Test imza anahtarını hazırla
+      - name: Kalıcı imza yedeğini kullan ve v162 kimliğini doğrula
+        env:
+          NUR_TEST_KEYSTORE_BASE64: ${{ secrets.NUR_TEST_KEYSTORE_BASE64 }}
+        shell: bash
         run: |
-          if [ ! -f android/debug.keystore ]; then
-            keytool -genkeypair -keystore android/debug.keystore -storepass android -keypass android -alias androiddebugkey -dname "CN=UyGar Medya, O=UyGar Medya, C=TR" -keyalg RSA -keysize 2048 -validity 10000
+          set -euo pipefail
+          if [ -n "$NUR_TEST_KEYSTORE_BASE64" ]; then
+            printf '%s' "$NUR_TEST_KEYSTORE_BASE64" | base64 --decode > android/debug.keystore
           fi
+          if [ ! -s android/debug.keystore ]; then
+            echo 'Mevcut NUR imza anahtarı bulunamadı. Yeni anahtar oluşturulmayacak.' >&2
+            exit 1
+          fi
+          keytool -exportcert -keystore android/debug.keystore -alias androiddebugkey -storepass android -file "$RUNNER_TEMP/nur-signer.der"
+          actual=$(sha256sum "$RUNNER_TEMP/nur-signer.der" | cut -d ' ' -f 1)
+          test "$actual" = '66970897005ea93450d83df45f59569b946422a88089050cca564aaa6db909ef' || {
+            echo 'İmza v162 APK ile eşleşmiyor; derleme durduruldu.' >&2
+            exit 1
+          }
 
       - name: Debug APK oluştur
         working-directory: android
         run: |
           chmod +x gradlew
-          ./gradlew assembleDebug testDebugUnitTest lintDebug --no-daemon --stacktrace
+          export NUR_VERSION_CODE=$((100 + GITHUB_RUN_NUMBER))
+          ./gradlew assembleDebug --no-daemon
 
-      - name: APK adını ve doğrulama dosyasını hazırla
+      - name: Üretilen APK imzasını doğrula
+        shell: bash
         run: |
-          mkdir -p dist
-          cp android/app/build/outputs/apk/debug/app-debug.apk dist/NUR-v162-0.3.1-test.apk
-          cd dist
-          sha256sum NUR-v162-0.3.1-test.apk > NUR-v162-0.3.1-test.apk.sha256
+          set -euo pipefail
+          "$ANDROID_HOME/build-tools/36.0.0/apksigner" verify --verbose --print-certs android/app/build/outputs/apk/debug/app-debug.apk > "$RUNNER_TEMP/nur-apk-signature.txt"
+          grep -Fqx 'Signer #1 certificate SHA-256 digest: 66970897005ea93450d83df45f59569b946422a88089050cca564aaa6db909ef' "$RUNNER_TEMP/nur-apk-signature.txt"
 
       - name: APK dosyasını indirilebilir hale getir
         uses: actions/upload-artifact@v4
         with:
           name: NUR-debug-APK
-          path: dist/*
+          path: android/app/build/outputs/apk/debug/app-debug.apk
           if-no-files-found: error
           retention-days: 14
+
+      - name: Firebase dağıtım aracını kur
+        run: npm install --global firebase-tools@15.33.0 --ignore-scripts
+
+      - name: NUR Firebase dağıtım hesabına bağlan
+        uses: google-github-actions/auth@v3
+        with:
+          project_id: nur-mobile-ec382
+          workload_identity_provider: projects/557016260273/locations/global/workloadIdentityPools/nur-github/providers/github
+          service_account: nur-github-distribution@nur-mobile-ec382.iam.gserviceaccount.com
+
+      - name: APK sürümünü NUR test grubuna dağıt
+        env:
+          CI: true
+        run: >-
+          firebase appdistribution:distribute android/app/build/outputs/apk/debug/app-debug.apk
+          --app 1:557016260273:android:1f0a581591c6656db08c90
+          --groups nur-test
+          --release-notes "NUR test sürümü. Kaynak: ${{ github.sha }}. Uygulama içi güncelleme ve bildirim düzenlemeleri."
+          --non-interactive

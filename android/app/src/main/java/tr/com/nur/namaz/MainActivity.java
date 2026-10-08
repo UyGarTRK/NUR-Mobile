@@ -30,6 +30,7 @@ public class MainActivity extends BridgeActivity {
     @Override
     public void onCreate(Bundle state) {
         registerPlugin(NurLocationAccessPlugin.class);
+        registerPlugin(NurUpdatesPlugin.class);
         super.onCreate(state);
         // Only cold launches: no replay on tab changes, resume or activity restoration.
         if (state == null) showIntro();

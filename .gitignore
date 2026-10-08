@@ -7,3 +7,4 @@ android/build/
 *.keystore
 keystore.properties
 local.properties
+gha-creds-*.json

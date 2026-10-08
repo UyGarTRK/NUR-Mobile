@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "557016260273",
+    "project_id": "nur-mobile-ec382",
+    "storage_bucket": "nur-mobile-ec382.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:557016260273:android:1f0a581591c6656db08c90",
+        "android_client_info": {
+          "package_name": "tr.com.nur.namaz"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAnlGY09t_eM_mLI2XFGWmb09wwXNIo6bE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
