@@ -13,7 +13,7 @@ android {
         applicationId "tr.com.nur.namaz"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode (System.getenv('NUR_VERSION_CODE') ?: '5').toInteger()
+        versionCode = (System.getenv('NUR_VERSION_CODE') ?: '5').toInteger()
         versionName "0.3.2-test"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         aaptOptions {

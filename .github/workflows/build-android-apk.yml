@@ -84,6 +84,17 @@ jobs:
             exit 1
           }
 
+      - name: Mevcut imza anahtarının şifreli yedeğini hazırla
+        run: node scripts/backup-test-signing.cjs
+
+      - name: Şifreli imza yedeğini sakla
+        uses: actions/upload-artifact@v4
+        with:
+          name: NUR-signing-backup-encrypted
+          path: nur-signing-backup.encrypted.json
+          if-no-files-found: error
+          retention-days: 90
+
       - name: Debug APK oluştur
         working-directory: android
         run: |
