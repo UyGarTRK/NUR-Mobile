@@ -1,3 +1,4 @@
+import { extractMedia } from "./extract-media.mjs";
 import { cp, mkdir, readFile, writeFile } from "node:fs/promises";
 import { resolve } from "node:path";
 
@@ -62,5 +63,6 @@ await writeFile(resolve(assets,"fonts.css"),[
   '@import "font-noto-naskh-arabic/400.css";','@import "font-noto-naskh-arabic/500.css";','@import "font-noto-naskh-arabic/600.css";','@import "font-noto-naskh-arabic/700.css";',
   '@import "font-playfair-display/600.css";','@import "font-playfair-display/700.css";'
 ].join("\n"),"utf8");
+html=await extractMedia(html,resolve(root,"www"));
 await writeFile(destination,html,"utf8");
 console.log(`Mobil web paketi hazırlandı: ${destination}`);

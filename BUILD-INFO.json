@@ -1,9 +1,11 @@
 {
-  "webRevision": "2026.10.08-hikayeler-1",
+  "webRevision": "2026.10.08-vakit-guvenilirlik-1",
   "handoffDate": "2026-10-08",
-  "androidSourceVersionName": "0.3.2-test",
+  "androidSourceVersionName": "0.3.3-test",
   "androidSourceVersionCode": 5,
   "apkBuiltForThisHandoff": false,
-  "lastInstalledApkVersion": "unverified",
-  "publisher": "UyGar Medya"
+  "lastInstalledApkVersion": "0.3.2-test (108)",
+  "publisher": "UyGar Medya",
+  "lastInstalledApkVerification": "Kullanıcı kurduğunu bildirdi; cihazdan doğrudan okunmadı",
+  "sourceChangesPendingApk": true
 }

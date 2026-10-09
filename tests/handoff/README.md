@@ -7,3 +7,9 @@ Bu testler geliştirme ortamında çalıştırılmış Playwright/Chromium testl
 - test-stories320.cjs: basılı tutma ve otomatik ilerleme.
 
 Önceki ortam sonuçları BURADAN-DEVAM-ET.md ve CHANGELOG.md içinde.
+
+## Vakit güvenilirliği testleri
+
+- test-notification-planning.cjs: kaynak/kontrol kopyası, süre ve ses ayrımı, hata sonrası alarm koruma, konum değişikliği.
+- test-updates.cjs: güncelleme ekranı durumları.
+- test-prayer-data.cjs: Playwright ve Edge ile izole HTTP sunucusunda tarihler, önbellek, aylar, yarış durumu, medya ve 16 ekran. NUR_TEST_WEB_DIR hazırlanmış www dizinine ayarlanabilir; varsayılan proje www dizini. Dış HTTPS istekleri engellenir, vakit API yanıtları test içinde taklit edilir. Canlı API veya Android testi değildir.

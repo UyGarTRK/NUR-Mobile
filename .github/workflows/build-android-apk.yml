@@ -134,5 +134,5 @@ jobs:
           firebase appdistribution:distribute android/app/build/outputs/apk/debug/app-debug.apk
           --app 1:557016260273:android:1f0a581591c6656db08c90
           --groups nur-test
-          --release-notes "NUR test sürümü. Kaynak: ${{ github.sha }}. Uygulama içi güncelleme ve bildirim düzenlemeleri."
+          --release-notes "NUR test sürümü. Kaynak: ${{ github.sha }}. 0.3.3-test: Tarih ve konuma uygun vakitler, ay/gece yarısı düzeltmeleri, bildirim planı bitiş tarihi ve kayıpsız medya düzenlemesi."
           --non-interactive
