@@ -13,7 +13,7 @@
     if(visible(document.getElementById('nur-assistant'))){window.NurAssistant?.close();return;}
     for(const selector of ['.quran-tool-modal:not([hidden])','.education-tool-modal:not([hidden])']){const modal=document.querySelector(selector);if(visible(modal)){modal.click();return;}}
     // Reuse each screen's own return action to preserve its scroll context.
-    const order=['education-jump-close','hadith-topic-jump-close','story-close','monthly-prayer-close','quran-tafsir-back','education-reader-back','quran-topic-reader-back','quran-reader-back','sermon-reader-close','dua-reader-back','hadith-scholar-back','hadith-reading-back','history-reader-back','siyer-reader-back','mufassir-reader-back','tasbihat-reader-back','esma-reader-back','quran-intro-back','education-course-back','hadith-source-back','settings-back'];
+    const order=['agenda-back','education-jump-close','hadith-topic-jump-close','story-close','monthly-prayer-close','quran-tafsir-back','education-reader-back','quran-topic-reader-back','quran-reader-back','sermon-reader-close','dua-reader-back','hadith-scholar-back','hadith-reading-back','history-reader-back','siyer-reader-back','mufassir-reader-back','tasbihat-reader-back','esma-reader-back','quran-intro-back','education-course-back','hadith-source-back','settings-back'];
     for(const id of order){const button=document.getElementById(id);if(visible(button)){button.click();return;}}
     if(window.NurAppBridge&&!window.NurAppBridge.isHome()){window.NurAppBridge.navigate({page:'home'});return;}
     if(confirm('NUR uygulamasından çıkılsın mı?'))app?.exitApp();

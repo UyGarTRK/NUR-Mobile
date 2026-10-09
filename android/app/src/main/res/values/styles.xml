@@ -17,6 +17,12 @@
 
 
     <style name="AppTheme.NoActionBarLaunch" parent="Theme.SplashScreen">
-        <item name="android:background">@drawable/splash</item>
+        <!-- Match the video while Android is creating the activity; never show white bars. -->
+        <item name="windowSplashScreenBackground">@color/nurIntroBackground</item>
+        <item name="android:statusBarColor">@color/nurIntroBackground</item>
+        <item name="android:navigationBarColor">@color/nurIntroBackground</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowBackground">@color/nurIntroBackground</item>
+        <item name="android:background">@null</item>
     </style>
 </resources>

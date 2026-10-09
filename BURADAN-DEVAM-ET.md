@@ -1,3 +1,40 @@
+## 9 Ekim 2026 — 0.3.3-test (109) yayımlandı
+
+Son vakit güvenilirliği ve kayıpsız medya düzeltmeleri GitHub main dalına 8fe120aa4ec7d3d92af56a0a88e5ac6ec44e6f3e commit olarak aktarıldı. Run 37899427837 başarılı; derleme, imza doğrulama ve Firebase nur-test dağıtımı geçti. Önceki 108 sürümüyle aynı imza korunuyor. Yeni sürümün telefon testi kullanıcı tarafından yapılacak.
+
+APK SHA-256: 15ff6c05c160d1ac2b6b701b0c719532b742bd1f0edd98e63028c116ad7d03db. Yerel dosya: outputs/NUR-0.3.3-test-109/app-debug.apk. APK içindeki geliştirme kimliği ve 45 medya başvurusu doğrulandı; eksik dosya yok.
+
+Firebase: https://appdistribution.firebase.google.com/testerapps/1:557016260273:android:1f0a581591c6656db08c90/releases/5mgrmqg6el5c8
+GitHub artifact: https://github.com/UyGarTRK/NUR-Mobile/actions/runs/37899427837/artifacts/11601479309
+
+Telefon testi: kaldırmadan güncelleme ve kayıtların korunması; vakit/konum doğruluğu; çevrimdışı ve tarih geçişi; ön hatırlatma + vakit sesi; hikâye paylaşımı ve ses önizlemesi. Aşağıdaki eski hazırlık notlarındaki “henüz APK’ya alınmadı” ifadeleri bu dağıtımdan önceki duruma aittir.
+
+---
+
+# Güncel devam noktası — 8 Ekim 2026
+
+## 8 Ekim 2026 — Vakit güvenilirliği düzeltmeleri (henüz APK’ya alınmadı)
+
+Web kaynağı: 2026.10.08-vakit-guvenilirlik-1. Telefonda kullanıcı beyanıyla 0.3.2-test (108) var. Bu düzeltmeler yerel kaynak ve kontrol HTML’sinde; GitHub’a gönderilmedi, yeni APK üretilmedi.
+
+- Başlangıçtaki örnek namaz saatleri kaldırıldı. Güncel tarih/konum verisi yoksa sayaç ve saatler bekleme durumunda.
+- Günlük önbellek tarih ve konum kimliğiyle doğrulanıyor. Eski biçimli günlük kayıtlar tekrar veri alınana kadar kullanılmıyor; kullanıcı tercihleri/notları silinmiyor.
+- Aylık dönüştürme takvimi temizlemiyor. Farklı aylar birlikte korunuyor; eski konumun gecikmiş yanıtı reddediliyor.
+- API’nin günlük tarihi ve altı vaktin biçim/sırası kontrol ediliyor; eksik veri eski saatlerle tamamlanmıyor.
+- Yarın verisi yokken bugünün imsak saati yarına kopyalanmıyor. Türkiye günü ve +03:00 vakit hesabı cihazın saat diliminden ayrıldı.
+- 30 günlük pencerenin kapsadığı bütün aylar yükleniyor; Ocak sonu/Şubat/Mart geçişi test edildi. Aktif uygulama, yeniden görünür olma ve bağlantının geri gelmesi yenilemeyi tetikliyor. Uygulama kapalıyken sınırsız arka plan yenilemesi eklenmedi.
+- Bildirim ayarları planın son tarihini gösteriyor. Yeni konumda plan yoksa eski konum alarmları bırakılmıyor; aynı konumda geçici veri eksikliği mevcut alarmları kaldırmıyor.
+- Yüzen kartın ilk konumu başlıktan aşağı alındı; kayıtlı kullanıcı konumu korundu. Azaltılmış hareket tercihi tüm CSS hareketlerini kapsıyor.
+- APK üretiminde gömülü raster/sesler kayıpsız, içerik hash’iyle adlandırılan dosyalara ayrılıyor; aynı varlık tek kez yazılıyor. Kaynak HTML ve tek dosyalı kontrol kopyası korunuyor. İnceleme paketinde HTML 14.408.707 → 1.643.797 bayt (%88,6 azalma); APK toplam boyutu için henüz yeni derleme ölçümü yok.
+
+Doğrulama: inline JS sözdizimi; bildirim ve güncelleme davranış testleri; farklı saat dilimi/boş/eski/yanlış konumlu önbellek/gece yarısı/yarın eksik/ay geçişi/gecikmiş yanıt testleri; 16 ana ekranın 320 ve 390 px genişliği; Canvas hikâye üretimi ve yerel ses URL’leri; 45 medya başvurusunun byte eşitliği. Sayfa JavaScript hatası 0. Tam Android derleme ve gerçek telefon doğrulaması bu revizyonda yapılmadı.
+
+Açık kapsam: dua/hadis metinlerinin kaynakla tek tek editoryal doğrulanması; hesap/bulut hizmeti kurulumu; hassas yerel verinin şifreli depoya geçişi; tam modüler mimariye dönüşüm; dini günlerin resmî takvimle içerik denetimi. Bunlar otomatik metin değişikliği veya kozmetik kapatma ile tamamlanmış sayılmadı. Mevcut eğitim kilitleri, kapalı tefsir tercihi, ana tema ve imza ayarları korundu.
+
+---
+
+Aşağıdaki önceki devir kayıtlarının “henüz” ifadeleri kendi yazıldıkları aşamaya aittir; güncel durum yukarıdadır.
+
 # NUR — Yeni sohbet için ana devam kaydı
 
 Devir tarihi: 8 Ekim 2026, Türkiye saati. Web geliştirme kimliği: `2026.10.08-hikayeler-1`.
@@ -105,3 +142,19 @@ Keystore, parolalar, local.properties, APK ve makineye özgü SDK yolları paket
 Hikâyelerde gerçek Chromium mobil dokunma benzetimi ve file:// testleri: 12 çıktı/indirme, aynı gün seçim, beğeni kalıcılığı, 320 px taşmasız görünüm, yatay grup kaydırma, kısa dokunma, dikey hareket/sınırlar geçti. npm run sync önceki aşamalarda başarılı; son kaydırma sonrası paket hazırlanırken tekrar çalıştırılır. Testler canlı API ve gerçek Android yerine yerel HTML/uyarlanmış ortam kullanır. Test yardımcıları tests/handoff altında referans olarak bulunur; çalışma ortamına özel mutlak yolları yerel makinenize uyarlayın.
 
 Sıradaki öncelik: kullanıcı HTML kontrolünü bitirdikten sonra cihazdaki sürüm/imza tespiti, uygun yeni APK derleme, TELEFON-TESTI.md kontrol listesi. APK talebi gelmedikçe APK üretmeye başlamayın. Bir hata giderildiyse kaynak + değişiklik kaydı + gerekirse istenen HTML eşitlenmeli. Yeni sohbet geçmişi otomatik biliyor varsayılmamalı.
+
+## Son derleme durumu
+
+8 Ekim 2026: Kullanıcı şifreli imza yedeğinin aktarımını açıkça onayladı. Main commit: 3850713293fbbc896988fa3a3585bc3158e06b71. GitHub Actions run 37753675265 başarıyla tamamlandı. Önceki versionCode hatası düzeltildi. NUR 0.3.2-test (108) APK üretildi; güncelleme davranış testleri, Android derlemesi ve APK imza doğrulaması geçti. İmza v162 dosyasıyla eşleşiyor; telefon üzerinden imza henüz okunmadı.
+
+Firebase App Distribution dağıtımı nur-test grubuna başarıyla yapıldı. Tester bağlantısı: https://appdistribution.firebase.google.com/testerapps/1:557016260273:android:1f0a581591c6656db08c90/releases/7gc5p0nn57860
+APK artifact: https://github.com/UyGarTRK/NUR-Mobile/actions/runs/37753675265/artifacts/11539595605
+Yerel APK: çalışma alanı outputs/NUR-0.3.2-test-108/app-debug.apk.
+
+Şifreli imza yedeği artifact 11539231420 indirildi, ZIP SHA256 doğrulandı, yerelde RSA-OAEP/AES-GCM ile kurtarıldı. Kurtarılan sertifika SHA256: 66970897005ea93450d83df45f59569b946422a88089050cca564aaa6db909ef. Kurtarma özel anahtarı, şifreli ZIP ve kurtarılan keystore proje DIŞINDA work/signing-recovery altında tutulur; bunları Git'e eklemeyin. GitHub NUR_TEST_KEYSTORE_BASE64 secret henüz oluşturulmadı; CI mevcut cache kullanıyor ve yoksa duruyor. Yerel yedek kurtarma için hazır.
+
+Telefonda ilk kez bu sürüm eskisinin üzerine kurulmalı, ardından Firebase tester hesabıyla giriş yapılıp güncelleme kontrolü denenmeli. Gelecek sürümün uygulama içinden indirilip kurulması henüz gerçek telefonda uçtan uca test edilmedi. Android kurulum onayı kullanıcı tarafından verilir.
+
+## 8 Ekim — Sistem analizi ve telefon testi başlangıcı
+
+Kullanıcı 0.3.2-test (108) kurulumunu tamamladığını ve telefon testine başladığını bildirdi; testlerin geçtiği henüz bildirilmedi. Güncel mimari, ekran/içerik envanteri, tasarım, animasyon, kaynaklar ve doğrulanmış bulgular docs/NUR-SISTEM-ANALIZI-2026-10-08.md dosyasına kaydedildi. Görsel atlas çalışma alanı outputs/nur-sistem-analizi/index.html. Vakit başlangıç/önbellek güncelliği ve scheduleFromTimings içindeki window.location karışıklığı öncelikli bulgular; uygulama koduna bu analizde düzeltme uygulanmadı. Yeni APK veya GitHub yüklemesi başlatılmadı.

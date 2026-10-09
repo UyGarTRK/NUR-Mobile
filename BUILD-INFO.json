@@ -1,11 +1,14 @@
 {
-  "webRevision": "2026.10.08-vakit-guvenilirlik-1",
-  "handoffDate": "2026-10-08",
-  "androidSourceVersionName": "0.3.3-test",
+  "webRevision": "2026.10.10-gundem-ve-mobil-duzeltmeler-1",
+  "handoffDate": "2026-10-10",
+  "androidSourceVersionName": "0.3.4-test",
   "androidSourceVersionCode": 5,
   "apkBuiltForThisHandoff": false,
   "lastInstalledApkVersion": "0.3.2-test (108)",
   "publisher": "UyGar Medya",
   "lastInstalledApkVerification": "Kullanıcı kurduğunu bildirdi; cihazdan doğrudan okunmadı",
-  "sourceChangesPendingApk": true
+  "sourceChangesPendingApk": true,
+  "lastDistributedApkVersion": "0.3.3-test (109)",
+  "lastDistributionCommit": "8fe120aa4ec7d3d92af56a0a88e5ac6ec44e6f3e",
+  "lastDistributionRun": 37899427837
 }

@@ -1,3 +1,114 @@
+## 10 Ekim 2026 — Otomatik haberler ve ana sayfa kısayolu (yerel, APK bekliyor)
+
+Dini Gündem, Diyanet Haber'in /rss/diyanet-haber ve /rss/tdv akışlarını doğrudan secureFetch üzerinden okur. Her iki uç 200 yanıtı, XML ve Access-Control-Allow-Origin:* ile doğrulandı. Genel haber akışı yerine yalnız bu iki kategori kullanılır. Akademik araştırma ve kültür anlatısı seçkileri korunur. Ana sayfa Keşfet ve Devam Et bölümünün ilk kartı Dini Gündem'dir; son haber başlığı ve yayın tarihi gösterilir.
+
+Açılışta ertelenmiş kontrol, sayfaya giriş, uygulamanın tekrar görünür olması, bağlantının gelmesi ve görünür ana sayfa/gündem ekranında zamanlayıcı ile kontrol yapılır. Kaynak başına 30 dakika önbellek; başarısız denemelerde en az 60 saniye, manuel yenilemede 10 saniye aralık uygulanır. Kapalı uygulamada arka plan servisi yok. Yenileme sırasında var olan okuyucu ve arama korunur. Son kontrol bilgisi her kaynak için ayrı gösterilir; yayın tarihiyle karıştırılmaz. Kısmi hata, çevrimdışı durum ve kayıt alanı hatası açıklanır.
+
+Son haberler localStorage'da kaynak bazlı saklanır. Hatalı/boş XML önceki veriyi silmez. RSS metinleri inert template ile düz metne dönüştürülür; başlık 180, kısa açıklama 240 karakterle sınırlıdır. Yalnız HTTPS Diyanet Haber bağlantıları kabul edilir; tarih doğrulama, tekilleştirme ve sınırlı liste uygulanır. Tam makaleler kopyalanmaz; kaynak bağlantısı açılır. Android geri tuşuna agenda-back eklendi.
+
+Doğrulama: gerçek akışlardan tarayıcı üzerinden 40 haber + dört seçki alındı. Senaryolar: ilk yenileme, kısayol, TTL, zararlı bağlantı reddi, okuyucu, kısmi kaynak hatası, bozuk XML, yeniden açılışta çevrimdışı kayıt, 320/390/530 px. Mevcut bildirim planlama/sözdizimi/kopya eşitliği testi geçti. Android cihaz testi sonraki APK'da yapılmalı. APK/GitHub işlemi yapılmadı.
+
+## 10 Ekim 2026 — Dini Gündem (yerel, APK bekliyor)
+
+Ekstra menüsüne Dini Gündem eklendi. Kayıtlı eski menü düzenleri korunarak yeni öğe Ekstra’ya eklenir; mevcut menü düzenleyicisiyle taşınabilir. Ortak motif başlığı, Haber/Araştırma/Anlatı filtreleri, Türkçe arama, boş sonuç durumu, kaynak/tarih bilgisi, çevrimdışı özet okuma ve kaynak bağlantıları var. Okumayı kapatmaması için yüzen vakit kartı bu sayfada gizlenir; diğer sayfalarda mevcut davranış sürer.
+
+İlk seçki: Diyanet 2 Ekim 2026 cami ve sosyal hayat hutbesi, 30 Eylül 2026 Mevlid-i Nebî sempozyum raporu; İSAM kütüphane duyurusuna dayanan araştırma rehberi; TDV Vakıf maddesine dayanan kültür anlatısı. Eski kaynakların tarihleri açıkça gösterilir. Haber özeti ile NUR rehber/anlatı metni ayrılır. Otomatik haber akışı yok; seçki tarihi 10 Ekim 2026. Kaynaklar Diyanet, TDV ve akademik kaynak kapsamındadır.
+
+Doğrulama: JavaScript sözdizimi ve mevcut bildirim planlama testleri; tarayıcıda eski menü kaydı, navigasyon, kategori, Türkçe arama, boş sonuç, dört içerik okuma/kaynak/geri dönüş, 320/390/530 px ve 16/20 px yazı boyutları geçti. Kaynak ve kontrol HTML kopyası aynı. APK derlenmedi, GitHub’a yüklenmedi; gerçek cihaz kontrolü bekliyor.
+
+## 9 Ekim 2026 — Bildirim kartı kişiselleştirme (yerel, APK bekliyor)
+
+Ayarlar → Kişiselleştirme: 1 Sade liste, 2 Vakit tablosu, 3 Sıradaki vakit; varsayılan tasarım 3. Kart gösterimi ayrı anahtarla açılır (başlangıçta kapalı); etkinleştirme telefon bildirim iznini ister. Mevcut ezan/ön hatırlatma ayarları bağımsızdır. Web önizleme tercihi localStorage'da, Android tarafı kendi SharedPreferences kaydında tutulur. Native durum açılışta okunur; panelden Gizle veya Android'in izin verdiği sürükleyerek kaldırma tekrar zorla bildirim çıkarmaz.
+
+NurPrayerCardPlugin ve NurPrayerCard receiver eklendi. Özel cami smallIcon hem vakit kartı hem yeni yerel test/ezan bildirimlerine bağlandı. Sessiz LOW kanalı ve çakışmayan 210000001 ID kullanılıyor. Tasarım 1 BigText, 2 altı hücreli RemoteViews, 3 native geri sayım + tüm vakitler; dar görünüm sistem şablonunu korur. Gece/açık renk kaynakları var. Dış görünüm OEM'e bağlı, çizim mockup ile birebir garanti edilmez.
+
+Doğrulanmış takvim günleri ezan bildirimleri kapalı olsa da bağımsız aktarılır. Bugünün altı vakti yoksa eski veri gösterilmez; uygulamayı açma mesajı çıkar. Gün geçişi, vakit sınırı, yeniden başlatma, saat değişimi ve uygulama güncellemesi yenilemeye bağlandı. Sürekli servis yok. Mevcut kesin alarm erişimi varsa sınır güncellemesi kesin alarm ile, yoksa gecikebilen inexact alarm ile yapılır. Güç tasarrufu/force-stop durumları telefonda sınanmalı. İnternetsiz sınırsız takvim üretimi eklenmedi.
+
+Doğrulama: test-prayer-card.cjs (varsayılan, kalıcılık, izin reddi, native sync/configure, kapatma, hata geri alma, native hide uzlaşması), mevcut notification-planning testleri ve HTML UI 320/390/530 px kontrolleri geçti. Android XML kaynakları aapt2 36.0.0 ile derlendi; NurPrayerCard Java sınıfı JDK21 / platform37 android.jar ile derlendi (R ve MainActivity için geçici kontrol sınıfları kullanıldı). Tam Capacitor/Gradle APK derlemesi ve gerçek cihaz davranışı henüz doğrulanmadı. APK veya GitHub yüklemesi başlatılmadı.
+
+## 9 Ekim 2026 — Başlıklarda kelime bölünmesi (yerel, APK bekliyor)
+
+Tesbihat dahil sayfa başlıklarında overflow-wrap:anywhere kaldırıldı; kelimeler harften bölünmüyor, çok kelimeli başlıklar gerektiğinde boşluklardan satıra geçiyor. Ortak motif panelinin yatay iç boşluğu azaltıldı, metne tam genişlik verildi; dekoratif çizgiler daralabilir, başlık en uzun kelime genişliğini korur.
+
+14 sayfa başlığı; 320, 360, 390, 412 ve 530 px ekranlarda 16/20 px kök yazı boyutuyla kontrol edildi (140 başlık/ölçü birleşimi). Kelime içinde satır kırılması ve panel dışına taşma yok. Tesbihat başlığı görsel olarak da incelendi. Yeni APK henüz üretilmedi.
+
+## 9 Ekim 2026 — Kur’an okuyucu üst/alt yerleşimi (yerel, APK bekliyor)
+
+Üst güvenli alanın okuyucu ve üst çubukta iki kez eklenmesi kaldırıldı. Üst çubuk top:0 ile yapışkan; güvenli alan yalnız çubuğun içinde uygulanıyor. Alt araç düğmeleri en az 44 px dokunma alanını koruyarak küçültüldü; altta yalnız cihazın güvenli alanı ve .25rem iç boşluk var. Okuma içeriğinin alt boşluğu ve bildirim balonu, gerçek araç çubuğu yüksekliğine bağlı. ResizeObserver ile yazı boyutu, ekran yönü ve güvenli alan değişimleri izleniyor.
+
+Yerel uzun metin testi: 320×568, 390×844, 412×915, büyük yazıyla 360×800 ve yatay 844×390; 0/24/44 px üst, 0/24/34 px alt güvenli alanlar. Üst çubuk başlangıçta ve kaydırma sonunda ekranın üstünde, alt menü ekran dibinde; yatay taşma yok ve düğmeler en az 44 px. Native sistem çubuğu davranışı sonraki APK'da gerçek cihazda doğrulanmalı.
+
+## 9 Ekim 2026 — Sûre bilgileri arasında kaydırma (yerel, APK bekliyor)
+
+Sûre bilgi kartında sola kaydırma sonraki, sağa kaydırma önceki sûreyi açıyor. Liste ve geçişler aynı sıralama işlevini kullanıyor: Mushaf veya seçili iniş sırası. İlk/son sûrede taşma veya başa dönme yok. Dikey kaydırma, iptal edilen/çok parmaklı dokunuşlar ve düğmelerde başlayan dokunuşlar sûre değiştirmiyor. Önceki/sonraki düğmeleri ve seçili sırayı belirten kısa ipucu eklendi. Geçişlerde Kur’an başlığı hizası ve asıl sûre listesine dönüş konumu korunuyor.
+
+Yerel tarayıcı testinde 114 kayıtlı sentetik veriyle her iki sıranın tamamı, sol/sağ hareketler, sınırlar, dikey hareket, iptal, liste kaydırma hafızası ve başlık hizası geçti. Telefon dokunmatik testi sonraki APK'da yapılacak.
+
+## 9 Ekim 2026 — Sûre bilgisi açılış hizası (yerel, APK bekliyor)
+
+Sûre seçildiğinde genel sayfanın sıfır noktasına gitmek yerine Kur’an başlığı ekranın üstüne hizalanıyor. Sûre bilgi görünümüne en az ekran yüksekliği verildi; kısa içerikte de hizalama mümkün. Diğer görünümlerin yüksekliği ve sûre listesine geri dönüşte kayıtlı kaydırma davranışı korunuyor. Yerel testte ortak açılış işlevi 1–114 sûre numarasıyla üç telefon ölçüsünde çalıştırıldı (390×844, 320×700, 412×915); başlık üst kenarı farkı 0,15 pikselin altında. Gerçek APK/telefon testi bekliyor.
+
+## 9 Ekim 2026 — İlk Kur’an girişinde meal seçimi (yerel, APK bekliyor)
+
+İlk Kur’an girişinde altı mevcut kaynaktan birini seçip “Kaydet ve devam et” ile onaylamak zorunlu. Varsayılan seçenek onaylanmış sayılmıyor; Escape/arka plana dokunma seçimi geçmiyor. Sûre ve konu okuma yolları aynı seçim bekleyicisini kullanıyor. Seçim mevcut Kur’an tercih kaydına yazılıyor; kayıt başarısızsa hata gösteriliyor ve diyalog açık kalıyor. Önceki sürümden geçerli meal kaydı olanların tercihi korunuyor. Kullanıcı sonradan mevcut meal menüsünden değiştirebilir.
+
+Yerel tarayıcı kontrolü: ana sayfada istem açılmaması, ilk giriş, seçmeden devam edememe, Escape, yeniden yüklemede tekrar sorulmaması, sonradan meal değiştirme, ana sayfa kısayolu ve verileri sıfırladıktan sonraki giriş geçti. Yeni APK henüz oluşturulmadı.
+
+## 9 Ekim 2026 — Hikâye performansı (yerel, APK bekliyor)
+
+- Aynı üç arka planın JSON çözümleme ve görsel decode işlemleri tekrar kullanılacak şekilde önbelleğe alındı. Başarısız yükleme yeniden denenebilir.
+- 1080×1920 hikâye görüntüsü PNG dışa aktarımını beklemeden gösteriliyor. Paylaşım dosyası ilk çizimden sonra hazırlanıyor; hazır olunca paylaşım düğmesi etkinleşiyor.
+- Tam çözünürlüklü hikâye önbelleği 12 yerine en fazla 3 kayıt tutuyor. Yalnız sıradaki hikâye 400 ms sonra hazırlanıyor; kapanmış/değişmiş hikâye için hazırlık başlatılmıyor.
+- İlgisiz bütün fontları beklemek yerine yalnız Esmâ'nın kullandığı Arapça font yükleniyor. İlk Arapça çizimin geçici fontla yapılması önleniyor.
+- 4 kat CPU yavaşlatılmış yerel Edge testinde 12 hikâyenin toplu hazırlama + karşılaştırma süresi 12.759 ms → 5.353 ms; arka plan decode sayısı 12 → 3, tutulan hikâye kaydı 12 → 3. Bu telefon açılış süresi ölçümü değildir.
+- Fontlar eşit hazırken 12/12 hikâyenin PNG piksel çıktısı birebir aynı. Yapay 800 ms kodlama gecikmesinde hikâye 219 ms'de görünürken paylaşım 1.450 ms'de hazır: görüntüleme PNG kodlamasını beklemiyor. Paylaşım dosyası PNG/1080×1920. Hızlı geçiş-kapatma ve Esmâ'ya yeniden giriş geçti.
+- Kaynak ve kontrol HTML aynı. 45 paketli medya referansı kayıpsız doğrulandı. Android telefonda kontrol ve yeni APK dağıtımı bekliyor.
+
+## 9 Ekim 2026 — Açılış şeritleri ve ölçü geçişi (yerel, APK bekliyor)
+
+- MainActivity tam ekran ve çentik yerleşimini WebView/video oluşturulmadan önce hazırlıyor. Video, gerçek en/boy oranı ölçülüp yerleşim tamamlandıktan sonra başlıyor.
+- Açılış temasının pencere ve sistem çubuğu arka planları video bekleme rengiyle eşleştirildi. Eski, pencereye gerilen splash arka planı kaldırıldı.
+- Video yüzeyi kaldırılmadan sistem çubuklarının geri gelmesi engellendi; SurfaceView üzerinde 250 ms alpha çıkışı kaldırıldı. Bitiş, hata, zaman aşımı ve arka plana geçiş aynı temizleme yolunu kullanıyor.
+- Mevcut 1080×1920, 2,09 saniyelik video değişmedi. Video kareleri yerel tarayıcıda incelendi. XML dosyaları ayrıştırıldı; bu ortamda Android SDK/derleyici olmadığından native derleme ve telefon doğrulaması yapılmadı.
+- GitHub'a aktarılmadı; 109 APK'sında bu düzenleme yok.
+
+## 9 Ekim 2026 — 0.3.3-test (109) yayımlandı
+
+Son vakit güvenilirliği ve kayıpsız medya düzeltmeleri GitHub main dalına 8fe120aa4ec7d3d92af56a0a88e5ac6ec44e6f3e commit olarak aktarıldı. Run 37899427837 başarılı; derleme, imza doğrulama ve Firebase nur-test dağıtımı geçti. Önceki 108 sürümüyle aynı imza korunuyor. Yeni sürümün telefon testi kullanıcı tarafından yapılacak.
+
+APK SHA-256: 15ff6c05c160d1ac2b6b701b0c719532b742bd1f0edd98e63028c116ad7d03db. Yerel dosya: outputs/NUR-0.3.3-test-109/app-debug.apk. APK içindeki geliştirme kimliği ve 45 medya başvurusu doğrulandı; eksik dosya yok.
+
+Firebase: https://appdistribution.firebase.google.com/testerapps/1:557016260273:android:1f0a581591c6656db08c90/releases/5mgrmqg6el5c8
+GitHub artifact: https://github.com/UyGarTRK/NUR-Mobile/actions/runs/37899427837/artifacts/11601479309
+
+Telefon testi: kaldırmadan güncelleme ve kayıtların korunması; vakit/konum doğruluğu; çevrimdışı ve tarih geçişi; ön hatırlatma + vakit sesi; hikâye paylaşımı ve ses önizlemesi. Aşağıdaki eski hazırlık notlarındaki “henüz APK’ya alınmadı” ifadeleri bu dağıtımdan önceki duruma aittir.
+
+---
+
+# Güncel değişiklik durumu
+
+## 8 Ekim 2026 — Vakit güvenilirliği düzeltmeleri (henüz APK’ya alınmadı)
+
+Web kaynağı: 2026.10.08-vakit-guvenilirlik-1. Telefonda kullanıcı beyanıyla 0.3.2-test (108) var. Bu düzeltmeler yerel kaynak ve kontrol HTML’sinde; GitHub’a gönderilmedi, yeni APK üretilmedi.
+
+- Başlangıçtaki örnek namaz saatleri kaldırıldı. Güncel tarih/konum verisi yoksa sayaç ve saatler bekleme durumunda.
+- Günlük önbellek tarih ve konum kimliğiyle doğrulanıyor. Eski biçimli günlük kayıtlar tekrar veri alınana kadar kullanılmıyor; kullanıcı tercihleri/notları silinmiyor.
+- Aylık dönüştürme takvimi temizlemiyor. Farklı aylar birlikte korunuyor; eski konumun gecikmiş yanıtı reddediliyor.
+- API’nin günlük tarihi ve altı vaktin biçim/sırası kontrol ediliyor; eksik veri eski saatlerle tamamlanmıyor.
+- Yarın verisi yokken bugünün imsak saati yarına kopyalanmıyor. Türkiye günü ve +03:00 vakit hesabı cihazın saat diliminden ayrıldı.
+- 30 günlük pencerenin kapsadığı bütün aylar yükleniyor; Ocak sonu/Şubat/Mart geçişi test edildi. Aktif uygulama, yeniden görünür olma ve bağlantının geri gelmesi yenilemeyi tetikliyor. Uygulama kapalıyken sınırsız arka plan yenilemesi eklenmedi.
+- Bildirim ayarları planın son tarihini gösteriyor. Yeni konumda plan yoksa eski konum alarmları bırakılmıyor; aynı konumda geçici veri eksikliği mevcut alarmları kaldırmıyor.
+- Yüzen kartın ilk konumu başlıktan aşağı alındı; kayıtlı kullanıcı konumu korundu. Azaltılmış hareket tercihi tüm CSS hareketlerini kapsıyor.
+- APK üretiminde gömülü raster/sesler kayıpsız, içerik hash’iyle adlandırılan dosyalara ayrılıyor; aynı varlık tek kez yazılıyor. Kaynak HTML ve tek dosyalı kontrol kopyası korunuyor. İnceleme paketinde HTML 14.408.707 → 1.643.797 bayt (%88,6 azalma); APK toplam boyutu için henüz yeni derleme ölçümü yok.
+
+Doğrulama: inline JS sözdizimi; bildirim ve güncelleme davranış testleri; farklı saat dilimi/boş/eski/yanlış konumlu önbellek/gece yarısı/yarın eksik/ay geçişi/gecikmiş yanıt testleri; 16 ana ekranın 320 ve 390 px genişliği; Canvas hikâye üretimi ve yerel ses URL’leri; 45 medya başvurusunun byte eşitliği. Sayfa JavaScript hatası 0. Tam Android derleme ve gerçek telefon doğrulaması bu revizyonda yapılmadı.
+
+Açık kapsam: dua/hadis metinlerinin kaynakla tek tek editoryal doğrulanması; hesap/bulut hizmeti kurulumu; hassas yerel verinin şifreli depoya geçişi; tam modüler mimariye dönüşüm; dini günlerin resmî takvimle içerik denetimi. Bunlar otomatik metin değişikliği veya kozmetik kapatma ile tamamlanmış sayılmadı. Mevcut eğitim kilitleri, kapalı tefsir tercihi, ana tema ve imza ayarları korundu.
+
+---
+
+## Önceki kayıtlar (tarihsel)
+
 # NUR değişiklik ve APK kayıt defteri
 
 ## Hazırlanıyor — 8 Ekim 2026 uygulama içi test güncellemeleri
@@ -67,3 +178,12 @@ Kesin APK dosyası, yayın tarihi, SHA-256, versionCode ve imza bu sohbet sonund
 - Veri koruma / geçiş notu:
 
 Bildirim düzenlemesi doğrulaması: Beş süre seçeneği, gece yarısı, geçmiş ön hatırlatma, ayrı sesler, tüm vakitlerin kapatılması, planlama hatasında eski alarmların korunması ve kontrol HTML eşitliği otomatik testte geçti. Bu sonuçlar mock testtir; gerçek Android teslim testi değildir.
+
+## 2026-10-08 — 0.3.2-test (108) dağıtıldı
+- Gradle versionCode ataması düzeltildi; Android APK ve aynı imza kontrolü başarılı.
+- Firebase nur-test grubuna dağıtım başarılı.
+- Açık onayla şifreli imza yedeği alındı ve yerelde kurtarılarak sertifikası doğrulandı.
+
+## 9 Ekim — Ekstra menü birleşimi (yerel, henüz APK’da değil)
+- Panelin alt konumu sabit varsayılan yükseklik yerine alt menünün gerçek üst kenarından hesaplanıyor. Güvenli alan, font ve ekran değişiminde yeniden ölçülüyor; birleşimde 1 px örtüşme var.
+- Kontrol HTML kopyası eşitlendi.
