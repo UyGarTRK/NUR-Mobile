@@ -1,3 +1,10 @@
+## Üst başlık ve Besmele — sonraki APK
+
+- [ ] Soğuk açılış/arka plandan dönüş/ekran döndürmede Android uygulama başlık çubuğu görünmez.
+- [ ] Ana sayfa ve tüm menü sayfalarında üstte NUR Namaz Uygulaması yazısı yok.
+- [ ] Camili başlık Besmele ile başlar; uzun boşluk kalmaz, metin saat/çentik altında kalmaz.
+- [ ] Farklı ekran oranları, büyük yazı, hareketli ve üç tuşlu gezinmede kontrol edilir.
+
 ## Otomatik Dini Gündem — sonraki APK
 
 - [ ] Ana sayfa kısayolu Dini Gündem'i açar; güncellemeden sonra son haber başlığı görünür.

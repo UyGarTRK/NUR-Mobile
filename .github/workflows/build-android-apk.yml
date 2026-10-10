@@ -56,7 +56,10 @@ jobs:
         run: npm run sync
 
       - name: Güncelleme ekranı davranışlarını doğrula
-        run: node tests/handoff/test-updates.cjs
+        run: |
+          node tests/handoff/test-updates.cjs
+          node tests/handoff/test-prayer-card.cjs
+          node tests/handoff/test-agenda-home-swipe.cjs
 
       - name: Mevcut test APK imzasını geri yükle
         uses: actions/cache/restore@v4
@@ -134,5 +137,5 @@ jobs:
           firebase appdistribution:distribute android/app/build/outputs/apk/debug/app-debug.apk
           --app 1:557016260273:android:1f0a581591c6656db08c90
           --groups nur-test
-          --release-notes "NUR test sürümü. Kaynak: ${{ github.sha }}. 0.3.4-test: Otomatik Dini Gündem ve ana sayfa kısayolu; bildirim kartı kişiselleştirme; açılış, menü, hikâye ve Kur’an okuma iyileştirmeleri."
+          --release-notes "NUR test sürümü. Kaynak: ${{ github.sha }}. 0.3.5-test: Telefon testi adayı. Açılış geçişi, Android başlık çubuğu ve Besmele üst boşluğu; Ayarlar başlık uyumu; Dini Gündem ikon/font uyumu ve ana sayfada haber kaydırma."
           --non-interactive

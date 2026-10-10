@@ -1,3 +1,59 @@
+## 10 Ekim 2026 — 0.3.5-test telefon testi adayı
+
+Açılış geçişi, başlık çubuğu/Besmele boşluğu, Ayarlar başlıkları ve Dini Gündem ikon/font/kaydırma düzenlemeleri bu adayda. Kullanıcının cihaz onayı yok; önceki yerel test sonuçları sorunun telefonda çözüldüğü anlamına gelmez. İmza ve uygulama kimliği korunarak CI dağıtımı hazırlanıyor.
+
+## 10 Ekim 2026 — Ayarlar başlık uyumu (yerel, APK bekliyor)
+
+Kullanıcı Ayarlar ve alt sayfalarındaki başlıkların diğer sayfalarla uyumlu olmasını, geliştirme etiketlerinin kaldırılmasını istedi. Ayarlar ana başlığı ortak motif-page-heading/quran-title-panel düzenine alındı. Mevcut dinamik başlık aynı panelde Profil, Kişiselleştirme, Bildirim Ayarları, Konum Ayarları ve Uygulama Güncellemeleri adlarını gösterir. Alt kısımdaki tekrarlanan sayfa başlıkları yerine Ayarlar listesine dönüş korunur. Ana sayfaya dönüş yalnız ayarlar ana listesinde görünür.
+
+Ayarlar içindeki h3 ve kategori kartı başlıkları sistemin Playfair Display fontuna bağlandı; kişiselleştirmedeki Georgia kaldırıldı. Gövde/ayar etiketleri ve kontroller korunur. Geliştirme satırı görünen DOM'dan kaldırıldı; revizyon yalnız görünmez meta bilgisi olarak tutulur. Bu ortak satır alt panellerde de görünüyordu; ayrı geliştirme etiketi bulunmadı. Gerçek uygulama sürüm bilgisi güncellemeler ekranında korundu.
+
+Kontrol: tüm ayar kontrol kimliklerinin korunduğu, beş alt başlığın işlendiği, JS/kopya eşitliği ve bildirim/kişiselleştirme/güncelleme davranış testleri geçti. Mobil medya hazırlığı kayıpsız geçti. Gerçek cihaz görünümü henüz doğrulanmadı; APK/GitHub işlemi yapılmadı.
+
+## 10 Ekim 2026 — Ana sayfa Dini Gündem kartında haber kaydırma (yerel, APK bekliyor)
+
+Keşfet ve Devam Et'teki mevcut Dini Gündem kartında sola sonraki, sağa önceki haber; sınırda döngü, sıra/toplam sayacı ve seçili habere dokunarak okuyucuyu doğrudan açma eklendi. Kartın ikonu, renkleri ve fontları korundu. Başlık/özet alanı iki satır için sabitlendi; yalnız bu karta hareket ve kısa yönlendirme eklendi. Otomatik kayan slayt yok. İnternet yokken kayıtlı/paket haberleri kullanılabilir; veri yenilenince seçili haber hâlâ varsa korunur.
+
+Yatay hareket eşiği 40px ve yön oranı 1.5. Dikey sürükleme, pointercancel ve çoklu dokunma haber açmaz; kaydırmanın ardından sentetik tıklama bastırılır. touch-action:pan-y pinch-zoom ile sayfa kaydırma ve yakınlaştırma korunur; klavye okları da geçiş yapar. Mevcut genel kısayol click işleyicisi yalnız Dini Gündem için özel işleyiciye bırakıldı; diğer kartlara dokunulmadı.
+
+Gerçek kontrol koduyla VM davranış testi geçti: ileri/geri/döngü, yanlış açılma engeli, dikey/iptal/çoklu dokunma, seçili haber, klavye, yenilemede seçim koruma, tek/boş liste. Bu bir fiziksel dokunma/cihaz doğrulaması değildir. APK veya GitHub işlemi yapılmadı.
+
+## 10 Ekim 2026 — Dini Gündem yazı tipi ve ikon uyumu (yerel, APK bekliyor)
+
+Kullanıcının isteğiyle yalnız Dini Gündem kart/okuyucu başlıklarının Georgia tanımı sistemdeki Playfair Display ile değiştirildi; gövde DM Sans olarak korunur. Başlık boyutu, yerleşim, tema, metinler ve diğer sayfaların stilleri değiştirilmedi.
+
+Hadisler, Eğitim ve Siyer ikonları görsel referans alınarak şeffaf lacivert-altın kabartmalı gazete ikonu üretildi. Orijinali branding/icons/dini-gundem-original.png, mobil varlık branding/icons/dini-gundem.webp. Ekstra'daki eski çizgi SVG yerine ortak ai-menu-icon yapısı kullanıldı; ana sayfa da aynı ikona bağlandı. Menü düzenleyicisiyle alt menüye taşınırsa ortak ikon ölçülerini kullanır.
+
+Doğrulama: iki konumun aynı gömülü görseli kullandığı, yeni görselin alpha kanalı, kaynak/kontrol kopyası eşitliği ve inline JS/bildirim regresyonu kontrol edildi. Mobil hazırlıkta 47 medya başvurusu kayıpsız çıkarıldı; tekrarlanan ikon aynı hash'li tek dosyaya dönüşür. Bu kontrol cihazda görsel onay değildir. APK/GitHub işlemi yapılmadı.
+
+## 10 Ekim 2026 — Android başlık çubuğu ve Besmele üst boşluğu (yerel, APK bekliyor)
+
+Kullanıcı ekran görüntüsünde tüm sayfalarda görünen NUR Namaz Uygulaması Android başlık çubuğunun kaldırılmasını ve camili başlığın üst sınırının Besmele olması isteğini belirtti. MainActivity, AppCompat pencereyi kurmadan önce AppTheme.NoActionBar temasını seçer; sonrasında varsa ActionBar gizlenir. Temel ve launch temalarında başlıksız pencere açıkça tanımlandı. Uygulama adı/launcher etiketi değiştirilmedi.
+
+HTML'de yalnız .night-header üst padding değeri 1rem + safe-top yerine .5rem + safe-top yapıldı. Besmele ilk içerik olmaya devam ediyor; güvenli alan korunuyor. Görsel, metin, font, renk ve diğer aralıklar değiştirilmedi. Önceki açılış adayı korunuyor; onun cihaz doğrulaması da hâlâ bekliyor.
+
+Kontrol: Java Android API37 ile geçici BridgeActivity/R stub'ları kullanılarak derlendi; Android XML aapt2 ile derlendi; JS sözdizimi/bildirim testi ve kaynak-kontrol HTML eşitliği geçti. 45 gömülü medya kayıpsız çıkarıldı. Yeni tarayıcı ölçüm testi hazırlandı ancak bu oturumdaki tarayıcı başlatma kısıtları yüzünden çalışmadı; farklı ekranlarda görsel doğrulama yapılmış sayılmaz. Tam Android APK/cihaz testi yapılmadı; GitHub'a yüklenmedi.
+
+## 10 Ekim 2026 — Açılış geçişi yeniden ele alındı (yerel; cihaz doğrulaması bekliyor)
+
+Kullanıcı 110 sürümünde açılış beyaz şerit/ölçek sorununun sürdüğünü bildirdi. Telefon: Xiaomi 11T; Android/MIUI sürümü henüz bilinmiyor.
+
+Yalnız MainActivity.java ve açılış temasının styles.xml kaydı değiştirildi. Tam ekran işlemi BridgeActivity kurulumundan sonraya alındı; pencere odağında tekrar uygulanıyor. API30+ WindowInsetsController ile sistem çubukları gizleniyor. Video başlaması için iki ardışık sabit tam pencere ölçüsü, odak ve gizli çubuklar bekleniyor. Hazır olmayan video yüzeyi ilk görüntüye kadar mevcut krem zeminle örtülüyor. Bitiş/hata/duraklamada pencere geri alınıyor; activity recreation durumunda launch-only fullscreen bayrağı temizleniyor. 7 saniyelik hata çıkışı korunuyor.
+
+Video SHA256 9ac3ea62f7a795e97855ffe9f54a0a1c0d63bf61af77e20086e8eded0df0743d ve HTML SHA256 285b541172cc845a889b0f9d9d577bdbd6140eebb987218912107d1f73af6321 önceki sürümle aynı. Animasyon, ana tema, metin ve sayfa düzeni değiştirilmedi.
+
+Doğrulama sınırı: MainActivity gerçek API37 android.jar ile JDK21'de derlendi; Capacitor BridgeActivity/R/diğer plugin sınıfları için geçici stub kullanıldı. Android kaynakları aapt2 ile derlendi. Bu kontrol tam APK/cihaz davranışı doğrulaması DEĞİLDİR. GitHub'a gönderilmedi, APK üretilmedi. Xiaomi 11T'de soğuk açılış, hareket/üç tuş gezinme, tekrar açma ve açılış sırasında arka plana alma testleri bekliyor.
+
+## 10 Ekim 2026 — 0.3.4-test (110) yayımlandı
+
+GitHub run 38003274408 başarılı. Commit e8c10a988c525aef011d25fb83b5dc84420a8e14. Firebase nur-test dağıtımı tamamlandı.
+
+Kurulum: https://appdistribution.firebase.google.com/testerapps/1:557016260273:android:1f0a581591c6656db08c90/releases/5a89u7h2c8qf8
+Artifact: https://github.com/UyGarTRK/NUR-Mobile/actions/runs/38003274408/artifacts/11650067314
+APK SHA256: 4d2275a67fa038907fa4e378dc018a2829c458c1c495a4e357289569c33ded62.
+
+Yerel APK apksigner ile doğrulandı; sertifika SHA256 66970897005ea93450d83df45f59569b946422a88089050cca564aaa6db909ef. Paket tr.com.nur.namaz, versionCode 110, versionName 0.3.4-test. APK içindeki güncel web revizyonu, otomatik haber, kısayol ve kişiselleştirme kodları doğrulandı; eksik medya yok. Kullanıcının telefonda kurulum/test onayı henüz yok. Aşağıdaki bekliyor notları önceki yerel geliştirme aşamalarına aittir.
+
 ## 10 Ekim 2026 — Otomatik haberler ve ana sayfa kısayolu (yerel, APK bekliyor)
 
 Dini Gündem, Diyanet Haber'in /rss/diyanet-haber ve /rss/tdv akışlarını doğrudan secureFetch üzerinden okur. Her iki uç 200 yanıtı, XML ve Access-Control-Allow-Origin:* ile doğrulandı. Genel haber akışı yerine yalnız bu iki kategori kullanılır. Akademik araştırma ve kültür anlatısı seçkileri korunur. Ana sayfa Keşfet ve Devam Et bölümünün ilk kartı Dini Gündem'dir; son haber başlığı ve yayın tarihi gösterilir.

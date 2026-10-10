@@ -2,7 +2,9 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
@@ -17,7 +19,11 @@
 
 
     <style name="AppTheme.NoActionBarLaunch" parent="Theme.SplashScreen">
-        <!-- Match the video while Android is creating the activity; never show white bars. -->
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowNoTitle">true</item>
+        <!-- Launch-only geometry; MainActivity restores the regular app window. -->
+        <item name="android:windowFullscreen">true</item>
         <item name="windowSplashScreenBackground">@color/nurIntroBackground</item>
         <item name="android:statusBarColor">@color/nurIntroBackground</item>
         <item name="android:navigationBarColor">@color/nurIntroBackground</item>
