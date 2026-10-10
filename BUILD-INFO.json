@@ -1,14 +1,15 @@
 {
-  "webRevision": "2026.10.10-telefon-testi-2",
+  "webRevision": "2026.10.10-hesapsiz-guncelleme",
   "handoffDate": "2026-10-10",
-  "androidSourceVersionName": "0.3.5-test",
+  "androidSourceVersionName": "0.3.6-test",
   "androidSourceVersionCode": 5,
   "apkBuiltForThisHandoff": false,
-  "lastInstalledApkVersion": "0.3.2-test (108)",
+  "lastInstalledApkVersion": "0.3.5-test (111)",
   "publisher": "UyGar Medya",
-  "lastInstalledApkVerification": "Kullanıcı kurduğunu bildirdi; cihazdan doğrudan okunmadı",
+  "lastInstalledApkVerification": "Kullanıcı telefon testinin başarılı olduğunu bildirdi; cihazdan doğrudan okunmadı",
   "sourceChangesPendingApk": true,
-  "lastDistributedApkVersion": "0.3.4-test (110)",
-  "lastDistributionCommit": "e8c10a988c525aef011d25fb83b5dc84420a8e14",
-  "lastDistributionRun": 38003274408
+  "lastDistributedApkVersion": "0.3.5-test (111)",
+  "lastDistributionCommit": "cf7782b841ba7af1640b321409553b9ca2ddea91",
+  "lastDistributionRun": 38041890605,
+  "updateChannel": "public-github-releases"
 }

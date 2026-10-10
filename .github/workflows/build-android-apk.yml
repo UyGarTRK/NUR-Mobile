@@ -18,8 +18,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 30
     permissions:
-      contents: read
-      id-token: write
+      contents: write
 
     steps:
       - name: Projeyi al
@@ -58,6 +57,7 @@ jobs:
       - name: Güncelleme ekranı davranışlarını doğrula
         run: |
           node tests/handoff/test-updates.cjs
+          node tests/handoff/test-update-policy.cjs
           node tests/handoff/test-prayer-card.cjs
           node tests/handoff/test-agenda-home-swipe.cjs
 
@@ -120,22 +120,23 @@ jobs:
           if-no-files-found: error
           retention-days: 14
 
-      - name: Firebase dağıtım aracını kur
-        run: npm install --global firebase-tools@15.33.0 --ignore-scripts
+      - name: Hesapsız güncelleme paketini hazırla
+        run: node scripts/prepare-public-release.cjs
 
-      - name: NUR Firebase dağıtım hesabına bağlan
-        uses: google-github-actions/auth@v3
-        with:
-          project_id: nur-mobile-ec382
-          workload_identity_provider: projects/557016260273/locations/global/workloadIdentityPools/nur-github/providers/github
-          service_account: nur-github-distribution@nur-mobile-ec382.iam.gserviceaccount.com
-
-      - name: APK sürümünü NUR test grubuna dağıt
+      - name: Test APK bağlantısını yayımla
         env:
-          CI: true
-        run: >-
-          firebase appdistribution:distribute android/app/build/outputs/apk/debug/app-debug.apk
-          --app 1:557016260273:android:1f0a581591c6656db08c90
-          --groups nur-test
-          --release-notes "NUR test sürümü. Kaynak: ${{ github.sha }}. 0.3.5-test: Telefon testi adayı. Açılış geçişi, Android başlık çubuğu ve Besmele üst boşluğu; Ayarlar başlık uyumu; Dini Gündem ikon/font uyumu ve ana sayfada haber kaydırma."
-          --non-interactive
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          if gh release view "$NUR_RELEASE_TAG" --json isDraft,targetCommitish > "$RUNNER_TEMP/nur-release.json" 2>/dev/null; then
+            node -e 'const r=require(process.argv[1]); if(r.targetCommitish!==process.env.GITHUB_SHA) process.exit(1)' "$RUNNER_TEMP/nur-release.json"
+            if [ "$(node -p 'require(process.argv[1]).isDraft' "$RUNNER_TEMP/nur-release.json")" = 'false' ]; then
+              echo 'Bu sürüm zaten yayımlanmış; APK değiştirilmiyor.'
+              exit 0
+            fi
+          else
+            gh release create "$NUR_RELEASE_TAG" --target "$GITHUB_SHA" --draft --title "$NUR_RELEASE_TITLE" --notes-file public-release/notes.txt
+          fi
+          gh release upload "$NUR_RELEASE_TAG" public-release/NUR-test.apk public-release/nur-update.json --clobber
+          gh release edit "$NUR_RELEASE_TAG" --draft=false --latest

@@ -1,3 +1,14 @@
+## Hesapsız güncelleme — 0.3.6-test
+
+- [ ] 111 üzerine yeni APK’yı kaldırmadan kur; kaydedilen ayarlar/okuma yeri korunur.
+- [ ] Google/test hesabı olmadan Ayarlar → Uygulama Güncellemeleri güncel sürüm der.
+- [ ] Sonraki daha yüksek sürüm yayımlanınca açılıştan sonra Güncelle / Daha sonra görünür.
+- [ ] Daha sonra uygulamayı engellemez; elle kontrol yeniden teklif eder.
+- [ ] Güncelle APK’yı indirir; ilk sefer kaynak iznine yönlendirir; geri dönüş Android kurulum onayını açar.
+- [ ] İzin reddi, indirme iptali, bağlantı kesilmesi ve kurulumu iptal etme sonrası tekrar dene.
+- [ ] Arka plana git/dön, uçak modu, düşük boş alan ve farklı Android sürümlerinde dene.
+- [ ] Güncelleme sonrası açılış, bildirimler, yazı biçimi ve kayıtlı tercihler korunur.
+
 ## Üst başlık ve Besmele — sonraki APK
 
 - [ ] Soğuk açılış/arka plandan dönüş/ekran döndürmede Android uygulama başlık çubuğu görünmez.

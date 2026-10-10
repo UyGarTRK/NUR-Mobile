@@ -1,3 +1,23 @@
+## 10 Ekim 2026 — Hesapsız test güncellemesi (0.3.6-test adayı)
+
+Kullanıcı APK bağlantısına erişen herkesin indirebilmesine açıkça onay verdi; e-posta ve test kodu kullanılmayacak. Firebase App Distribution oturumuna bağlı güncelleme kaldırıldı. GitHub Releases üzerinde APK ve sürüm bilgisi beraber yayımlanır; uygulama 8 saniye sonra ve ön plana döndüğünde yeni sürümü kontrol eder (başarılı otomatik kontroller en fazla saatte bir; elle kontrol serbest). Yeni sürüm için Güncelle / Daha sonra, indirme ilerlemesi ve iptal, SHA-256/boyut/paket/sürüm/imza kontrolü, Android kaynak izni ve kurulum onayı eklendi. İndirme HTTPS ve NUR deposunun sürüm dosyaları ile sınırlı. İnternet yokken uygulama kullanılmaya devam eder.
+
+Mevcut kurulu 111 sürümü bu akışı içermediği için geçiş APK’sı bir kez bağlantıdan, uygulamayı kaldırmadan kurulmalıdır. İmza anahtarı aynı kalır. CI bundan sonra anonim GitHub sürümü yayımlar; Firebase bulut kaynakları ve eski dağıtımlar silinmedi. Tasarım, animasyon ve diğer sayfalarda değişiklik yok; güncellemeler sayfasının yalnız açıklama/durum metinleri yenilendi.
+
+Yerel JS/planlama/kart/haber testleri ve Java sürüm/metadata/URL/hash politika testleri geçti. Tam APK derlemesi ve telefon güncelleme akışı doğrulaması bekleniyor. Kullanıcı 111 sürümünün kendi telefonundaki önceki sorunlarının düzeldiğini bildirdi; başka cihazların onayı yok.
+
+## 10 Ekim 2026 — Kullanıcı 111 sürümünün telefon testini onayladı
+
+Kullanıcı tüm bildirdiği sorunların ve açılış animasyonunun kendi telefonunda düzeldiğini bildirdi. Başka telefonlarda test yapacağını belirtti; çoklu cihaz onayı henüz yok. Yeni istek: Firebase test hesabı/e-posta zorunluluğu olmadan uygulama açılışında yeni test sürümü için güncelleme teklifi. Mevcut NurUpdatesPlugin FirebaseAppDistribution tester oturumuna bağlı. E-postasız dağıtım için ayrı sürüm metadatası ve imzası doğrulanan APK indirme/Android kurulum onayı akışı gerekir. Dağıtımın herkese açık mı yoksa tek seferlik test koduyla sınırlı mı olacağı netleştirilmeli. Henüz güncelleme sistemi değiştirilmedi.
+
+## 10 Ekim 2026 — 0.3.5-test (111) telefon testine yayımlandı
+
+Commit cf7782b841ba7af1640b321409553b9ca2ddea91, run 38041890605 başarılı. Firebase nur-test dağıtımı tamamlandı: https://appdistribution.firebase.google.com/testerapps/1:557016260273:android:1f0a581591c6656db08c90/releases/1olrogkq8obn0 . Artifact 11665967465.
+
+Yerel dosya outputs/NUR-0.3.5-test-111/app-debug.apk. APK SHA256 c0a37de2c1b4cf5f10e3e64838f768020cec2f15fba1bc1dc657c7cda20b5a4a. APK paketi tr.com.nur.namaz, sürüm 111/0.3.5-test; aynı signer 66970897005ea93450d83df45f59569b946422a88089050cca564aaa6db909ef apksigner ile doğrulandı. Güncel revizyon, yeni Ayarlar başlık düzeni, görünür geliştirme etiketinin kaldırılması, haber kaydırma ve medya dosyaları APK içinde kontrol edildi. Eksik medya yok.
+
+Bu derleme cihaz doğrulaması değildir. Kullanıcının açılış/başlık/boşluk ve haber kaydırma telefon testi sonucu bekleniyor. Aşağıdaki yerel APK bekliyor kayıtları bu dağıtımdan önceki aşamalardır.
+
 ## 10 Ekim 2026 — 0.3.5-test telefon testi adayı
 
 Açılış geçişi, başlık çubuğu/Besmele boşluğu, Ayarlar başlıkları ve Dini Gündem ikon/font/kaydırma düzenlemeleri bu adayda. Kullanıcının cihaz onayı yok; önceki yerel test sonuçları sorunun telefonda çözüldüğü anlamına gelmez. İmza ve uygulama kimliği korunarak CI dağıtımı hazırlanıyor.

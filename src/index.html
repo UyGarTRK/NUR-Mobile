@@ -1560,7 +1560,7 @@
 
 #religious-agenda-page{min-height:100vh;min-height:100dvh}.agenda-intro,.agenda-card,.agenda-reader{background:var(--surface,#fffdf7);border:1px solid #dfd6be;border-radius:22px;padding:clamp(16px,4vw,24px);color:#344a49}.agenda-intro{margin-bottom:18px}.agenda-intro p{line-height:1.65;margin:8px 0}.agenda-edition,.agenda-meta{font-size:.82rem;color:#686b62;line-height:1.6}.agenda-search{display:grid;gap:8px;font-weight:600;margin:18px 0 12px}.agenda-search input{width:100%;min-width:0;box-sizing:border-box;border:1px solid #d6c99e;background:#fffdf7;color:#253e3b;border-radius:16px;padding:14px;font:inherit}.agenda-filters{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}.agenda-filters button,.agenda-back{border:1px solid #d9cba8;border-radius:22px;background:#fffaf0;color:#514c3c;padding:10px 16px;min-height:44px;font:inherit;cursor:pointer}.agenda-filters button[aria-pressed="true"]{background:#123b45;color:#fff7dc;border-color:#123b45}.agenda-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,290px),1fr));gap:16px}.agenda-card{display:flex;flex-direction:column;gap:12px;min-width:0}.agenda-card h3{font-family:"Playfair Display",serif;font-size:1.35rem;line-height:1.35;margin:0;overflow-wrap:normal;word-break:normal}.agenda-card p{line-height:1.65;margin:0}.agenda-category{color:#81632a;font-size:.8rem;letter-spacing:.06em;font-weight:700}.agenda-read{margin-top:auto;align-self:flex-start;min-height:44px;border:0;border-radius:12px;background:#f2e6c9;color:#4b431e;padding:10px 16px;font:inherit;font-weight:700;cursor:pointer}.agenda-reader{margin-top:16px}.agenda-reader h3{font-family:"Playfair Display",serif;font-size:clamp(1.5rem,6vw,2rem);line-height:1.3;margin:14px 0}.agenda-reader p{line-height:1.85;margin:18px 0}.agenda-source{display:inline-block;color:#23594d;text-decoration:underline;text-underline-offset:4px;min-height:44px;padding:10px 0;overflow-wrap:anywhere}.agenda-count{margin:12px 0;color:#69756c;font-size:.88rem}.agenda-note{font-size:.85rem;color:#6e7268}#religious-agenda-page :focus-visible{outline:3px solid #ab8436;outline-offset:4px}#religious-agenda-page [hidden]{display:none!important}
 </style>
-<meta name="nur-web-revision" content="2026.10.10-telefon-testi-2">
+<meta name="nur-web-revision" content="2026.10.10-hesapsiz-guncelleme">
 <style id="nur-settings-heading-consistency">
 #settings-page h3,#settings-page .settings-category-copy>strong{font-family:"Playfair Display",serif;word-break:normal;overflow-wrap:normal;hyphens:none}
 #settings-page .settings-return-home{display:inline-flex;align-items:center;gap:.5rem;min-height:44px;margin:0 0 .8rem;padding:.5rem .75rem;border:1px solid #e3d6bf;border-radius:.75rem;background:#fffdf8;color:#173754;font:inherit;font-size:.8rem}
@@ -1926,7 +1926,7 @@
       <section class="section-card">
        <h3>NUR'u güncel tut</h3>
        <p id="nur-update-version" class="adhan-status">Sürüm bilgisi Android uygulamasında görünür.</p>
-       <p>Yeni test sürümlerini buradan kontrol edebilirsiniz. İlk kullanımda davet edildiğiniz Google hesabıyla giriş yapmanız istenir. Güncelleme, Android onayınızla kurulur.</p>
+       <p>Yeni sürümler uygulama açıldığında kontrol edilir. Hesap veya test kodu gerekmez. Güncellemeyi seçtiğinizde APK indirilir ve Android onayınızla kurulur. Mevcut ayarlarınız korunur.</p>
        <button type="button" id="nur-check-updates" class="adhan-test-btn">Güncellemeleri kontrol et</button>
        <p id="nur-update-status" class="adhan-status" role="status" aria-live="polite">Güncelleme bağlantısı kontrol ediliyor…</p>
       </section>
@@ -5626,7 +5626,7 @@ grant execute on function public.nur_save_progress(integer,jsonb) to authenticat
   if(!updates||busy)return;
   busy=true;const button=document.getElementById('nur-check-updates');button.disabled=true;
   try{if(interactive)message('Güncellemeler kontrol ediliyor…');const result=await updates.check({interactive});
-   const messages={not_configured:'Güncelleme bağlantısı henüz etkinleştirilmedi.',sign_in_required:'İlk bağlantı için Güncellemeleri kontrol et düğmesine dokunun.',checked:'Kontrol tamamlandı. Yeni sürüm varsa açılan güncelleme ekranından devam edebilirsiniz.'};
+   const messages={not_configured:'Güncelleme bağlantısı henüz etkinleştirilmedi.',current:'Güncel NUR sürümünü kullanıyorsunuz.',available:'Yeni sürüm hazır. Güncelleme ekranından devam edebilirsiniz.',busy:'Güncelleme işlemi zaten açık.'};
    if(messages[result.state])message(messages[result.state]);
   }catch(error){message(error.message||'Güncelleme kontrol edilemedi. Daha sonra tekrar deneyin.');}
   finally{busy=false;button.disabled=false;}
