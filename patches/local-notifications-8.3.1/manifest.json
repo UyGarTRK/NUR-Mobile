@@ -2,7 +2,7 @@
   {
     "file": "LocalNotificationManager.kt",
     "original": "0e16b1554ccbf7182f60b33b9a12cce7151d28aac1976d58ac3f2d74ef0f1203",
-    "patched": "ee62eb471376370e3acd193a420e173057e7ff9a1bdde3d0b338a52358daa2e3"
+    "patched": "463fb442b05265e62382dd98f83f0456c9d329c50f2037b73677328c3b32eefb"
   },
   {
     "file": "TimedNotificationPublisher.kt",

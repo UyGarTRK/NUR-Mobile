@@ -64,6 +64,7 @@ jobs:
           node tests/handoff/test-prayer-alarm-policy.cjs
           node tests/handoff/test-notification-permissions.cjs
           node tests/handoff/test-notification-planning.cjs
+          node tests/handoff/test-notification-migration.cjs
           node tests/handoff/test-prayer-card.cjs
           node tests/handoff/test-agenda-home-swipe.cjs
 

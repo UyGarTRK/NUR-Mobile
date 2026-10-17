@@ -140,10 +140,28 @@ class LocalNotificationManager(
             // If the deadline passed during bridge/channel work, keep an existing due alarm intact.
             if ((localNotification.extra as? JSONObject)?.optBoolean("nurPrayer", false) == true &&
                 (localNotification.schedule?.at?.time ?: 0L) <= System.currentTimeMillis()) continue
-            dismissVisibleNotification(id)
-            cancelTimerForNotification(id)
-            buildNotification(notificationManager, localNotification, call)
-            ids.put(id)
+            val previous = storage.getSavedNotification(id.toString())
+            try {
+                dismissVisibleNotification(id)
+                cancelTimerForNotification(id)
+                buildNotification(notificationManager, localNotification, call)
+                // Persist each successful alarm: a later failure must not leave untracked alarms.
+                storage.appendNotifications(listOf(localNotification))
+                ids.put(id)
+            } catch (error: RuntimeException) {
+                Logger.error("NUR alarm registration failed", error)
+                // Best effort restore of the replaced slot, without hiding a second Android rejection.
+                if (previous != null && !previous.cancelled &&
+                    (previous.schedule?.at?.time ?: 0L) > System.currentTimeMillis()) {
+                    try {
+                        buildNotification(notificationManager, previous, null)
+                    } catch (restoreError: RuntimeException) {
+                        Logger.error("NUR previous alarm could not be restored", restoreError)
+                    }
+                }
+                call?.reject("Vakit alarmı kaydedilemedi. Bildirim izinlerini kontrol edin.", error)
+                return null
+            }
         }
         return ids
     }

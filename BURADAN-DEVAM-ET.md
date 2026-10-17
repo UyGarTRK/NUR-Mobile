@@ -1,3 +1,15 @@
+## Güncel durum — 17 Ekim 2026 kapanma incelemesi
+
+113 sürümünde ana ekran gelince kapanma bildirildi. Alarm kimlik geçişinin kayıt sayısını artırması düzeltildi; Android alarm hatası artık yakalanıyor. Ayrıntılar: docs/ACILIS-KAPANMA-INCELEMESI.md. Telefon kaydı alınmadığı için bildirilen kapanmanın kesin nedeni ve cihazda çözüm henüz doğrulanmadı. Yeni APK, mevcut uygulama kaldırılmadan kurulmalı; açılışın birkaç kez denenmesi ve vakit/ön hatırlatma teslimi kontrol edilmeli.
+
+## 17 Ekim 2026 — 0.3.7-test (113) yayımlandı
+
+GitHub Actions 39022329864 başarıyla tamamlandı. Commit: 432e38ed4d8309f572ff8303ac2c8fd9ee574dba. İndirilen APK paket adı tr.com.nur.namaz, sürümü 0.3.7-test (113), boyutu 28661838 bayt. SHA-256: c0dd27630ff6119923b61ae09ba89c2fe940d0cc4b6a375d804c74045ec5c2b5. İmza SHA-256: 66970897005ea93450d83df45f59569b946422a88089050cca564aaa6db909ef; önceki APK ile aynı. Gömülü sürüm geçmişi 113 ve 112; yeni not sayısı 7. Kaynak düzenlemeleri APK içinde doğrulandı. Fiziksel telefon testi ve kurulum kullanıcıda bekliyor; lastInstalledApkVersion değiştirilmedi.
+
+İndirme: https://github.com/UyGarTRK/NUR-Mobile/releases/download/nur-test-113/NUR-test.apk
+
+Sonraki paket hazırlanırken release-notes.json içindeki baseVersionCode 113 yapılmalı, yeni changes maddeleri hazırlanmalı. Yayımlanmış geçmiş CI tarafından 113 sürümündeki nur-release-history.json dosyasından korunarak alınacak.
+
 ## 17 Ekim 2026 — 0.3.7-test APK güncellemesi
 
 Kullanıcı APK güncellemesini istedi. Birikmiş değişiklikler release-notes.json içinde listelendi; aynı paket adı ve mevcut test imzasıyla GitHub Actions derlemesi/yayını hazırlanıyor. Telefon testleri henüz yapılmadı.

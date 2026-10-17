@@ -1,15 +1,23 @@
 {
-  "baseVersionCode": 112,
+  "baseVersionCode": 113,
   "changes": [
-    "Eğitim seçildiğinde ana listenin altında açılmasına neden olan görünüm kuralı düzeltildi.",
-    "Haftanın hutbesi sayfaya her girişte yenilenecek şekilde düzenlendi; Şimdi yenile düğmesi kaldırıldı.",
-    "Namaz bildirimlerinin Android alarm planlaması, gecikmiş bildirim kontrolü ve telefon izinlerinin gösterimi yenilendi.",
-    "Dini Gündem bölümünde sıradaki vakit kartının gizlenmesi kaldırıldı.",
-    "Kur’an sûre listesine adıyla arama eklendi; Mushaf ve iniş sırası korundu.",
-    "Ayarlar bölümüne sürüm bazında güncelleme notları eklendi.",
-    "114 sûrenin Hakkında bölümü; adın Türkçe anlamı, adlandırma kaynağı ve iniş bilgileriyle genişletildi; kaynak bağlantıları eklendi."
+    "Açılışta bildirim alarmları yenilenirken eski ve yeni kayıtların birikmesini önleyen geçiş düzenlemesi yapıldı.",
+    "Android alarm kaydını reddettiğinde uygulamanın kapanmasını önleyen hata kontrolü eklendi."
   ],
   "history": [
+    {
+      "versionCode": 113,
+      "versionName": "0.3.7-test",
+      "changes": [
+        "Eğitim seçildiğinde ana listenin altında açılmasına neden olan görünüm kuralı düzeltildi.",
+        "Haftanın hutbesi sayfaya her girişte yenilenecek şekilde düzenlendi; Şimdi yenile düğmesi kaldırıldı.",
+        "Namaz bildirimlerinin Android alarm planlaması, gecikmiş bildirim kontrolü ve telefon izinlerinin gösterimi yenilendi.",
+        "Dini Gündem bölümünde sıradaki vakit kartının gizlenmesi kaldırıldı.",
+        "Kur’an sûre listesine adıyla arama eklendi; Mushaf ve iniş sırası korundu.",
+        "Ayarlar bölümüne sürüm bazında güncelleme notları eklendi.",
+        "114 sûrenin Hakkında bölümü; adın Türkçe anlamı, adlandırma kaynağı ve iniş bilgileriyle genişletildi; kaynak bağlantıları eklendi."
+      ]
+    },
     {
       "versionCode": 112,
       "versionName": "0.3.6-test",

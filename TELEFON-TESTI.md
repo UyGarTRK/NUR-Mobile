@@ -1,3 +1,7 @@
+## Öncelikli test — açılış kapanması
+
+113 sürümünde ana ekran gelince kapanma bildirildi. Alarm kimlik geçişinin kayıt sayısını artırması düzeltildi; Android alarm hatası artık yakalanıyor. Ayrıntılar: docs/ACILIS-KAPANMA-INCELEMESI.md. Telefon kaydı alınmadığı için bildirilen kapanmanın kesin nedeni ve cihazda çözüm henüz doğrulanmadı. Yeni APK, mevcut uygulama kaldırılmadan kurulmalı; açılışın birkaç kez denenmesi ve vakit/ön hatırlatma teslimi kontrol edilmeli.
+
 ## 15 Ekim — Namaz alarmı kabul testi (henüz yapılmadı)
 
 - [ ] Yeni APK üzerine kurulur; bildirim ve dakik alarm durumları ayrı ayrı kontrol edilir.
