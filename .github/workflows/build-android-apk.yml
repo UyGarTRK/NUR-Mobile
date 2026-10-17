@@ -54,10 +54,16 @@ jobs:
       - name: Mobil web dosyalarını Android'e aktar
         run: npm run sync
 
+      - name: Sûre tanıtımlarını doğrula
+        run: node tests/handoff/test-surah-about.cjs
+
       - name: Güncelleme ekranı davranışlarını doğrula
         run: |
           node tests/handoff/test-updates.cjs
           node tests/handoff/test-update-policy.cjs
+          node tests/handoff/test-prayer-alarm-policy.cjs
+          node tests/handoff/test-notification-permissions.cjs
+          node tests/handoff/test-notification-planning.cjs
           node tests/handoff/test-prayer-card.cjs
           node tests/handoff/test-agenda-home-swipe.cjs
 
@@ -138,5 +144,5 @@ jobs:
           else
             gh release create "$NUR_RELEASE_TAG" --target "$GITHUB_SHA" --draft --title "$NUR_RELEASE_TITLE" --notes-file public-release/notes.txt
           fi
-          gh release upload "$NUR_RELEASE_TAG" public-release/NUR-test.apk public-release/nur-update.json --clobber
+          gh release upload "$NUR_RELEASE_TAG" public-release/NUR-test.apk public-release/nur-update.json public-release/nur-release-history.json --clobber
           gh release edit "$NUR_RELEASE_TAG" --draft=false --latest

@@ -1,11 +1,16 @@
 import { extractMedia } from "./extract-media.mjs";
 import { cp, mkdir, readFile, writeFile } from "node:fs/promises";
 import { resolve } from "node:path";
+import releaseHistory from "./release-history.cjs";
 
 const root=resolve(import.meta.dirname,"..");
 const source=resolve(root,"src/index.html");
 const destination=resolve(root,"www/index.html");
 let html=await readFile(source,"utf8");
+const history=await releaseHistory.createHistory();
+const historyTag=/<script type="application\/json" id="nur-release-history">[\s\S]*?<\/script>/;
+if(!historyTag.test(html))throw new Error('Sürüm notları alanı bulunamadı');
+html=html.replace(historyTag,()=>'<script type="application/json" id="nur-release-history">'+JSON.stringify(history).replace(/</g,'\\u003c')+'</script>');
 
 // ChatGPT önizleme ortamına ait kodlar mobil pakete taşınmaz.
 html=html

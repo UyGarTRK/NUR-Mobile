@@ -1,0 +1,17 @@
+[
+  {
+    "file": "LocalNotificationManager.kt",
+    "original": "0e16b1554ccbf7182f60b33b9a12cce7151d28aac1976d58ac3f2d74ef0f1203",
+    "patched": "ee62eb471376370e3acd193a420e173057e7ff9a1bdde3d0b338a52358daa2e3"
+  },
+  {
+    "file": "TimedNotificationPublisher.kt",
+    "original": "d800af6143fc92a57b19bcc36b12e91c6cdc78c4c9f9bfc5e9171e127aa32743",
+    "patched": "3c43cf6bd67fd5cffc50619e02a4898bdf4cf534addc1f7bba571b66a5c959e2"
+  },
+  {
+    "file": "LocalNotificationRestoreReceiver.kt",
+    "original": "946263c7d6e5ec1c4666782d7e161d7d66cc736ee4482f642d8ae3946fcdb7f5",
+    "patched": "9dea577d97d009ad4e03bbbf24ff98a0ef420368bbea3c6e3105278b1297d96a"
+  }
+]

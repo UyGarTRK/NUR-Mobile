@@ -11,6 +11,12 @@ if (!match || match[1] !== 'tr.com.nur.namaz') throw Error('Unexpected APK ident
 const versionCode = Number(match[2]), versionName = match[3];
 if (versionCode !== 100 + Number(process.env.GITHUB_RUN_NUMBER)) throw Error('Unexpected APK version');
 const tag = `nur-test-${versionCode}`;
+const {validateHistory}=require('./release-history.cjs');
+const embedded=fs.readFileSync('www/index.html','utf8').match(/<script type="application\/json" id="nur-release-history">([\s\S]*?)<\/script>/);
+if(!embedded)throw Error('APK sürüm notları eksik');
+const history={releases:validateHistory(JSON.parse(embedded[1]).releases)};
+const current=history.releases[0];
+if(current.versionCode!==versionCode||current.versionName!==versionName)throw Error('APK ile sürüm notları eşleşmiyor');
 const bytes = fs.readFileSync(apk);
 const metadata = {
   schemaVersion: 1, packageName: match[1], versionCode, versionName,
@@ -21,6 +27,7 @@ const metadata = {
 fs.mkdirSync('public-release', {recursive:true});
 fs.copyFileSync(apk, 'public-release/NUR-test.apk');
 fs.writeFileSync('public-release/nur-update.json', JSON.stringify(metadata, null, 2)+'\n');
-fs.writeFileSync('public-release/notes.txt', `NUR ${versionName} (${versionCode}) — telefon testi sürümü.\n\nGoogle hesabı veya test kodu gerekmez. Mevcut NUR uygulamasını kaldırmadan APK’yı kurun. Bu sürüm uygulama açılışında yeni sürüm kontrolü, Güncelle / Daha sonra seçimi ve Android onaylı kurulumu içerir. Mevcut tema ve sayfa düzeni korunmuştur.\n\nKaynak: ${process.env.GITHUB_SHA}\nAPK SHA-256: ${metadata.sha256}\n`);
+fs.writeFileSync('public-release/nur-release-history.json',JSON.stringify(history,null,2)+'\n');
+fs.writeFileSync('public-release/notes.txt', `NUR ${versionName} (${versionCode}) — telefon testi sürümü.\n\n${current.changes.map(text=>'- '+text).join('\n')}\n\nMevcut uygulamayı kaldırmadan Android onayıyla kurabilirsiniz.\n\nKaynak: ${process.env.GITHUB_SHA}\nAPK SHA-256: ${metadata.sha256}\n`);
 fs.appendFileSync(process.env.GITHUB_ENV, `NUR_RELEASE_TAG=${tag}\nNUR_RELEASE_TITLE=NUR ${versionName} (${versionCode})\n`);
 console.log(`Prepared ${tag}: ${metadata.sha256}`);

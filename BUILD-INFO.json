@@ -1,15 +1,17 @@
 {
-  "webRevision": "2026.10.10-hesapsiz-guncelleme",
-  "handoffDate": "2026-10-10",
-  "androidSourceVersionName": "0.3.6-test",
+  "webRevision": "2026.10.17-telefon-testi",
+  "handoffDate": "2026-10-17",
+  "androidSourceVersionName": "0.3.7-test",
   "androidSourceVersionCode": 5,
   "apkBuiltForThisHandoff": false,
   "lastInstalledApkVersion": "0.3.5-test (111)",
   "publisher": "UyGar Medya",
   "lastInstalledApkVerification": "Kullanıcı telefon testinin başarılı olduğunu bildirdi; cihazdan doğrudan okunmadı",
   "sourceChangesPendingApk": true,
-  "lastDistributedApkVersion": "0.3.5-test (111)",
-  "lastDistributionCommit": "cf7782b841ba7af1640b321409553b9ca2ddea91",
-  "lastDistributionRun": 38041890605,
-  "updateChannel": "public-github-releases"
+  "lastDistributedApkVersion": "0.3.6-test (112)",
+  "lastDistributionCommit": "7d0c9b7c90f46084b787f92495601f40e098496e",
+  "lastDistributionRun": 38065661605,
+  "updateChannel": "public-github-releases",
+  "lastDistributionUrl": "https://github.com/UyGarTRK/NUR-Mobile/releases/download/nur-test-112/NUR-test.apk",
+  "pendingNotificationAudit": "Android compile and source tests passed; phone/Doze/reboot tests pending"
 }

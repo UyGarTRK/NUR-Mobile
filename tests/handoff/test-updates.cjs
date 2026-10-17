@@ -3,9 +3,11 @@ const html = fs.readFileSync(path.resolve(__dirname, '../../src/index.html'), 'u
 const source = html.match(/<script id="nur-updates-controller">([\s\S]*?)<\/script>/)[1];
 async function setup({native=true, configured=true, check=async()=>({state:'current'})}={}) {
   const events={}, timers=[], calls=[];
-  const elements=Object.fromEntries(['nur-check-updates','nur-update-status','nur-update-version'].map(id=>[id,{disabled:false,textContent:'',addEventListener(type,fn){this[type]=fn;}}]));
+  const element=()=>({disabled:false,textContent:'',children:[],appendChild(child){this.children.push(child);},replaceChildren(){this.children=[];},addEventListener(type,fn){this[type]=fn;}});
+  const elements=Object.fromEntries(['nur-check-updates','nur-update-status','nur-update-version','nur-release-list','nur-release-history'].map(id=>[id,element()]));
+  elements['nur-release-history'].textContent=html.match(/<script type="application\/json" id="nur-release-history">([\s\S]*?)<\/script>/)[1];
   const plugin={status:async()=>({configured,versionName:'0.3.2-test',versionCode:5}),check:async arg=>{calls.push(arg);return check(arg);}};
-  const document={hidden:false,getElementById:id=>elements[id],addEventListener:(type,fn)=>events[type]=fn};
+  const document={hidden:false,getElementById:id=>elements[id],createElement:element,addEventListener:(type,fn)=>events[type]=fn};
   vm.runInNewContext(source,{window:{Capacitor:{isNativePlatform:()=>native,registerPlugin:()=>plugin}},document,setTimeout:fn=>timers.push(fn)});
   await events.DOMContentLoaded();
   return {events,timers,calls,elements,document};

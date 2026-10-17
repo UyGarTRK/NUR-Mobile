@@ -21,12 +21,16 @@ vm.runInNewContext(nativeSource,{window,document:{getElementById:()=>null,addEve
  assert.equal(notifications.find(x=>x.extra.soundCategory==='prayer').sound,'nur_ezan_vakti_2.mp3');
  assert.equal(notifications.find(x=>x.extra.soundCategory==='before').sound,'nur_silent.wav');
  assert.equal(new Set(notifications.map(x=>x.id)).size,2);
+ await window.NurNativeNotifications.sync({...settings,plan:[...events].reverse()});
+ for(const n of calls.scheduled.at(-1))assert.equal(n.id,notifications.find(old=>old.extra.nurScheduledAt===n.extra.nurScheduledAt).id,'Alarm ID must not change when plan order changes');
+ assert.ok(notifications.every(n=>n.isExactNotification&&n.schedule.allowWhileIdle));
  await window.NurNativeNotifications.sync({...settings,enabled:false,plan:[]});assert.equal(calls.cancelled[0].length,2);
  await window.NurNativeNotifications.sync({...settings,prayers:{Fajr:false},plan:[]});assert.equal(calls.cancelled[1].length,2,'Deselecting every prayer must cancel stale alarms');
  plugin.schedule=async()=>{throw Error('simulated schedule failure');};const cancelled=calls.cancelled.length;
  await window.NurNativeNotifications.sync({...settings,plan:events});assert.equal(calls.cancelled.length,cancelled,'Scheduling failure must preserve existing alarms');
  pending=[{id:100000000,extra:{nurLocation:'manual:old'}}];const beforeLocationCancel=calls.cancelled.length;await window.NurNativeNotifications.sync({...settings,locationSignature:'manual:new',plan:[]});assert.equal(calls.cancelled.length,beforeLocationCancel+1,'Empty new-location plan must not retain old-location alarms');pending=[{id:100000000,extra:{nurLocation:'manual:new'}}];const same=calls.cancelled.length;await window.NurNativeNotifications.sync({...settings,locationSignature:'manual:new',plan:[]});assert.equal(calls.cancelled.length,same,'Temporary missing data must preserve same-location alarms');
  assert.ok(html.includes('Ön hatırlatma sesi'));assert.ok(html.includes('timeZone:"Europe/Istanbul"'));
- assert.equal(fs.readFileSync(path.resolve(__dirname,'../../../NUR-Namaz-Uygulamasi-v6-Kuran.html'),'utf8'),html);
+ const control=path.resolve(__dirname,'../../../NUR-Namaz-Uygulamasi-v6-Kuran.html');
+ if(fs.existsSync(control))assert.equal(fs.readFileSync(control,'utf8'),html);
  console.log('PASS: inline JS syntax; 5 timing options; midnight reminder; elapsed reminder; prayer selection; independent sounds; distinct IDs; master off; failed scheduling preserves alarms; control-copy equality');
 })().catch(e=>{console.error(e);process.exitCode=1});

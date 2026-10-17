@@ -50,6 +50,7 @@ public class MainActivity extends BridgeActivity {
         registerPlugin(NurLocationAccessPlugin.class);
         registerPlugin(NurUpdatesPlugin.class);
         registerPlugin(NurPrayerCardPlugin.class);
+        registerPlugin(NurNotificationAccessPlugin.class);
         super.onCreate(state);
         if (getSupportActionBar() != null) getSupportActionBar().hide();
         // The launch theme is fullscreen, including activity recreation. Never

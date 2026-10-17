@@ -5,7 +5,7 @@
   "description": "NUR Namaz Uygulaması Android ve iOS mobil kabuğu",
   "scripts": {
     "prepare:web": "node scripts/prepare-web.mjs && tailwindcss -c tailwind.config.cjs -i styles/tailwind.input.css -o www/assets/tailwind.css --minify",
-    "sync": "npm run prepare:web && cap sync",
+    "sync": "node scripts/patch-prayer-alarms.cjs && npm run prepare:web && cap sync",
     "android:add": "npm run prepare:web && cap add android",
     "android:open": "npm run sync && cap open android",
     "android:build:debug": "npm run sync && cd android && ./gradlew assembleDebug",

@@ -1,3 +1,17 @@
+## 15 Ekim — Namaz alarmı kabul testi (henüz yapılmadı)
+
+- [ ] Yeni APK üzerine kurulur; bildirim ve dakik alarm durumları ayrı ayrı kontrol edilir.
+- [ ] Ön hatırlatma 5 dakika seçilir; ekran kapalıyken hem hatırlatma hem vakit bildiriminin gerçek saatleri kaydedilir.
+- [ ] Aynı kontrol 10/15/30 dakika ve yalnız vakit seçimiyle yapılır.
+- [ ] Uygulama son uygulamalardan kaydırılıp çıkarılır; zorla durdurma ile karıştırılmaz.
+- [ ] Telefon yeniden başlatılır ve kilidi açılır; uygulamayı açmadan gelecek alarm beklenir.
+- [ ] Geliştirici cihazında Doze, saat değişimi, alarm iznini kapat/aç ve APK güncellemesi denenir.
+- [ ] Telefon uzun süre kapalı/engelli kaldıktan sonra eski bildirimler topluca çalmaz; son atlanan bilgi görünür.
+- [ ] Kapalı kanal, bildirim izni reddi, DND, düşük bildirim sesi ayrı ayrı denenir.
+- [ ] Üreticinin pil/otomatik başlatma kısıtları ve farklı Android sürümleri test edilir.
+- [ ] Konum/vakit/ses değişikliği ve bildirim ana anahtarını kapatma eski planı doğru kaldırır.
+- [ ] Plan bitiş tarihi ve internet yokken kayıtlı gelecekteki alarmlar kontrol edilir.
+
 ## Hesapsız güncelleme — 0.3.6-test
 
 - [ ] 111 üzerine yeni APK’yı kaldırmadan kur; kaydedilen ayarlar/okuma yeri korunur.

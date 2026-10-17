@@ -1,3 +1,57 @@
+## 17 Ekim 2026 — 0.3.7-test APK güncellemesi
+
+Kullanıcı APK güncellemesini istedi. Birikmiş değişiklikler release-notes.json içinde listelendi; aynı paket adı ve mevcut test imzasıyla GitHub Actions derlemesi/yayını hazırlanıyor. Telefon testleri henüz yapılmadı.
+
+## 17 Ekim 2026 — 114 sûre için ayrıntılı tanıtım
+
+Kur’an > Sûre hakkında alanına adın Türkçe anlamı, adlandırmanın âyet/konu kaynağı ve iniş yeri-dönemi eklendi. 114 kısa özet, esas HTML içindeki nur-surah-about JSON bloğunda gömülü; ek ağ isteği gerektirmez. Her kayıtta doğrudan TDV kaynak bağlantısı vardır; Alak için ilk vahiy tarihi Muhammed maddesiyle, Felak anlamı Diyanet kaynağıyla desteklendi. Kaynak dökümü docs/SURE-TANITIM-KAYNAKLARI.md dosyasındadır.
+
+Alak’ın ilk beş âyeti ile kalan on dört âyetin zamanı ayrıldı. İhtilaflı sûreler tek kesin yere bağlanmadı; harf adlarına kesin çeviri atfedilmedi. Mevcut tanıtım kartı stilleri kullanıldı; meal, sıralama ve kaydırma akışı korundu. Yeni özellik release-notes.json içindeki gelecek paket notlarına eklendi.
+
+114 veri kaydı, metin yenileme, kaynak bağlantıları, boş kayıt davranışı ve sözdizimi testleri geçti. Tarayıcıda kontrollü sûre listesi verisiyle iki sıralamada 114 geçiş, geri dönüş, başlık hizası ve 320/390/530 piksel taşma kontrolleri geçti. Bu telefon testi değildir. APK oluşturulmadı/yayımlanmadı.
+
+## 17 Ekim 2026 — Güncelleme geçmişi
+
+Ayarlar > Uygulama Güncellemeleri bölümüne, sürüm numarası ve değişikliklerin maddeler halinde en yeniden eskiye gösterildiği çevrimdışı sürüm notları eklendi. Yüklü sürüm ayrıca işaretlenir. Kaynak ön izlemesinde yayımlanmamış notlar Hazırlanan güncelleme olarak görünür.
+
+Her yeni APK öncesinde release-notes.json içindeki baseVersionCode en son yayımlanmış sürüme ayarlanmalı ve changes yalnız yeni paketin gerçek değişiklikleriyle güncellenmelidir. prepare-web.mjs önceki yayımlanmış geçmişi alıp gerçek derleme numarasıyla APK içine gömer. prepare-public-release.cjs aynı notları GitHub sürüm açıklamasına ve nur-release-history.json dosyasına aktarır. İş akışı bu dosyayı APK ile yayımlar. Geçmiş alınamazsa veya yeni notlar hazırlanmamışsa yayın hazırlığı durur; eski notlar sessizce kaybedilmez. 112 başlangıç kaydıdır, daha eski sürümler için doğrulanmamış notlar uydurulmadı.
+
+Sözdizimi, geçmiş birleştirme, tekrar çalıştırma, eksik not engeli, çevrimdışı görünüm ve güncelleme denetimi testleri geçti. Tarayıcıda 320/390/530 piksel genişlik kontrol edildi. APK oluşturulmadı/yayımlanmadı; telefon testi bekliyor.
+
+## 15 Ekim 2026 — Sûre adıyla arama
+
+Kur’an sûre listesine mevcut konu araması tasarımıyla arama alanı eklendi. Yazdıkça sûre adları filtrelenir; büyük/küçük harf, Türkçe harf ve şapka farklılıkları normalleştirilir. Mushaf/iniş sırası korunur; arama temizlenince tüm liste döner. Sûreler arası kaydırma tam sıralamayı kullanmaya devam eder. Kaynak/kontrol kopyası eşitlendi; sözdizimi ve arama davranış kontrolleri geçti. APK oluşturulmadı, telefon testi bekliyor.
+
+## 15 Ekim 2026 — Dini Gündem vakit kartı
+
+Dini Gündem sayfasına girişte sıradaki vakit kartını gizleyen koşul kaldırıldı. Kartın tasarımı ve mevcut hareket/konum davranışı korundu. Kaynak ve kontrol kopyası eşitlendi; bu değişiklik için APK oluşturulmadı, telefon doğrulaması bekliyor.
+
+## 15 Ekim 2026 — Kapalı uygulama bildirim altyapısı (yerel, APK bekliyor)
+
+Kullanıcı kapalı/arka plandaki uygulamada bildirimlerin gelmeyip açınca topluca gelmesini bildirdi. Telefon bağlı değil; mevcut cihazdaki izinler ve loglar okunamadı. İnceleme kaynak ve kilitli @capacitor/local-notifications 8.3.1 kodu üzerinden yapıldı. Kaynak zaten AlarmManager kullanıyor: izin varsa setExactAndAllowWhileIdle, yoksa setAndAllowWhileIdle. Uyku modu kotası özellikle 5 dakika önce + vakit çiftini etkileyebilir. Eski alıcı teslim sırasında hedef zamanını kontrol etmiyordu. Bunlar doğrulanan altyapı zayıflıklarıdır; cihazdaki kesin tek neden saptandı denmedi.
+
+NUR namaz bildirimleri izin varsa setAlarmClock ile kurulur. Uygulama içi seçilen ses/kanal korunur; Android alarm göstergesi görünebilir. İzin yoksa mevcut gecikmeli yedek plan ve açık uyarı vardır. Bildirim kimlikleri sıra indeksinden tarih/vakit/tür kimliğine taşındı. Native alıcı iki dakikadan eski, iptal edilmiş veya değiştirilmiş bildirimleri çalmaz; tek kullanımlık kayıt tüketilir ve son teslim/atlanan kayıt bilgisi saklanır. Saat/saat dilimi, uygulama güncellemesi ve dakik alarm izninin verilmesinde gelecekteki plan yeniden kurulur. Boot işlemi mevcut eklenti alıcısı üzerinden gelecekteki kayıtlarla sürer.
+
+Ayarlar içinde mevcut sınıflarla bildirim/dakik alarm/pil optimizasyonu/arka plan kısıtı/Rahatsız Etmeyin durumları ve telefon ayarlarına geçiş eklendi. Seçili kapalı kanallar ayrıca bildirilir. OEM otomatik başlatma durumunu evrensel API ile okuyamıyoruz; Android backgroundRestricted=false sonucu OEM sınırlaması yok demek değildir. Yeni arka plan konumu, foreground servis, tam ekran izni veya otomatik pil muafiyeti eklenmedi.
+
+Paket: patches/local-notifications-8.3.1, orijinal MIT lisansı, kaynak özetleri ve açıklama korunur. npm run sync, patch-prayer-alarms.cjs ile tam sürümü ve hashleri doğrular; beklenmeyen eklenti değişikliğinde durur. Bu klasör/senaryo sonraki GitHub yüklemesinde mutlaka dahil edilmeli.
+
+Doğrulama: JS sözdizimi/planlama/sabit kimlik/izin durumları/teslim süresi testleri geçti; patch iki kere uygulanarak tekrar çalışabilirliği kontrol edildi. Gerçek Android SDK36 ile :app:compileDebugJavaWithJavac, eklentinin Kotlin/Java derlemesi dahil BAŞARILI (135 görev). Birleştirilmiş manifest izin/alıcı kontrolü yapıldı. Fiziksel telefon/Doze/reboot testi yapılmadı. APK oluşturulmadı, GitHub’a yüklenmedi. Hazır vakit planı en fazla 30 gün; süresi dolmadan uygulama+internetle yenilenmelidir. Zorla durdurma ve üretici pil kısıtları uygulama tarafından garantiyle aşılamaz.
+
+Yerel derleyici notu: JBR Windows temp socket yönlendirme sorunu -Djdk.net.unixdomain.tmpdir=C:/Users/MUSTAF~1/Documents/Codex/.nur-java-sockets ile çözüldü; PowerShell'de '-Pandroid.overridePathCheck=true' tırnaklı verildi. npm geçici çalışma alanında; bağımlılıklar npm ci --ignore-scripts ile kilit dosyasından kuruldu.
+
+## 10 Ekim 2026 — Hutbe sayfasına girişte otomatik yenileme (yerel)
+
+Haftanın Güncel Hutbesi kartındaki Şimdi yenile düğmesi, yalnız ona ait CSS ve olay bağlantısı kaldırıldı. Ortak showPage gezinmesinde sermon hedefi için syncSermons({force:true}) çağrılır. Her giriş mevcut zaman aralığı sınırını aşarak kontrol eder; sürmekte olan aynı istek çoğaltılmaz. Son kontrol satırı yükleme sırasında Kontrol ediliyor… gösterir. Çevrimdışıyken son kayıtlı hutbe ve mevcut hata mesajı korunur. Sayfanın tema/metin hiyerarşisi, arşiv/okuyucu ve Dini Gündem yenile düğmesi değiştirilmedi.
+
+Gerçek showPage/syncSermons koduyla VM kontrolü: iki ayrı girişte iki yenileme, force ile aralık sınırının aşılması, eşzamanlı isteğin tekilleştirilmesi ve çevrimdışı arşivin korunması geçti. JS/planlama ve kontrol kopyası eşitliği geçti. Cihazda doğrulanmadı; Eğitim düzeltmesiyle birlikte sonraki APK bekliyor. GitHub/APK başlatılmadı.
+
+## 10 Ekim 2026 — Eğitim iç sayfasının listenin altında açılması (yerel)
+
+Neden: education-library üzerindeki hidden özelliği, .education-shell display:grid kuralı nedeniyle görünürlüğü kapatmıyordu. Yalnız .education-shell[hidden] için display:none!important eklendi. Seçilen eğitimin ders listesi açılırken kütüphane artık yer kaplamaz; geri dönüşte mevcut liste geri gelir. Tema, metin, içerik ve gezinme işleyicileri değiştirilmedi. Esas HTML ve kontrol kopyası eşit.
+
+Tarayıcıda eski CSS ile sorun yeniden üretildi; düzeltmeyle 320/390/530px genişliklerde dört eğitimin liste/kurs görünürlüğü ve geri dönüşü geçti. Ders okuyucusu açılması DOM click ile kontrol edildi; bazı otomatik fiziksel tıklama denemeleri okuyucuyu açmadığından tam dokunma doğrulaması sayılmaz. Eğitim kartlarına tıklamalar ve geri düğmeleri gerçek tarayıcı tıklamasıyla kontrol edildi. Inline JS ve bildirim planlama regresyonu geçti. Telefon testi ve yeni APK bekliyor; GitHub'a yüklenmedi.
+
 ## 10 Ekim 2026 — Hesapsız test güncellemesi (0.3.6-test adayı)
 
 Kullanıcı APK bağlantısına erişen herkesin indirebilmesine açıkça onay verdi; e-posta ve test kodu kullanılmayacak. Firebase App Distribution oturumuna bağlı güncelleme kaldırıldı. GitHub Releases üzerinde APK ve sürüm bilgisi beraber yayımlanır; uygulama 8 saniye sonra ve ön plana döndüğünde yeni sürümü kontrol eder (başarılı otomatik kontroller en fazla saatte bir; elle kontrol serbest). Yeni sürüm için Güncelle / Daha sonra, indirme ilerlemesi ve iptal, SHA-256/boyut/paket/sürüm/imza kontrolü, Android kaynak izni ve kurulum onayı eklendi. İndirme HTTPS ve NUR deposunun sürüm dosyaları ile sınırlı. İnternet yokken uygulama kullanılmaya devam eder.
