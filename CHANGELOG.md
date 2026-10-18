@@ -1,3 +1,17 @@
+## 18 Ekim 2026 · İki yeni bölümde ortak tema
+
+Peygamberler Tarihi ve İlmihal mevcut Siyer/İslam Tarihi stil kurallarına bağlandı. İlmihal liste başlıkları ve açıklamaları ortak history-era-copy yapısını kullanıyor. Okuma metni ve mezhep listeleri aynı boyut ve renkte; iki bölümün düğme ve bağlantıları ortak düğme stili kullanıyor. Ana tema değerleri değiştirilmedi. 320/390/530 piksel tarayıcı testleri ve hesaplanan yazı stili karşılaştırmaları geçti. Fiziksel telefon testi ve APK derlemesi yapılmadı.
+
+## 18 Ekim 2026 · İlmihal (APK bekliyor)
+
+Ekstra menüsüne sekiz kategoride 26 kaynaklı konu içeren İlmihal eklendi. Arama, kategori süzme, ayrı okuma ve kaynak bağlantıları bulunur. Başlıca mezhep ayrımları adlarıyla belirtilir. Mevcut tasarım ve Peygamberler Tarihi özelliği korunmuştur. Yeni APK veya GitHub yayını yapılmadı.
+
+## 18 Ekim 2026 — Peygamberler Tarihi
+
+Ekstra menüsüne mevcut başlık/kart/font düzeniyle eklendi. 25 peygamberin hayat ve dönem özetleri, Kur’an anlatımı ve diğer rivayetler ayrı alanlarda; Diyanet âyet ve TDV madde bağlantıları içerir. Kesin olmayan tarihler ve Zülkifl’in kimliği/peygamberliği gibi ihtilaflar belirtilir. Liste kesin kronoloji iddiasında bulunmaz. İsim araması, boş sonuç, listeye dönüş, önceki/sonraki okuma ve Muhammed kaydından mevcut Siyer’e geçiş vardır. Esas veri src/index.html içindeki nur-prophets-data bloğudur. Ayrıntılı kaynak dökümü docs/PEYGAMBERLER-TARIHI-KAYNAKLARI.md.
+
+Kullanıcı 114 sürümünün telefonunda açıldığını doğruladı; bu geri bildirim yeni özelliğin cihaz testi değildir. Yeni APK/GitHub yayını yapılmadı. Bir sonraki sürüm notları baseVersionCode=114 üzerinden hazırlanmıştır.
+
 ## 0.3.8-test hazırlığı — açılış alarm geçişi
 
 113 sürümünde ana ekran gelince kapanma bildirildi. Alarm kimlik geçişinin kayıt sayısını artırması düzeltildi; Android alarm hatası artık yakalanıyor. Ayrıntılar: docs/ACILIS-KAPANMA-INCELEMESI.md. Telefon kaydı alınmadığı için bildirilen kapanmanın kesin nedeni ve cihazda çözüm henüz doğrulanmadı. Yeni APK, mevcut uygulama kaldırılmadan kurulmalı; açılışın birkaç kez denenmesi ve vakit/ön hatırlatma teslimi kontrol edilmeli.

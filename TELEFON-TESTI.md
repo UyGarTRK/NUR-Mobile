@@ -1,3 +1,21 @@
+## İlmihal · Bekleyen telefon kontrolleri
+
+- Ekstra → İlmihal; eski menü sırası ve ana sekmeler korunmalı.
+- Sekiz kategoriyi ve Türkçe aramayı kontrol et.
+- Konu seçilince liste gizlenmeli; geri dönünce arama ve kategori korunmalı.
+- Çevrimdışı okuma, kaynak bağlantıları ve sıradaki vakit kartını kontrol et.
+- Küçük/büyük ekran ve büyük yazı ayarında başlıkları kontrol et.
+- Bu değişiklik henüz APK olarak derlenmedi.
+
+## Peygamberler Tarihi — sonraki APK testi
+
+- Eski kişisel menü sırası korunmalı; Ekstra altında yeni başlık görünmeli.
+- 25 kayıt açılmalı; Yakup, İdris, Şuayb ve Zekeriya aramaları denenmeli.
+- Bir kayıt açılınca liste gizlenmeli; geri dönüşte arama ve kaydırma korunmalı.
+- Önceki/sonraki sınırları, Siyer geçişi ve diğer ana menülere dönüş denenmeli.
+- Uzun başlıklar dar ekranda kelime ortasından bölünmemeli.
+- İnternet kapalıyken özetler okunmalı; dış kaynakların internet gerektirdiği belirtilmeli.
+
 ## Öncelikli test — açılış kapanması
 
 113 sürümünde ana ekran gelince kapanma bildirildi. Alarm kimlik geçişinin kayıt sayısını artırması düzeltildi; Android alarm hatası artık yakalanıyor. Ayrıntılar: docs/ACILIS-KAPANMA-INCELEMESI.md. Telefon kaydı alınmadığı için bildirilen kapanmanın kesin nedeni ve cihazda çözüm henüz doğrulanmadı. Yeni APK, mevcut uygulama kaldırılmadan kurulmalı; açılışın birkaç kez denenmesi ve vakit/ön hatırlatma teslimi kontrol edilmeli.

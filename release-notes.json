@@ -1,10 +1,21 @@
 {
-  "baseVersionCode": 113,
+  "baseVersionCode": 114,
   "changes": [
-    "Açılışta bildirim alarmları yenilenirken eski ve yeni kayıtların birikmesini önleyen geçiş düzenlemesi yapıldı.",
-    "Android alarm kaydını reddettiğinde uygulamanın kapanmasını önleyen hata kontrolü eklendi."
+    "Ekstra menüsüne Peygamberler Tarihi eklendi: 25 peygamber için hayat ve dönem özeti, Kur’an kıssaları, ayrı rivayet açıklamaları ve kaynak bağlantıları.",
+    "Peygamberler Tarihi bölümüne isimle arama ve önceki/sonraki okuma geçişleri eklendi.",
+    "Ekstra menüsüne İlmihal eklendi: 8 başlıkta 26 kaynaklı konu, konu araması ve ayrı okuma sayfaları.",
+    "İlmihalde mezhebe özgü hükümler ve başlıca görüş farklılıkları kaynak bağlantılarıyla gösteriliyor; içerikler çevrimdışı okunabiliyor.",
+    "Peygamberler Tarihi ve İlmihal başlık, metin, düğme ve renkleri mevcut sayfaların ortak stil kurallarına bağlandı."
   ],
   "history": [
+    {
+      "versionCode": 114,
+      "versionName": "0.3.8-test",
+      "changes": [
+        "Açılışta bildirim alarmları yenilenirken eski ve yeni kayıtların birikmesini önleyen geçiş düzenlemesi yapıldı.",
+        "Android alarm kaydını reddettiğinde uygulamanın kapanmasını önleyen hata kontrolü eklendi."
+      ]
+    },
     {
       "versionCode": 113,
       "versionName": "0.3.7-test",
