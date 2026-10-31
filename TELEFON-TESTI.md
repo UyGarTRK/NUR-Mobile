@@ -1,3 +1,10 @@
+## Peygamberler Tarihi kıssaları · Telefon testi bekliyor
+
+- Mûsâ ve Yûsuf gibi uzun sayfalarda başlıkları aç/kapat; eski telefonlarda kaydırmayı kontrol et.
+- İdrîs, Elyesa‘ ve Zülkifl’de kaynak sınırı açıklamalarını kontrol et.
+- Uçak modunda kıssa metinlerini oku; internetle âyet düğmelerinin doğru sûreye geçtiğini dene.
+- Hadis/TDV kaynaklarını ve başlıkların büyük yazı ayarındaki görünümünü kontrol et.
+
 ## İlmihal · Bekleyen telefon kontrolleri
 
 - Ekstra → İlmihal; eski menü sırası ve ana sekmeler korunmalı.

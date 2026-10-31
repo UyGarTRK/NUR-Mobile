@@ -66,6 +66,7 @@ jobs:
           node tests/handoff/test-notification-planning.cjs
           node tests/handoff/test-notification-migration.cjs
           node tests/handoff/test-prophets.cjs
+          node tests/handoff/test-prophets-stories.cjs
           node tests/handoff/test-ilmihal.cjs
           node tests/handoff/test-prayer-card.cjs
           node tests/handoff/test-agenda-home-swipe.cjs

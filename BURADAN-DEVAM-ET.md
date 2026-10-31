@@ -1,3 +1,11 @@
+## 25 Ekim 2026 · Peygamberler Tarihi kapsamlı kıssa dosyası
+
+25 peygamber için 97 anlatı eklendi: 79 Kur’an konusu/kıssası, 10 hadis, 8 sonraki rivayet değerlendirmesi; yaklaşık 6400 kelimelik yeni anlatı. content/peygamberler-kissalari.json ile esas HTML içindeki nur-prophets-stories aynı tutulur. Okunabilir kitap docs/PEYGAMBERLER-TARIHI-KITABI.md. Her peygamberin mevcut okuyucusunda açılır başlıklar kullanılır; yalnız seçili peygamberin kıssaları oluşturulur. Metinler çevrimdışı; âyetler uygulama içi okuyucuda, hadis/TDV kaynakları dış bağlantıda açılır. Mevcut tema blokları korundu. Kur’an’ın bilgi vermediği ayrıntılar kesinleştirilmedi; bütün tarihî rivayetler toplandı iddiası yok. APK/GitHub yayını yapılmadı.
+
+## 25 Ekim 2026 · Peygamberler Tarihi uygulama içi âyet bağlantıları
+
+Kur’an özet anlatımındaki âyet düğmeleri artık NurAppBridge üzerinden mevcut Kur’an okuyucusuna yönlenir. Âyet aralıklarında ilk âyet açılır, seçili meal ve ilk kullanım meal seçimi korunur. Dış TDV kaynakları korunmuştur. Stil blokları değiştirilmedi. Yeni APK henüz hazırlanmadı.
+
 ## 18 Ekim 2026 · İki yeni bölümde ortak tema
 
 Peygamberler Tarihi ve İlmihal mevcut Siyer/İslam Tarihi stil kurallarına bağlandı. İlmihal liste başlıkları ve açıklamaları ortak history-era-copy yapısını kullanıyor. Okuma metni ve mezhep listeleri aynı boyut ve renkte; iki bölümün düğme ve bağlantıları ortak düğme stili kullanıyor. Ana tema değerleri değiştirilmedi. 320/390/530 piksel tarayıcı testleri ve hesaplanan yazı stili karşılaştırmaları geçti. Fiziksel telefon testi ve APK derlemesi yapılmadı.

@@ -1,8 +1,12 @@
+# 25 Ekim 2026 · Genişletilmiş derleme
+
+97 anlatı: 79 Kur’an, 10 hadis, 8 sonraki rivayet/kaynak notu. Yapılandırılmış dosya content/peygamberler-kissalari.json; esas HTML içindeki nur-prophets-stories ile aynı tutulur ve test eşitliği denetler. Okunabilir toplu dosya PEYGAMBERLER-TARIHI-KITABI.md. Kitap ve JSON özgün özetler içerir; kaynak eserlerin tam metni kopyalanmamıştır. Kur’an atıfları doğrudan sûre/âyet numarasıyla, hadisler eser/numara/bağlantıyla belirtilir. TDV rivayetlerin değerlendirilmesi için kullanılır. Bütün tarihî anlatıların eksiksiz toplandığı iddia edilmez.
+
 # Peygamberler Tarihi — kaynak ve yöntem
 
 Hazırlama: 18 Ekim 2026. Özgün kısa özetlerdir; doğrudan meal veya ansiklopedi alıntısı kullanılmamıştır. Kur’an anlatımı ile tefsir/tarih/hadis geleneği ayrı başlıklarda gösterilir. Yaklaşık dönemler takvimsel kesinlik taşımaz. 25 isim geleneksel kapsamdır; Zülkifl konusundaki görüş ayrılığı kendi kaydında ayrıca belirtilir. Üzeyr, Lokmân ve Zülkarneyn bu 25 isimlik listeye eklenmemiştir.
 
-Diyanet bağlantıları ilgili âyet grubunun ilk âyetini açar; kullanıcı kalan âyetleri aynı mushaf ekranından okuyabilir. Kaynak sayfalarının içeriklerini uygulamaya kopyalamak yerine özgün özet ve bağlantı sağlanmıştır.
+Âyet düğmeleri uygulama içindeki Kur’an okuyucusunda ilgili grubun ilk âyetini açar; kullanıcı kalan âyetlere kaydırarak devam edebilir. Kaynak sayfalarının içeriklerini uygulamaya kopyalamak yerine özgün özet ve bağlantı sağlanmıştır.
 
 ## Hz. Âdem
 
