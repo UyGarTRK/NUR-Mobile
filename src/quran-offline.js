@@ -1,0 +1,42 @@
+/* Explicit, complete-edition downloads. No automatic meal downloads. */
+(()=>{'use strict';
+const API='https://api.alquran.cloud/v1/',CHAPTERS='https://api.quran.com/api/v4/chapters?language=tr';
+let dbPromise,busy=false,controller,ui,dialog,selectedOffer;
+function db(){return dbPromise??=new Promise((resolve,reject)=>{const r=indexedDB.open('nur-quran-offline',1);r.onupgradeneeded=()=>r.result.createObjectStore('data');r.onsuccess=()=>resolve(r.result);r.onerror=()=>{dbPromise=null;reject(r.error);};});}
+async function get(key){const d=await db();return new Promise((resolve,reject)=>{const r=d.transaction('data').objectStore('data').get(key);r.onsuccess=()=>resolve(r.result);r.onerror=()=>reject(r.error);});}
+async function commit(entries){const d=await db();return new Promise((resolve,reject)=>{const t=d.transaction('data','readwrite');for(const [key,value] of entries)t.objectStore('data').put(value,key);t.oncomplete=resolve;t.onabort=()=>reject(t.error||Error('Kayıt başarısız'));t.onerror=()=>{};});}
+const response=data=>new Response(JSON.stringify(data),{headers:{'Content-Type':'application/json'}});
+async function resolve(url,network){
+ if(url.href!==CHAPTERS&&url.hostname!=='api.alquran.cloud')return null;
+ try{await db();}catch{return null;}
+ try{
+  if(url.href===CHAPTERS){const v=await get('chapters');return v?response(v):null;}
+  if(url.hostname!=='api.alquran.cloud')return null;
+  if(url.pathname==='/v1/surah'){const v=await get('surahs');return v?response(v):null;}
+  const m=url.pathname.match(/^\/v1\/(surah|ayah)\/(\d+)(?::(\d+))?\/editions\/(.+)$/);if(!m)return null;
+  const ids=decodeURIComponent(m[4]).split(','),stored=await Promise.all(ids.map(get));if(!stored.some(Boolean))return null;
+  const data=await Promise.all(ids.map(async(id,i)=>{if(stored[i]){const s=stored[i].data.surahs.find(s=>s.number===Number(m[2]));if(!s)throw Error('Sûre bulunamadı');if(m[1]==='surah')return {...s,edition:stored[i].data.edition};const ayah=s.ayahs.find(a=>a.numberInSurah===Number(m[3]));if(!ayah)throw Error('Âyet bulunamadı');return {...ayah,surah:{...s,ayahs:undefined},edition:stored[i].data.edition};}const r=await network(API+m[1]+'/'+m[2]+(m[3]?':'+m[3]:'')+'/'+encodeURIComponent(id));if(!r.ok)throw Error('Kaynak alınamadı');return (await r.json()).data;}));return response({code:200,status:'OK',data});
+ }catch(e){if(url.hostname==='api.alquran.cloud'&&url.pathname.includes('/editions/'))throw e;return null;}
+}
+function validate(payload,id){const d=payload?.data;if(d?.edition?.identifier!==id||d.surahs?.length!==114)throw Error('Eksik meal');let count=0;d.surahs.forEach((s,i)=>{if(s.number!==i+1||!s.ayahs?.length||(s.numberOfAyahs!==undefined&&s.ayahs.length!==s.numberOfAyahs))throw Error('Eksik sûre');s.ayahs.forEach((a,j)=>{if(a.numberInSurah!==j+1||typeof a.text!=='string'||!a.text.trim())throw Error('Eksik âyet');});s.numberOfAyahs=s.ayahs.length;count+=s.ayahs.length;});if(count!==6236)throw Error('Eksik âyetler');}
+async function fetchJson(url){const timer=setTimeout(()=>controller.abort(),120000);try{const r=await fetch(url,{signal:controller.signal,credentials:'omit'});if(!r.ok)throw Error('İndirme başarısız');return await r.json();}finally{clearTimeout(timer);}}
+function sources(){return [...document.querySelector('#quran-translation-select').options].map(o=>({id:o.value,name:o.text}));}
+function status(text){ui.querySelector('[role=status]').textContent=text;}
+async function refresh(){for(const b of ui.querySelectorAll('[data-download]')){let ready=false;try{ready=!!(await get(b.dataset.download));}catch{}b.textContent=ready?'İndirildi':'İndir';b.disabled=busy||ready;const remove=b.nextElementSibling;remove.hidden=!ready;remove.disabled=busy;}ui.querySelector('[data-all]').disabled=busy;ui.querySelector('[data-cancel]').hidden=!busy;}
+async function download(ids){if(busy)return;busy=true;controller=new AbortController();let completed=0;await refresh();try{
+ const shared=[];let arabic=await get('quran-simple');if(!arabic){status('Arapça metin indiriliyor…');arabic=await fetchJson(API+'quran/quran-simple');validate(arabic,'quran-simple');shared.push(['quran-simple',arabic]);}
+ if(!await get('surahs')){const data=arabic.data.surahs.map(({ayahs,...s})=>s);shared.push(['surahs',{code:200,data}]);}
+ if(!await get('chapters')){status('Sûre bilgileri indiriliyor…');const c=await fetchJson(CHAPTERS);if(c.chapters?.length!==114||c.chapters.some((x,i)=>x.id!==i+1||!Number.isInteger(x.revelation_order)))throw Error('Eksik sûre bilgisi');shared.push(['chapters',c]);}
+ for(const id of ids){if(await get(id)){completed++;continue;}status(`${sources().find(s=>s.id===id).name} indiriliyor… (${completed+1}/${ids.length})`);const data=await fetchJson(API+'quran/'+encodeURIComponent(id));validate(data,id);if(data.data.surahs.some((s,i)=>s.ayahs.length!==arabic.data.surahs[i].ayahs.length))throw Error('Âyet sayıları uyuşmuyor');if(controller.signal.aborted)throw Error('İptal');await commit([...shared,[id,data]]);shared.length=0;completed++;}
+ status('İndirme tamamlandı. İndirilen mealler ve Arapça metin çevrimdışı okunabilir.');
+ }catch(e){status(controller.signal.aborted?'İndirme durduruldu. Tamamlanan mealler korunuyor; kalanları yeniden indirebilirsiniz.':'İndirme tamamlanamadı. Bağlantınızı ve cihazın boş alanını kontrol edip yeniden deneyin. Tamamlanan mealler korunuyor.');}finally{busy=false;await refresh();}}
+function offer(id){selectedOffer=id;dialog.querySelector('p').textContent=`${sources().find(s=>s.id===id)?.name||'Seçtiğiniz meal'} ve Arapça metni internet olmadan okumak için indirebilirsiniz. İndirme internet ve cihazınızda depolama alanı kullanır. Diğer mealler kendiliğinden indirilmez. Daha sonra meal seçme bölümünden de indirebilirsiniz.`;dialog.showModal();}
+window.NurQuranOffline={resolve,offer};
+document.addEventListener('DOMContentLoaded',()=>{
+ const select=document.getElementById('quran-translation-select');if(!select)return;
+ ui=document.createElement('details');ui.className='quran-source-card';ui.id='quran-offline-downloads';ui.innerHTML='<summary>Çevrimdışı mealler</summary><p>İstediğiniz meali indirerek Arapça metinle birlikte internet olmadan okuyabilirsiniz. Tefsir ve dış kaynak bağlantıları internet gerektirir.</p><div data-list></div><button type="button" class="quran-primary-btn" data-all>Tüm mealleri indir</button> <button type="button" class="quran-secondary-btn" data-cancel hidden>İndirmeyi durdur</button><p role="status" aria-live="polite"></p>';
+ for(const s of sources()){const row=document.createElement('div');row.style.cssText='display:flex;align-items:center;gap:.5rem;flex-wrap:wrap;margin:.7rem 0';const name=document.createElement('span');name.textContent=s.name;name.style.flex='1 1 160px';const b=document.createElement('button');b.type='button';b.className='quran-secondary-btn';b.dataset.download=s.id;b.textContent='İndir';b.onclick=()=>download([s.id]);const remove=document.createElement('button');remove.type='button';remove.className='quran-secondary-btn';remove.textContent='Kaldır';remove.hidden=true;remove.onclick=async()=>{if(busy)return;try{const d=await db();await new Promise((res,rej)=>{const t=d.transaction('data','readwrite');t.objectStore('data').delete(s.id);t.oncomplete=res;t.onabort=()=>rej(t.error);});status('Bu mealin çevrimdışı kopyası kaldırıldı.');await refresh();}catch{status('Kopya kaldırılamadı. Yeniden deneyin.');}};row.append(name,b,remove);ui.querySelector('[data-list]').append(row);}
+ select.closest('.quran-source-card').after(ui);ui.querySelector('[data-all]').onclick=()=>download(sources().map(s=>s.id));ui.querySelector('[data-cancel]').onclick=()=>controller?.abort();ui.addEventListener('toggle',()=>{if(ui.open)refresh();});
+ dialog=document.createElement('dialog');dialog.id='quran-offline-offer';dialog.className='quran-source-card';dialog.style.cssText='max-width:28rem;width:90%;max-height:85vh;overflow:auto;margin:auto;padding:1.3rem;border:1px solid #dfcfad;border-radius:1.25rem;background:#fffdf8;color:#10253f';dialog.innerHTML='<h2>Çevrimdışı okumak ister misiniz?</h2><p></p><button type="button" class="quran-primary-btn" data-yes>Onayla ve indir</button> <button type="button" class="quran-secondary-btn" data-later>Daha sonra</button>';document.body.append(dialog);dialog.querySelector('[data-later]').onclick=()=>dialog.close();dialog.querySelector('[data-yes]').onclick=()=>{dialog.close();ui.open=true;download([selectedOffer]);};refresh();
+});
+})();

@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="tr"><head><script>window["__codeletBootstrap__"]=JSON.parse('{"A":"A","B":"20260911-05-06910f9","C":{"Abril Fatface":"YACgEZbkUVE,0","Alfa Slab One":"YACgEYS9sJU,0","Anton":"YACgEcYqQ-A,0","Archivo":"YAHO2-t-jNE,0","Arial":"YAGyDvJ_4Ts,0","Bebas Neue":"YACgESME5ew,0","Bricolage Grotesque":"YAFyMcdwzpc,0","Canva Sans":"YAFLd8sKbwc,2","Caveat":"YALBs2ploWQ,0","Comic Sans MS":"YAHO2VMiyZo,0","Cormorant Garamond":"YAFdJhX-538,0","Courier New":"YAGzXiGs0_8,0","DM Sans":"YAD1aU3sLnI,0","DM Serif Display":"YAD1aYG82rc,0","Forum":"YACgEcnnqB4,0","Fraunces":"YAEul-FRQw4,0","Georgia":"YAGzXkO0pEM,0","Helvetica Neue":"YAFcf6CtJfI,0","Impact":"YAFcfnjI7Vk,0","Inter":"YAFdJvSyp_k,3","Iowan Old Style":"YAGNIFa8j9o,0","Jacques Francois":"YAHO2a5g66Q,0","JetBrains Mono":"YAFdJksXcAk,0","Libre Baskerville":"YACgEUFdPdA,0","Manrope":"YAHO2b2feC4,0","Merriweather":"YACgEXvHxxs,0","Montserrat":"YADLjI9qxTA,0","Nunito":"YACgEX8C5Gg,0","Oleo Script":"YACgEQQ14jI,0","Phantom Sans":"YAHO2E8Pb88,0","Playfair Display":"YACgEYmuCJE,0","Poppins":"YAFdJjbTu24,1","Press Start 2P":"YAFyGr-8pmQ,0","Quicksand":"YADWjpfPmdk,0","Raleway":"YACgEVg3xZg,0","Segoe UI":"YAHNdRD1Klw,0","Source Sans 3":"YAG4lO1Mj10,0","Spectral":"YAHO2rVUHIM,0","Times New Roman":"YAGzXW3gftg,0","Times":"YAGzXW3gftg,0","Ubuntu":"YACgERDU--Q,0","Work Sans":"YAGXhLOKv44,0","Yellowtail":"YACgEYG4kG4,0","ui-monospace":"YADlN8CFZ8Q,0","ui-sans-serif":"YACkoN-xg4g,0"}}');</script><script src="/_sdk/c21197326e9a1154.telemetry_sdk.js" integrity="sha512-Aqwl+NmLtKBcMQM4HY+W9lmBHa+zP5MqSEuYfCjkzt4xeOSv2xNz81cCp7JyXBVrY+zojg5o94FHY/R31v2d3Q=="></script>
   <meta charset="UTF-8">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: blob:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.tailwindcss.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' data: https://fonts.gstatic.com; img-src 'self' data: blob: https:; connect-src https://api.aladhan.com https://api.alquran.cloud https://api.bigdatacloud.net https://api.open-meteo.com https://api.quran.com https://api.rss2json.com https://api.turkiyeapi.dev https://geocoding-api.open-meteo.com https://kuran.diyanet.gov.tr https://nominatim.openstreetmap.org https://r.jina.ai https://www.diyanethaber.com.tr; object-src 'none'; frame-src 'none'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'; upgrade-insecure-requests">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: blob:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.tailwindcss.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' data: https://fonts.gstatic.com; img-src 'self' data: blob: https:; connect-src 'self' https://api.aladhan.com https://api.alquran.cloud https://api.bigdatacloud.net https://api.open-meteo.com https://api.quran.com https://api.rss2json.com https://api.turkiyeapi.dev https://geocoding-api.open-meteo.com https://kuran.diyanet.gov.tr https://nominatim.openstreetmap.org https://r.jina.ai https://www.diyanethaber.com.tr; object-src 'none'; frame-src 'none'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'; upgrade-insecure-requests">
   <meta name="referrer" content="no-referrer">
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
   <meta http-equiv="Pragma" content="no-cache">
@@ -1601,6 +1601,9 @@
 #ilmihal-page :focus-visible{outline:2px solid #9a6815;outline-offset:3px}
 </style>
 <style id="nur-prophets-stories-style">#prophets-page .prophets-story summary{cursor:pointer}#prophets-page .prophets-story summary h3{display:inline}#prophets-page .prophets-story .prophets-actions{margin-bottom:0}#prophets-page .prophets-story .siyer-reader-sources{overflow-wrap:anywhere}</style>
+<link rel="stylesheet" href="mushaf/mushaf.css">
+<script type="module" src="mushaf/mushaf.js"></script>
+<script src="quran-offline.js"></script>
 </head>
  <body data-template-id="__page-root" style="background: rgb(236, 233, 225);">
   <div class="app-shell">
@@ -1752,6 +1755,7 @@
      </section>
 
      <section id="quran-intro-view" class="quran-shell" hidden>
+      <nav class="quran-reading-modes" aria-label="Kur’an okuma biçimi"><button id="quran-start-reading" type="button"><span>Ayet Ayet Mealle Oku</span><small>Arapça ve seçili meal</small></button><button id="quran-start-mushaf" type="button"><span>Kur’an Oku</span><small>Diyanet mushafı · Sayfa sayfa</small></button></nav>
       <button id="quran-intro-back" type="button" class="quran-inline-back"><i data-lucide="arrow-left"></i> Sûrelere dön</button>
       <article class="quran-intro-card">
        <span id="quran-intro-number" class="quran-intro-badge"></span>
@@ -1761,7 +1765,7 @@
        <div class="quran-intro-copy"><h4>Sûre hakkında</h4><p id="quran-intro-text"></p></div>
        <div id="quran-intro-details"></div>
        <p id="quran-intro-source" class="quran-intro-source"></p>
-       <button id="quran-start-reading" type="button" class="quran-primary-btn"><i data-lucide="book-open"></i> Okumaya başla</button>
+       
       </article>
       <p id="quran-intro-swipe-hint" class="quran-swipe-hint"></p>
       <nav class="quran-intro-navigation" aria-label="Sûreler arasında gezinme">
@@ -2446,6 +2450,7 @@
     async function secureFetch(input,options={}){
       const requestUrl=new URL(typeof input==="string"?input:input.url,window.location.href);
       if(requestUrl.protocol!=="https:"||!APP_ALLOWED_NETWORK_HOSTS.has(requestUrl.hostname))throw new Error("Güvenlik ilkesi bu ağ isteğini engelledi.");
+      if(!options.nurSkipOffline&&window.NurQuranOffline){const cached=await window.NurQuranOffline.resolve(requestUrl, url=>secureFetch(url,{nurSkipOffline:true}));if(cached)return cached;}
       const controller=new AbortController(),externalSignal=options.signal,timeout=setTimeout(()=>controller.abort(),15000);
       if(externalSignal){if(externalSignal.aborted)controller.abort();else externalSignal.addEventListener("abort",()=>controller.abort(),{once:true});}
       try{return await nativeFetch(requestUrl.href,{...options,signal:controller.signal,credentials:"omit",cache:"no-store",referrerPolicy:"no-referrer"});}
@@ -3056,6 +3061,24 @@
     function adhanPermissionText(permission=adhanPermission()){return permission==="granted"?"İzin verildi":permission==="denied"?"İzin engellendi":permission==="unsupported"?"Bu ön izlemede desteklenmiyor":"Henüz izin verilmedi";}
     function updateAdhanSettingsUI(){const card=document.getElementById("adhan-settings-card"),enabled=document.getElementById("adhan-notifications-enabled"),state=document.getElementById("adhan-permission-state"),permissionButton=document.getElementById("adhan-permission-button");if(!card||!enabled)return;enabled.checked=adhanNotificationSettings.enabled;card.classList.toggle("is-disabled",!adhanNotificationSettings.enabled);document.getElementById("adhan-notification-time").value=String(adhanNotificationSettings.leadMinutes);document.getElementById("adhan-notification-sound").checked=adhanNotificationSettings.sound;document.getElementById("adhan-notification-vibration").checked=adhanNotificationSettings.vibration;document.querySelectorAll("[data-adhan-prayer]").forEach(input=>input.checked=Boolean(adhanNotificationSettings.prayers[input.dataset.adhanPrayer]));}
     async function requestAdhanPermission(){const status=document.getElementById("adhan-notification-status");if(window.NurNativeNotifications?.isNative()){const granted=await window.NurNativeNotifications.requestPermission();updateAdhanSettingsUI();status.textContent=granted?"Bildirim izni verildi.":"Bildirim izni verilmedi. Telefon ayarlarından NUR bildirimlerini açabilirsiniz.";return granted;}status.textContent="HTML ön izlemede seçimler kaydedilir. Telefon bildirimi yeni APK içinde kullanılabilir.";return true;}
+    let onboardingNotificationTask=null;
+    function finishFirstNotificationSetup(){
+      if(!window.NurNativeNotifications?.isNative())return Promise.resolve();
+      if(localStorage.getItem('nurFirstNotificationSetupV1')!=='pending')return Promise.resolve();
+      if(onboardingNotificationTask)return onboardingNotificationTask;
+      onboardingNotificationTask=(async()=>{
+        // Show the home screen before Android's notification permission sheet.
+        await new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve)));
+        const granted=await requestAdhanPermission();
+        if(granted){
+          adhanNotificationSettings={...DEFAULT_ADHAN_SETTINGS,enabled:true,leadMinutes:5,prayers:{...DEFAULT_ADHAN_SETTINGS.prayers}};
+          saveAdhanNotificationSettings();updateAdhanSettingsUI();
+          document.getElementById('adhan-notification-status').textContent='Ezan vakti ve 5 dakika öncesi bildirimleri etkinleştirildi.';
+        }
+        localStorage.setItem('nurFirstNotificationSetupV1',granted?'granted':'declined');
+      })().catch(()=>{document.getElementById('adhan-notification-status').textContent='Bildirim kurulumu tamamlanamadı. Uygulama yeniden açıldığında tekrar denenecek.';}).finally(()=>{onboardingNotificationTask=null;});
+      return onboardingNotificationTask;
+    }
     function sendAdhanNotification(title,body){if(adhanPermission()!=="granted")return false;try{new Notification(title,{body,tag:`nur-adhan-${Date.now()}`,renotify:true,silent:!adhanNotificationSettings.sound});if(adhanNotificationSettings.vibration&&navigator.vibrate)navigator.vibrate([180,90,180]);return true;}catch(error){return false;}}
     function buildAdhanPlan(now=new Date()){
       const lead=[0,5,10,15,30].includes(Number(adhanNotificationSettings.leadMinutes))?Number(adhanNotificationSettings.leadMinutes):0,plan=[];
@@ -3139,6 +3162,34 @@
       const results=await Promise.allSettled([...months.values()].map(date=>loadPrayerMonth(location,date)));renderThreeDayPrayerPanel();updatePrayerDisplay();
       if(results.every(result=>result.status==="rejected"))throw new Error("Aylık vakitler alınamadı.");return results.flatMap(result=>result.status==="fulfilled"?result.value:[]);
     }
+    let automaticLocationRefresh=null,automaticLocationCheckedAt=0;
+    function refreshAutomaticLocationOnOpen(){
+      const saved=parseSavedLocation();
+      if(!window.NurNativeNotifications?.isNative()||saved?.type!=="auto")return refreshPrayerDataIfNeeded();
+      if(automaticLocationRefresh)return automaticLocationRefresh;
+      // Android resume and WebView visibility can announce the same opening twice.
+      if(Date.now()-automaticLocationCheckedAt<3000)return Promise.resolve();
+      automaticLocationCheckedAt=Date.now();
+      const signature=JSON.stringify(saved);
+      automaticLocationRefresh=(async()=>{
+        try{
+          const position=await window.NurDeviceLocation.getCurrentPosition({enableHighAccuracy:false,timeout:15000,maximumAge:0,requestPermission:false});
+          const current=parseSavedLocation();
+          if(current?.type!=="auto"||JSON.stringify(current)!==signature)return;
+          const {latitude,longitude}=position.coords;
+          if(!Number.isFinite(latitude)||!Number.isFinite(longitude)||Math.abs(latitude)>90||Math.abs(longitude)>180)throw Error('Geçersiz konum');
+          await fetchPrayerTimes(latitude,longitude);
+        }catch{
+          // Do not replace the saved location or claim a successful update on GPS/network failure.
+          if(parseSavedLocation()?.type==="auto"){
+            await refreshPrayerDataIfNeeded();
+            setHeaderLocationStatus('Güncel konum alınamadı; son kayıtlı konumun vakitleri gösteriliyor. Konum iznini, konum hizmetini ve interneti kontrol edin.');
+          }
+        }
+      })().finally(()=>{automaticLocationRefresh=null;});
+      return automaticLocationRefresh;
+    }
+    window.NurRefreshLocationOnOpen=refreshAutomaticLocationOnOpen;
     function refreshPrayerDataIfNeeded(force=false){
       const saved=parseSavedLocation();if(!saved||prayerRefreshPromise||(!force&&Date.now()-prayerLastRefresh<15*60000))return prayerRefreshPromise;
       prayerLastRefresh=Date.now();prayerRefreshPromise=refreshPrayerCalendar(saved).catch(()=>{setHeaderLocationStatus("Vakit bağlantısı kurulamadı. Yalnız tarih ve konumu eşleşen kayıtlar gösteriliyor.");}).finally(()=>{prayerRefreshPromise=null;});return prayerRefreshPromise;
@@ -3506,6 +3557,8 @@
     async function requestLocation(statusElement,onSuccess) {
       const button=document.getElementById("onboarding-use-location");if(button?.disabled)return;
       if(button)button.disabled=true;
+      const locationChoices=['location-auto-tab','location-manual-tab','onboarding-save-location'].map(id=>document.getElementById(id));
+      locationChoices.forEach(el=>{if(el)el.disabled=true;});
       statusElement.textContent="Telefonun konum izni bekleniyor…";
       try{
         const position=await window.NurDeviceLocation.getCurrentPosition({enableHighAccuracy:false,timeout:15000,maximumAge:300000});
@@ -3514,7 +3567,7 @@
         statusElement.textContent="Konum bulundu. Namaz vakitleri alınıyor…";
         await fetchPrayerTimes(position.coords.latitude,position.coords.longitude);onSuccess?.();
       }catch(error){if(error.code==='LOCATION_DISABLED'){statusElement.textContent=error.message;let settings=document.getElementById('nur-location-settings');if(!settings){settings=document.createElement('button');settings.id='nur-location-settings';settings.type='button';settings.className='adhan-test-btn';settings.textContent='Konum ayarlarını aç';settings.onclick=async()=>{window.nurResumeLocation=true;try{await window.NurDeviceLocation.openSettings();}catch{window.nurResumeLocation=false;statusElement.textContent='Telefon ayarlarından konumu açıp tekrar deneyin.';}};statusElement.after(settings);}return;}statusElement.textContent=error.code===1?"Konum izni verilmedi. Telefon ayarlarından izni açabilir veya manuel seçim yapabilirsiniz.":error.message||"Konum alınamadı. Konum servislerini ve internet bağlantısını kontrol edin.";}
-      finally{if(button)button.disabled=false;}
+      finally{if(button)button.disabled=false;locationChoices.forEach(el=>{if(el)el.disabled=false;});}
     }
     function extractApiItems(payload){ return Array.isArray(payload)?payload:(payload?.data||payload?.result||payload?.items||[]); }
     async function loadProvinces(...selects){
@@ -4010,7 +4063,7 @@
         sources.forEach(selectedSource=>{const edition=payload.data.find(item=>item.edition?.identifier===selectedSource);if(!edition?.ayahs)throw new Error();translations[selectedSource]=edition.ayahs;});
         if(!arabicEdition?.ayahs)throw new Error();quranAyahs={arabic:arabicEdition.ayahs,translations};quranLoadedSource=source;quranLoadedSources=[...sources];quranComparisonSources=sources.filter(selectedSource=>selectedSource!==source);quranAyahIndex=Math.min(quranAyahIndex,quranAyahs.arabic.length-1);renderQuranAyah();quranView("reader");reader.scrollTop=preserveScroll?previousScroll:0;
       }catch(error){if(quranLoadedSource){document.getElementById("quran-translation-select").value=quranLoadedSource;quranComparisonSources=quranLoadedSources.filter(selectedSource=>selectedSource!==quranLoadedSource);}document.getElementById("quran-intro-source").textContent="Ayetler şu anda alınamadı. Lütfen biraz sonra tekrar deneyin.";showQuranToast("Seçilen meâl kaynakları yüklenemedi.");}
-      finally{button.disabled=false;button.innerHTML='<i data-lucide="book-open"></i> Okumaya başla';lucide.createIcons();}
+      finally{button.disabled=false;button.innerHTML='<span>Ayet Ayet Mealle Oku</span><small>Arapça ve seçili meal</small>';lucide.createIcons();}
     }
     function renderQuranAyah(){
       if(!quranAyahs)return;const arabic=quranAyahs.arabic[quranAyahIndex],sources=quranLoadedSources.length?quranLoadedSources:activeQuranSources();
@@ -4383,8 +4436,8 @@ Hutbemizi, Sevgili Peygamberimiz (s.a.s)’in şu hadis-i şerifleriyle bitiriyo
       }
       setInterval(updatePrayerDisplay,1000);
       setInterval(()=>refreshPrayerDataIfNeeded(),15*60000);
-      window.addEventListener('online',()=>refreshPrayerDataIfNeeded(true));
-      document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible'){updatePrayerRows();refreshPrayerDataIfNeeded();}});
+      window.addEventListener('online',()=>{automaticLocationCheckedAt=0;if(window.NurNativeNotifications?.isNative())refreshAutomaticLocationOnOpen();else refreshPrayerDataIfNeeded(true);});
+      document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible'){updatePrayerRows();refreshAutomaticLocationOnOpen();}});
       const home=document.getElementById("home-page");
       const pages={quran:document.getElementById("quran-page"),qibla:document.getElementById("qibla-page"),dhikr:document.getElementById("dhikr-page"),sermon:document.getElementById("sermon-page"),settings:document.getElementById("settings-page"),hijri:document.getElementById("hijri-page"),"religious-days":document.getElementById("religious-days-page"),siyer:document.getElementById("siyer-page"),duas:document.getElementById("duas-page"),hadiths:document.getElementById("hadiths-page"),"islam-history":document.getElementById("islam-history-page"),mufassirs:document.getElementById("mufassirs-page"),education:document.getElementById("education-page"),tasbihat:document.getElementById("tasbihat-page"),esma:document.getElementById("esma-page"),"religious-agenda":document.getElementById("religious-agenda-page"),prophets:document.getElementById("prophets-page"),ilmihal:document.getElementById("ilmihal-page")};
       const esmaLibrary=document.querySelector('#esma-page .esma-shell'),esmaReader=document.getElementById('esma-reader'),esmaGrid=document.getElementById('esma-grid'),esmaSearch=document.getElementById('esma-search');
@@ -4622,7 +4675,7 @@ Hutbemizi, Sevgili Peygamberimiz (s.a.s)’in şu hadis-i şerifleriyle bitiriyo
         event.preventDefault();const source=mealSelect.value;if(!Object.hasOwn(quranSources,source))return;
         const select=document.getElementById('quran-translation-select'),previous=select.value;select.value=source;
         try{saveQuranPreferences();}catch{select.value=previous;document.getElementById('quran-first-meal-status').textContent='Seçiminiz kaydedilemedi. Lütfen tekrar deneyin.';return;}
-        quranMealConfirmed=true;mealDialog.close();quranMealResolve?.();quranMealResolve=null;quranMealPromise=null;
+        quranMealConfirmed=true;mealDialog.close();window.NurQuranOffline?.offer(source);quranMealResolve?.();quranMealResolve=null;quranMealPromise=null;
       });
       document.getElementById('quran-intro-previous').addEventListener('click',()=>moveQuranIntro(-1));
       document.getElementById('quran-intro-next').addEventListener('click',()=>moveQuranIntro(1));
@@ -4691,7 +4744,10 @@ Hutbemizi, Sevgili Peygamberimiz (s.a.s)’in şu hadis-i şerifleriyle bitiriyo
       const onboarding=document.getElementById("location-onboarding"), onboardingStatus=document.getElementById("onboarding-location-status");
       const onboardingProvince=document.getElementById("onboarding-province"), onboardingDistrict=document.getElementById("onboarding-district");
       const settingsProvince=document.getElementById("settings-province"), settingsDistrict=document.getElementById("settings-district"), settingsStatus=document.getElementById("settings-location-status");
-      const finishOnboarding=()=>{onboarding.hidden=true;document.body.style.overflow="";};
+      const finishOnboarding=()=>{
+        if(window.NurNativeNotifications?.isNative()&&!localStorage.getItem('nurFirstNotificationSetupV1')&&!localStorage.getItem(STORAGE_KEYS.adhanNotifications))localStorage.setItem('nurFirstNotificationSetupV1','pending');
+        onboarding.hidden=true;document.body.style.overflow="";finishFirstNotificationSetup();
+      };
       function switchLocationMode(mode){
         const automatic=mode==="auto";
         document.getElementById("location-auto-tab").classList.toggle("active",automatic);
@@ -4700,7 +4756,7 @@ Hutbemizi, Sevgili Peygamberimiz (s.a.s)’in şu hadis-i şerifleriyle bitiriyo
         document.getElementById("location-manual-panel").hidden=automatic;
         onboardingStatus.textContent="";
       }
-      document.getElementById("location-auto-tab").addEventListener("click",()=>switchLocationMode("auto"));
+      document.getElementById("location-auto-tab").addEventListener("click",()=>{switchLocationMode("auto");requestLocation(onboardingStatus,finishOnboarding);});
       document.getElementById("location-manual-tab").addEventListener("click",()=>switchLocationMode("manual"));
       document.getElementById("onboarding-use-location").addEventListener("click",()=>requestLocation(onboardingStatus,finishOnboarding));
       onboardingProvince.addEventListener("change",()=>loadDistricts(onboardingProvince.value,onboardingDistrict).catch(()=>{onboardingStatus.textContent="İlçe listesi alınamadı.";}));
@@ -4713,11 +4769,12 @@ Hutbemizi, Sevgili Peygamberimiz (s.a.s)’in şu hadis-i şerifleriyle bitiriyo
           settingsProvince.value=String(saved.provinceId||"");
           if(settingsProvince.value) await loadDistricts(settingsProvince.value,settingsDistrict,saved.districtId);
         }
-      }).catch(()=>{onboardingStatus.textContent="İl ve ilçe listesi alınamadı. İnternet bağlantınızı kontrol edin.";settingsStatus.textContent="İl ve ilçe listesi alınamadı.";});
+      }).catch(()=>{if(!document.getElementById("location-manual-panel").hidden)onboardingStatus.textContent="İl ve ilçe listesi alınamadı. İnternet bağlantınızı kontrol edin.";settingsStatus.textContent="İl ve ilçe listesi alınamadı.";});
       const initialLocation=parseSavedLocation();
+      if(initialLocation)finishFirstNotificationSetup();
       if(!initialLocation){onboarding.hidden=false;document.body.style.overflow="hidden";}
       else if(initialLocation.type==="manual") fetchPrayerTimesByDistrict(initialLocation.province,initialLocation.district,initialLocation.provinceId,initialLocation.districtId).catch(()=>{});
-      else if(initialLocation.type==="auto") fetchPrayerTimes(initialLocation.latitude,initialLocation.longitude).catch(()=>{});
+      else if(initialLocation.type==="auto"){if(window.NurNativeNotifications?.isNative())refreshAutomaticLocationOnOpen();else fetchPrayerTimes(initialLocation.latitude,initialLocation.longitude).catch(()=>{});}
       function alignExtraMenu(){
         const rect=nav.getBoundingClientRect();if(!rect.height)return;
         // Measure the rendered navigation, including safe-area and font/layout changes.
@@ -4734,6 +4791,7 @@ Hutbemizi, Sevgili Peygamberimiz (s.a.s)’in şu hadis-i şerifleriyle bitiriyo
         requestAnimationFrame(()=>{const element=target==="home"?document.getElementById("dynamic-prayer-hero"):pages[target];if(!element)return;const top=target==="home"?0:Math.max(0,window.scrollY+element.getBoundingClientRect().top);window.scrollTo({top,behavior});});
       }
       function showPage(page,key=page) {
+        window.NurMushaf?.close(false);
         const target=page==="home"||Object.prototype.hasOwnProperty.call(pages,page)?page:"home";
         const leavingHome=currentPage==="home"&&target!=="home",returningHome=currentPage!=="home"&&target==="home",leavingQibla=currentPage==="qibla"&&target!=="qibla";
         if(leavingQibla)stopQiblaCompass();
@@ -5606,7 +5664,7 @@ grant execute on function public.nur_save_progress(integer,jsonb) to authenticat
   const geo=plugin('Geolocation');if(!geo)throw new Error('Konum bağlantısı bu APK’da bulunmuyor.');
   const access=plugin('NurLocationAccess');
   let state=await access.checkPermissions();
-  if(state.location!=='granted'&&state.coarseLocation!=='granted')state=await access.requestPermissions({permissions:['location','coarseLocation']});
+  if(state.location!=='granted'&&state.coarseLocation!=='granted'&&options.requestPermission!==false)state=await access.requestPermissions({permissions:['location','coarseLocation']});
   if(state.location!=='granted'&&state.coarseLocation!=='granted')throw new Error('Konum izni verilmedi. Telefon ayarlarından NUR için konum iznini açabilir veya manuel seçim yapabilirsiniz.');
   const services=await access.servicesEnabled();if(!services.enabled){const error=new Error('Telefonun konum hizmeti kapalı. Konum ayarlarını açıp geri dönün.');error.code='LOCATION_DISABLED';throw error;}
   return geo.getCurrentPosition({enableHighAccuracy:!!options.enableHighAccuracy,timeout:options.timeout||15000,maximumAge:options.maximumAge||0});
@@ -5670,7 +5728,7 @@ grant execute on function public.nur_save_progress(integer,jsonb) to authenticat
   document.getElementById('adhan-exact-permission')?.addEventListener('click',()=>window.NurNativeNotifications.exactPermission());
   window.addEventListener('nur-notification-permission',()=>{try{updateAdhanSettingsUI();}catch{}});
   window.NurNativeNotifications.refreshPermission();
-  const app=plugin('App');app?.addListener('appStateChange',({isActive})=>{if(isActive){if(window.nurResumeLocation){window.nurResumeLocation=false;document.getElementById('onboarding-use-location')?.click();}window.NurNativeNotifications.refreshPermission();try{updatePrayerRows();refreshPrayerDataIfNeeded();syncAdhanNotificationBridge();}catch{}}});
+  const app=plugin('App');app?.addListener('appStateChange',({isActive})=>{if(isActive){if(window.nurResumeLocation){window.nurResumeLocation=false;document.getElementById('onboarding-use-location')?.click();}window.NurNativeNotifications.refreshPermission();try{updatePrayerRows();window.NurRefreshLocationOnOpen?.();syncAdhanNotificationBridge();}catch{}}});
  });
 })();
 

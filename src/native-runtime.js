@@ -10,6 +10,7 @@
   }
   const visible=element=>!!element&&!element.hidden&&element.getClientRects().length>0;
   function back(){
+    if(window.NurMushaf?.isOpen()){window.NurMushaf.close();return;}
     if(visible(document.getElementById('nur-assistant'))){window.NurAssistant?.close();return;}
     for(const selector of ['.quran-tool-modal:not([hidden])','.education-tool-modal:not([hidden])']){const modal=document.querySelector(selector);if(visible(modal)){modal.click();return;}}
     // Reuse each screen's own return action to preserve its scroll context.

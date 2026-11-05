@@ -1,10 +1,21 @@
 {
-  "baseVersionCode": 115,
+  "baseVersionCode": 116,
   "changes": [
-    "Peygamberler Tarihi âyet bağlantıları harici site yerine uygulamanın Kur’an okuyucusunda ilgili âyeti açıyor.",
-    "Peygamberler Tarihi genişletildi: 25 peygamber için 97 kaynaklı anlatı; Kur’an kıssaları, hadisler ve sonraki rivayetler ayrı başlıklarda sunuluyor."
+    "Sûre bilgisine Ayet Ayet Mealle Oku ve Kur’an Oku seçenekleri eklendi.",
+    "Diyanet mushafının orijinal sayfa düzeniyle çevrimdışı okuma, sayfa/cüz seçimi, büyütme ve kaldığın sayfaya dönüş eklendi.",
+    "Mealler için onaylı çevrimdışı indirme eklendi: tekli/toplu indirme, indirmeyi durdurma ve indirilen meali kaldırma. Arapça metin ve sûre bilgileri birlikte saklanıyor.",
+    "İlk kurulumda Otomatik konum tek dokunuşla izin ve konum alma akışını başlatıyor. Ana ekran açıldıktan sonra bildirim izni isteniyor; onayla ezan vakti ve 5 dakika öncesi bildirimleri etkinleşiyor.",
+    "Otomatik konum seçiliyken açılışta ve arka plandan dönüşte güncel konum alınarak vakitler ve bildirim planı yenileniyor. Manuel konum korunuyor."
   ],
   "history": [
+    {
+      "versionCode": 116,
+      "versionName": "0.3.10-test",
+      "changes": [
+        "Peygamberler Tarihi âyet bağlantıları harici site yerine uygulamanın Kur’an okuyucusunda ilgili âyeti açıyor.",
+        "Peygamberler Tarihi genişletildi: 25 peygamber için 97 kaynaklı anlatı; Kur’an kıssaları, hadisler ve sonraki rivayetler ayrı başlıklarda sunuluyor."
+      ]
+    },
     {
       "versionCode": 115,
       "versionName": "0.3.9-test",

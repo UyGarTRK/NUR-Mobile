@@ -4,8 +4,10 @@ import { resolve } from "node:path";
 import releaseHistory from "./release-history.cjs";
 
 const root=resolve(import.meta.dirname,"..");
+const site=process.argv.includes("--site");
+const output=resolve(root,site?"site":"www");
 const source=resolve(root,"src/index.html");
-const destination=resolve(root,"www/index.html");
+const destination=resolve(output,"index.html");
 let html=await readFile(source,"utf8");
 const history=await releaseHistory.createHistory();
 const historyTag=/<script type="application\/json" id="nur-release-history">[\s\S]*?<\/script>/;
@@ -26,7 +28,7 @@ html=html
   .replace(/<title>[\s\S]*?<\/title>/i,"<title>NUR</title>");
 
 const audioCatalog=html.match(/<script type="application\/json" id="nur-sound-catalog">([\s\S]*?)<\/script>/);
-if(audioCatalog){
+if(audioCatalog&&!site){
   const raw=resolve(root,"android/app/src/main/res/raw");
   await mkdir(raw,{recursive:true});
   for(const sound of JSON.parse(audioCatalog[1]).sounds){
@@ -35,10 +37,13 @@ if(audioCatalog){
   }
 }
 const requirements=html.match(/<script type="application\/json" id="nur-native-requirements">([\s\S]*?)<\/script>/);
-if(requirements){const silent=JSON.parse(requirements[1]).silentAudio;if(silent)await writeFile(resolve(root,"android/app/src/main/res/raw/nur_silent.wav"),Buffer.from(silent.base64,'base64'));}
+if(requirements&&!site){const silent=JSON.parse(requirements[1]).silentAudio;if(silent)await writeFile(resolve(root,"android/app/src/main/res/raw/nur_silent.wav"),Buffer.from(silent.base64,'base64'));}
 
-const assets=resolve(root,"www/assets");
+await cp(resolve(root,"src/quran-offline.js"),resolve(output,"quran-offline.js"));
+const assets=resolve(output,"assets");
 await mkdir(assets,{recursive:true});
+await cp(resolve(root,"src/mushaf"),resolve(output,"mushaf"),{recursive:true});
+if(!site){
 for(const [name,source] of [["capacitor.js","@capacitor/core/dist/capacitor.js"],["capacitor-app.js","@capacitor/app/dist/plugin.js"],["capacitor-synapse.js","@capacitor/synapse/dist/synapse.js"],["capacitor-geolocation.js","@capacitor/geolocation/dist/plugin.js"]]){
   await cp(resolve(root,"node_modules",source),resolve(assets,name));
 }
@@ -46,6 +51,7 @@ await writeFile(resolve(assets,"capacitor-synapse.js"),(await readFile(resolve(a
 await cp(resolve(root,"src/native-runtime.js"),resolve(assets,"native-runtime.js"));
 html=html.replace('<meta name="viewport" content="width=device-width, initial-scale=1.0">','<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">');
 html=html.replace('</head>','<script src="assets/capacitor.js"></script><script src="assets/capacitor-app.js"></script><script src="assets/capacitor-synapse.js"></script><script src="assets/capacitor-geolocation.js"></script><script src="assets/native-runtime.js"></script></head>');
+}
 const supabaseUrl=process.env.NUR_SUPABASE_URL||"",publishableKey=process.env.NUR_SUPABASE_PUBLIC_KEY||"";
 if(supabaseUrl||publishableKey){
   const url=new URL(supabaseUrl);
@@ -68,6 +74,16 @@ await writeFile(resolve(assets,"fonts.css"),[
   '@import "font-noto-naskh-arabic/400.css";','@import "font-noto-naskh-arabic/500.css";','@import "font-noto-naskh-arabic/600.css";','@import "font-noto-naskh-arabic/700.css";',
   '@import "font-playfair-display/600.css";','@import "font-playfair-display/700.css";'
 ].join("\n"),"utf8");
-html=await extractMedia(html,resolve(root,"www"));
+if(site){
+  const {prepareSite}=await import("./site-transform.mjs");
+  html=prepareSite(html);
+  // Embed the small map so static hosts cannot break it with an incorrect SVG MIME type.
+  const mapThumbnail=await readFile(resolve(root,"src/site-map/thumbnail.svg"));
+  const siteRuntime=(await readFile(resolve(root,"src/site-runtime.js"),"utf8")).replace('prayer-map/thumbnail.svg','data:image/svg+xml;base64,'+mapThumbnail.toString('base64'));
+  await writeFile(resolve(assets,"site-runtime.js"),siteRuntime);
+  await cp(resolve(root,"styles/site-layout.css"),resolve(assets,"site-layout.css"));
+  await cp(resolve(root,"src/site-map"),resolve(output,"prayer-map"),{recursive:true});
+}
+html=await extractMedia(html,output);
 await writeFile(destination,html,"utf8");
-console.log(`Mobil web paketi hazırlandı: ${destination}`);
+console.log(`${site?"NUR site":"Mobil web"} paketi hazırlandı: ${destination}`);
