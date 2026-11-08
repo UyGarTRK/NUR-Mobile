@@ -120,6 +120,16 @@ jobs:
             -o "$RUNNER_TEMP/nur-gradle.zip"
           echo "bd71102213493060956ec229d946beee57158dbd89d0e62b91bca0fa2c5f3531  $RUNNER_TEMP/nur-gradle.zip" | sha256sum --check --status
           unzip -q "$RUNNER_TEMP/nur-gradle.zip" -d "$RUNNER_TEMP/nur-gradle"
+          # Seed the unchanged Maven artifact using its official release asset and both published hashes.
+          curl --fail --location --retry 3 --connect-timeout 30 --max-time 180 \
+            -H 'Accept: application/octet-stream' \
+            'https://api.github.com/repos/JetBrains/kotlin/releases/assets/587823233' \
+            -o "$RUNNER_TEMP/nur-kotlin.jar"
+          echo "9fa8cdd1de0dccffe154c997d423ec6b5f53cd6d9177e3a77a9b0de03fb1bc81  $RUNNER_TEMP/nur-kotlin.jar" | sha256sum --check --status
+          echo "79346ed53db48b18312a472602eb5c057070c54d  $RUNNER_TEMP/nur-kotlin.jar" | sha1sum --check --status
+          kotlin_cache="$GRADLE_USER_HOME/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-compiler-embeddable/2.0.21/79346ed53db48b18312a472602eb5c057070c54d"
+          mkdir -p "$kotlin_cache"
+          cp "$RUNNER_TEMP/nur-kotlin.jar" "$kotlin_cache/kotlin-compiler-embeddable-2.0.21.jar"
           export NUR_VERSION_CODE=$((100 + GITHUB_RUN_NUMBER))
           "$RUNNER_TEMP/nur-gradle/gradle-8.14.3/bin/gradle" assembleDebug --no-daemon
 
