@@ -112,9 +112,16 @@ jobs:
       - name: Debug APK oluştur
         working-directory: android
         run: |
-          chmod +x gradlew
+          set -euo pipefail
+          # Same Gradle version as the wrapper; API avoids failing public download redirects.
+          curl --fail --location --retry 3 --connect-timeout 30 --max-time 180 \
+            -H 'Accept: application/octet-stream' \
+            'https://api.github.com/repos/gradle/gradle-distributions/releases/assets/269969095' \
+            -o "$RUNNER_TEMP/nur-gradle.zip"
+          echo "bd71102213493060956ec229d946beee57158dbd89d0e62b91bca0fa2c5f3531  $RUNNER_TEMP/nur-gradle.zip" | sha256sum --check --status
+          unzip -q "$RUNNER_TEMP/nur-gradle.zip" -d "$RUNNER_TEMP/nur-gradle"
           export NUR_VERSION_CODE=$((100 + GITHUB_RUN_NUMBER))
-          ./gradlew assembleDebug --no-daemon
+          "$RUNNER_TEMP/nur-gradle/gradle-8.14.3/bin/gradle" assembleDebug --no-daemon
 
       - name: Üretilen APK imzasını doğrula
         shell: bash
