@@ -17,7 +17,14 @@ async function createHistory(){
   if(!process.env.GITHUB_RUN_NUMBER)return {releases:history,pending:notes.changes};
   const versionCode=100+Number(process.env.GITHUB_RUN_NUMBER);
   const versionName=fs.readFileSync(path.join(root,'android/app/build.gradle'),'utf8').match(/versionName\s+"([^"]+)"/)?.[1];
-  async function json(url){const res=await fetch(url,{signal:AbortSignal.timeout(20000),cache:'no-store'});if(!res.ok)throw Error('Sürüm geçmişi alınamadı: '+res.status);return res.json();}
+  async function json(url){
+    for(let attempt=0;attempt<3;attempt++){
+      try{const res=await fetch(url,{signal:AbortSignal.timeout(20000),cache:'no-store'});
+        if(!res.ok){const error=Error('Sürüm geçmişi alınamadı: '+res.status);error.retryable=res.status===429||res.status>=500;throw error;}
+        return await res.json();
+      }catch(error){if(attempt===2||error.retryable===false||error instanceof SyntaxError)throw error;await new Promise(resolve=>setTimeout(resolve,1500*(attempt+1)));}
+    }
+  }
   const manifest=await json(latest+'nur-update.json');
   if(manifest.packageName!=='tr.com.nur.namaz'||!Number.isSafeInteger(manifest.versionCode))throw Error('Geçersiz yayımlanmış sürüm');
   // 112 predates the history asset; its verified notes are the initial seed.
