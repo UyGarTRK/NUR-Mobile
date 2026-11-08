@@ -11,7 +11,7 @@
 #nur-mushaf button:disabled{opacity:.4;cursor:default}
 .mushaf-toolbar{display:flex;align-items:center;gap:.35rem;flex-wrap:wrap;padding:.4rem .65rem;border-bottom:1px solid #e2d4b9}
 .mushaf-toolbar label{display:flex;align-items:center;gap:.3rem;font-size:.7rem}.mushaf-toolbar select{max-width:115px}
-.mushaf-viewport{flex:1;min-height:0;overflow:auto;overscroll-behavior:contain;touch-action:pan-x pan-y pinch-zoom;background:#fff4d5;position:relative}
+.mushaf-viewport{flex:1;min-height:0;overflow:auto;overscroll-behavior:contain;touch-action:none;background:#fff4d5;position:relative}
 .mushaf-sheet{margin:0 auto;width:100%;min-height:1px}.mushaf-sheet canvas{display:block;max-width:none;width:100%;height:auto}
 .mushaf-state{padding:.7rem;text-align:center;font-size:.76rem;margin:0;color:#75603b;background:#fbf7ed}
 .mushaf-state:empty{display:none}

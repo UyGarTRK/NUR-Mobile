@@ -10,3 +10,7 @@ PDF 616 yaprak içerir. Okuyucu PDF 2–606 arasını gösterir: numarasız Fât
 Sayfa/cüz seçimi, önceki/sonraki, kaydırma, büyütme ve cihazda son konumu saklama vardır. Ses ve hatim tamamlama takibi henüz yoktur. nurMushafPositionV1 yalnız açılmış son sayfayı saklar; okunmuş/tamamlanmış sayfa anlamına gelmez.
 
 tests/handoff/test-mushaf.cjs gerçek yerel PDF ile çevrimdışı sayfa açılışını, sınırları, büyütmeyi, son konuma dönüşü, mevcut meal ekranını ve 320/390/530 piksel genişlikleri kontrol eder. Tarayıcı testi fiziksel Android cihaz testi değildir. Güncel kaynak için APK oluşturulmadı veya yayımlanmadı. Sonraki telefon testinde eski Android WebView uyumluluğu, bellek kullanımı, geri tuşu ve ekran dönüşü ayrıca kontrol edilmeli.
+
+## 5 Kasım — Dokunmatik yakınlaştırma
+
+Sayfa alanı iki parmak mesafesine göre 1–2 kat büyür; başlangıç ölçüsünün altına inmez. Parmakların orta noktasındaki içerik korunur, tek parmak büyütülmüş sayfayı taşır. Çok parmaklı hareket sayfa geçişi üretmez. PDF hareket sırasında yeniden çizilmez; mevcut canvas boyutu güncellenir, hareket bitince keskin çizim yapılır. Başlık ve araç çubukları büyümez. Sığdır başlangıç ölçüsüne döner. tests/handoff/test-mushaf.cjs gerçek PDF ve CDP dokunmatik olaylarıyla odak, taşıma, alt sınır, görüntü ölçeği, yanlış sayfa geçişi ve önceki okuyucu kontrollerini doğrular. Tarayıcı testi geçti; fiziksel cihaz doğrulaması ve yeni APK bekliyor.

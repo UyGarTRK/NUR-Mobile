@@ -11,7 +11,24 @@ const {chromium}=require('playwright'),fs=require('fs'),path=require('path'),ass
  fs.mkdirSync('docs/mushaf-preview',{recursive:true});await page.screenshot({path:'docs/mushaf-preview/choices.png'});
  await page.locator('#quran-start-mushaf').click();
  const rendered=async n=>{await page.waitForFunction(n=>document.querySelector('#mushaf-sheet canvas')?.getAttribute('aria-label')===('Diyanet mushafı — '+(n===0?'Fâtiha':`Sayfa ${n} / 604`))&&!document.getElementById('mushaf-sheet').hidden,n,{timeout:60000});};
- await rendered(0);assert(await page.locator('#mushaf-previous').isDisabled());await page.screenshot({path:'docs/mushaf-preview/fatiha.png'});
+ await rendered(0);
+ const cdp=await page.context().newCDPSession(page),area=await page.locator('#mushaf-viewport').boundingBox();
+ const point=(id,x,y)=>({id,x,y,radiusX:6,radiusY:6,force:1});
+ const mid={x:area.x+170,y:area.y+210};
+ const send=(type,touchPoints)=>cdp.send('Input.dispatchTouchEvent',{type,touchPoints});
+ const geometry=()=>page.locator('#mushaf-viewport').evaluate(e=>({left:e.scrollLeft,top:e.scrollTop,width:e.clientWidth,sheet:document.getElementById('mushaf-sheet').getBoundingClientRect().width}));
+ const before=await geometry();
+ await send('touchStart',[point(0,mid.x-40,mid.y),point(1,mid.x+40,mid.y)]);
+ await send('touchMove',[point(0,mid.x-72,mid.y),point(1,mid.x+72,mid.y)]);
+ const enlarged=await geometry();assert(Math.abs(enlarged.sheet/enlarged.width-1.8)<.03);
+ assert(Math.abs((enlarged.left+170)/1.8-(before.left+170))<2);assert(Math.abs((enlarged.top+210)/1.8-(before.top+210))<2);
+ await send('touchEnd',[]);await page.waitForTimeout(500);const stable=await geometry();assert(Math.abs(stable.left-enlarged.left)<2);assert(Math.abs(stable.top-enlarged.top)<2);assert.equal(await page.evaluate(()=>visualViewport.scale),1);
+ await send('touchStart',[point(0,mid.x,mid.y)]);await send('touchMove',[point(0,mid.x-55,mid.y-45)]);await send('touchEnd',[]);const panned=await geometry();assert(panned.left>stable.left+45);assert(panned.top>stable.top+35);assert.equal(await page.locator('#mushaf-page').inputValue(),'0');
+ await page.screenshot({path:'docs/mushaf-preview/pinch-zoom.png'});
+ // Shrink well past the limit, then keep one finger moving: never turn a page.
+ await send('touchStart',[point(0,mid.x-70,mid.y),point(1,mid.x+70,mid.y)]);await send('touchMove',[point(0,mid.x-10,mid.y),point(1,mid.x+10,mid.y)]);await send('touchEnd',[point(0,mid.x-10,mid.y)]);await send('touchMove',[point(0,mid.x-95,mid.y)]);await send('touchEnd',[]);await page.waitForTimeout(500);
+ const fitted=await geometry();assert(Math.abs(fitted.sheet/fitted.width-1)<.01);assert.equal(fitted.left,0);assert.equal(await page.locator('#mushaf-page').inputValue(),'0');assert(await page.locator('#mushaf-minus').isDisabled());
+ assert(await page.locator('#mushaf-previous').isDisabled());await page.screenshot({path:'docs/mushaf-preview/fatiha.png'});
  await page.locator('#mushaf-next').click();await rendered(1);await page.screenshot({path:'docs/mushaf-preview/bakara.png'});
  await page.locator('#mushaf-page').selectOption('49');await rendered(49);await page.screenshot({path:'docs/mushaf-preview/ali-imran.png'});
  await page.locator('#mushaf-plus').click();await page.waitForFunction(()=>document.getElementById('mushaf-sheet').getBoundingClientRect().width>document.getElementById('mushaf-viewport').clientWidth&&!document.getElementById('mushaf-sheet').hidden);await page.locator('#mushaf-fit').click();await rendered(49);
@@ -22,5 +39,5 @@ const {chromium}=require('playwright'),fs=require('fs'),path=require('path'),ass
  await page.locator('#mushaf-back').click();await page.locator('#quran-start-reading').click();await page.locator('#quran-reader-view').waitFor({state:'visible'});await page.locator('#quran-reader-back').click();
  for(const width of [320,530]){await page.setViewportSize({width,height:800});await page.locator('#quran-start-mushaf').click();await rendered(0);assert(await page.locator('#nur-mushaf').evaluate(e=>e.scrollWidth<=e.clientWidth+1));await page.screenshot({path:'docs/mushaf-preview/reader-'+width+'.png'});await page.locator('#mushaf-back').click();}
  await page.evaluate(()=>{window.NurMushaf.open(1);window.NurMushaf.close();window.NurMushaf.open(3);});await rendered(49);await page.waitForTimeout(700);assert.equal(await page.locator('#mushaf-state').textContent(),'');assert(await page.locator('#mushaf-sheet canvas').isVisible());await page.locator('#mushaf-back').click();
- assert.deepEqual(errors,[]);console.log('PASS: real offline PDF pages, 0/1/49/581/604, zoom, resume, bounds, meal reader return, 320/390/530 layouts. Not an Android device test.');
+ assert.deepEqual(errors,[]);console.log('PASS: anchored pinch/pan/minimum zoom/no accidental page turn, real offline PDF pages, 0/1/49/581/604, zoom, resume, bounds, meal reader return, 320/390/530 layouts. Not an Android device test.');
  }finally{await browser.close();server.close();}})().catch(e=>{console.error(e);process.exitCode=1});

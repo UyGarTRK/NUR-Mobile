@@ -1,13 +1,22 @@
 {
-  "baseVersionCode": 116,
+  "baseVersionCode": 118,
   "changes": [
-    "Sûre bilgisine Ayet Ayet Mealle Oku ve Kur’an Oku seçenekleri eklendi.",
-    "Diyanet mushafının orijinal sayfa düzeniyle çevrimdışı okuma, sayfa/cüz seçimi, büyütme ve kaldığın sayfaya dönüş eklendi.",
-    "Mealler için onaylı çevrimdışı indirme eklendi: tekli/toplu indirme, indirmeyi durdurma ve indirilen meali kaldırma. Arapça metin ve sûre bilgileri birlikte saklanıyor.",
-    "İlk kurulumda Otomatik konum tek dokunuşla izin ve konum alma akışını başlatıyor. Ana ekran açıldıktan sonra bildirim izni isteniyor; onayla ezan vakti ve 5 dakika öncesi bildirimleri etkinleşiyor.",
-    "Otomatik konum seçiliyken açılışta ve arka plandan dönüşte güncel konum alınarak vakitler ve bildirim planı yenileniyor. Manuel konum korunuyor."
+    "Mushaf okuyucusuna dokunulan noktayı merkez alan iki parmakla yakınlaştırma ve tek parmakla taşıma eklendi. Küçültme başlangıç ölçüsünde duruyor.",
+    "Ortak hesap için e-posta/şifre girişi, profil kullanıcı adı ve uygulama/site arasında kişisel ilerleme eşitleme altyapısı eklendi.",
+    "Ayarlar > Profil yeni ortak hesap sistemine göre yenilendi: giriş/kayıt sekmeleri, kullanıcı adı, e-posta doğrulaması, bulut kayıtları ve şifre sıfırlama. Eski kodla giriş ve güvenlik sorusu alanları kaldırıldı."
   ],
   "history": [
+    {
+      "versionCode": 118,
+      "versionName": "0.3.11-test",
+      "changes": [
+        "Sûre bilgisine Ayet Ayet Mealle Oku ve Kur’an Oku seçenekleri eklendi.",
+        "Diyanet mushafının orijinal sayfa düzeniyle çevrimdışı okuma, sayfa/cüz seçimi, büyütme ve kaldığın sayfaya dönüş eklendi.",
+        "Mealler için onaylı çevrimdışı indirme eklendi: tekli/toplu indirme, indirmeyi durdurma ve indirilen meali kaldırma. Arapça metin ve sûre bilgileri birlikte saklanıyor.",
+        "İlk kurulumda Otomatik konum tek dokunuşla izin ve konum alma akışını başlatıyor. Ana ekran açıldıktan sonra bildirim izni isteniyor; onayla ezan vakti ve 5 dakika öncesi bildirimleri etkinleşiyor.",
+        "Otomatik konum seçiliyken açılışta ve arka plandan dönüşte güncel konum alınarak vakitler ve bildirim planı yenileniyor. Manuel konum korunuyor."
+      ]
+    },
     {
       "versionCode": 116,
       "versionName": "0.3.10-test",

@@ -19,7 +19,7 @@ async function load(){
 function controls(){byId('mushaf-page').value=String(page);byId('mushaf-juz').value=String(page===0?1:Math.min(30,Math.floor((page-1)/20)+1));byId('mushaf-previous').disabled=page===0;byId('mushaf-next').disabled=page===604;byId('mushaf-minus').disabled=zoom<=1;byId('mushaf-plus').disabled=zoom>=2;}
 function label(n){return n===0?'Fâtiha':`Sayfa ${n} / 604`;}
 async function show(n,{resetScroll=true}={}){
- if(!opened||!Number.isInteger(n)||n<0||n>604)return;page=n;const current=++token;renderTask?.cancel();renderTask=null;controls();byId('mushaf-retry').hidden=true;byId('mushaf-state').textContent='Mushaf sayfası hazırlanıyor…';byId('mushaf-position').textContent=label(page);byId('mushaf-sheet').hidden=true;
+ if(!opened||!Number.isInteger(n)||n<0||n>604)return;page=n;const current=++token;renderTask?.cancel();renderTask=null;controls();byId('mushaf-retry').hidden=true;const keepPage=!resetScroll&&renderedPage===n&&byId('mushaf-sheet').firstChild;byId('mushaf-state').textContent=keepPage?'':'Mushaf sayfası hazırlanıyor…';byId('mushaf-position').textContent=label(page);byId('mushaf-sheet').hidden=!keepPage;if(resetScroll)clearGesture();
  try{
   await load();if(current!==token||!opened)return;
   const pdfPage=await pdf.getPage(n+2);if(current!==token||!opened)return;
@@ -39,15 +39,57 @@ async function show(n,{resetScroll=true}={}){
 async function open(surah){if(opened)return;opened=true;const opening=++token;pendingSurah=surah;renderedPage=null;lastWidth=0;returnFocus=document.activeElement;previousOverflow=document.body.style.overflow;document.body.style.overflow='hidden';view.hidden=false;byId('mushaf-back').focus();zoom=1;byId('mushaf-state').textContent='Mushaf açılıyor…';
  try{await load();if(!opened||opening!==token)return;const position=saved();byId('mushaf-resume').hidden=!position;byId('mushaf-resume').onclick=()=>show(position.page);pendingSurah=null;await show(Number(metadata.surahStarts[String(surah)])||0);}catch{if(!opened||opening!==token)return;byId('mushaf-state').textContent='Mushaf açılamadı. Yeniden deneyin.';byId('mushaf-retry').hidden=false;}
 }
-function close(restore=true){if(!opened)return;opened=false;renderedPage=null;pendingSurah=null;++token;clearTimeout(resizeTimer);renderTask?.cancel();renderTask=null;view.hidden=true;byId('mushaf-sheet').replaceChildren();document.body.style.overflow=previousOverflow;if(restore)returnFocus?.focus({preventScroll:true});}
+function close(restore=true){if(!opened)return;opened=false;clearGesture();renderedPage=null;pendingSurah=null;++token;clearTimeout(resizeTimer);renderTask?.cancel();renderTask=null;view.hidden=true;byId('mushaf-sheet').replaceChildren();document.body.style.overflow=previousOverflow;if(restore)returnFocus?.focus({preventScroll:true});}
 window.NurMushaf={open,close,isOpen:()=>opened};
 for(let n=0;n<=604;n++)byId('mushaf-page').add(new Option(n===0?'Fâtiha':String(n),String(n)));
 for(let n=1;n<=30;n++)byId('mushaf-juz').add(new Option(String(n),String(n)));
 byId('mushaf-back').onclick=()=>close();byId('mushaf-page').onchange=e=>show(Number(e.target.value));byId('mushaf-juz').onchange=e=>show((Number(e.target.value)-1)*20+1);
 byId('mushaf-previous').onclick=()=>show(page-1);byId('mushaf-next').onclick=()=>show(page+1);byId('mushaf-retry').onclick=()=>{if(pendingSurah!==null){const surah=pendingSurah;close(false);open(surah);}else show(page);};
-function setZoom(n){zoom=Math.max(1,Math.min(2,n));show(page,{resetScroll:false});}
+const viewport=byId('mushaf-viewport'),sheet=byId('mushaf-sheet');
+let gesture=null,hadMulti=false,zoomChanged=false;
+function clearGesture(){gesture=null;hadMulti=false;zoomChanged=false;}
+function localPoint(t){const r=viewport.getBoundingClientRect();return {x:t.clientX-r.left,y:t.clientY-r.top};}
+function anchorAt(p){return {x:(viewport.scrollLeft+p.x)/zoom,y:(viewport.scrollTop+p.y)/zoom};}
+function applyZoom(value,anchor,point){
+ zoom=Math.max(1,Math.min(2,value));sheet.style.width=Math.max(260,viewport.clientWidth)*zoom+'px';
+ viewport.scrollLeft=anchor.x*zoom-point.x;viewport.scrollTop=anchor.y*zoom-point.y;controls();
+}
+function invalidateRender(){++token;renderTask?.cancel();renderTask=null;}
+function setZoom(n){if(renderedPage===null||sheet.hidden)return;clearGesture();invalidateRender();const point={x:viewport.clientWidth/2,y:viewport.clientHeight/2};applyZoom(n,anchorAt(point),point);show(page,{resetScroll:false});}
 byId('mushaf-plus').onclick=()=>setZoom(zoom+.25);byId('mushaf-minus').onclick=()=>setZoom(zoom-.25);byId('mushaf-fit').onclick=()=>{zoom=1;show(page);};
-let touch=null;const viewport=byId('mushaf-viewport');viewport.addEventListener('touchstart',e=>{touch=e.touches.length===1&&zoom===1?{x:e.touches[0].clientX,y:e.touches[0].clientY}:null;},{passive:true});viewport.addEventListener('touchmove',e=>{if(e.touches.length!==1)touch=null;},{passive:true});viewport.addEventListener('touchcancel',()=>touch=null);viewport.addEventListener('touchend',e=>{const start=touch;touch=null;if(!start||e.touches.length||!e.changedTouches.length)return;const dx=e.changedTouches[0].clientX-start.x,dy=e.changedTouches[0].clientY-start.y;if(Math.abs(dx)>65&&Math.abs(dx)>Math.abs(dy)*1.4)show(page+(dx<0?1:-1));},{passive:true});
+function beginGesture(touches){
+ if(touches.length>=2){
+  const a=localPoint(touches[0]),b=localPoint(touches[1]),point={x:(a.x+b.x)/2,y:(a.y+b.y)/2};
+  gesture={kind:'pinch',distance:Math.max(1,Math.hypot(a.x-b.x,a.y-b.y)),startZoom:zoom,anchor:anchorAt(point)};hadMulti=true;invalidateRender();
+ }else if(touches.length===1){const p=localPoint(touches[0]);gesture={kind:'pan',start:p,last:p,startZoom:zoom};}
+}
+viewport.addEventListener('touchstart',e=>{
+ if(!opened||renderedPage===null||sheet.hidden)return;
+ e.preventDefault();if(!gesture){hadMulti=false;zoomChanged=false;}beginGesture(e.touches);
+},{passive:false});
+viewport.addEventListener('touchmove',e=>{
+ if(!gesture)return;e.preventDefault();
+ if(e.touches.length>=2){
+  if(gesture.kind!=='pinch'){beginGesture(e.touches);return;}
+  const a=localPoint(e.touches[0]),b=localPoint(e.touches[1]),point={x:(a.x+b.x)/2,y:(a.y+b.y)/2};
+  applyZoom(gesture.startZoom*Math.hypot(a.x-b.x,a.y-b.y)/gesture.distance,gesture.anchor,point);zoomChanged=true;
+ }else if(e.touches.length===1){
+  if(gesture.kind!=='pan'){beginGesture(e.touches);return;}
+  const p=localPoint(e.touches[0]);viewport.scrollLeft+=gesture.last.x-p.x;viewport.scrollTop+=gesture.last.y-p.y;gesture.last=p;
+ }
+},{passive:false});
+function endGesture(e,cancelled=false){
+ if(!gesture)return;e.preventDefault();
+ if(!cancelled&&e.touches.length){beginGesture(e.touches);return;}
+ const old=gesture,multi=hadMulti,redraw=zoomChanged;clearGesture();
+ if(!cancelled&&!multi&&old.kind==='pan'&&old.startZoom===1&&zoom===1&&e.changedTouches.length){
+  const p=localPoint(e.changedTouches[0]),dx=p.x-old.start.x,dy=p.y-old.start.y;
+  if(Math.abs(dx)>65&&Math.abs(dx)>Math.abs(dy)*1.4){show(page+(dx<0?1:-1));return;}
+ }
+ if(redraw)show(page,{resetScroll:false});
+}
+viewport.addEventListener('touchend',e=>endGesture(e),{passive:false});
+viewport.addEventListener('touchcancel',e=>endGesture(e,true),{passive:false});
 view.addEventListener('keydown',e=>{if(e.key==='Escape'){e.preventDefault();close();}if(e.target.closest('select,input'))return;if(e.key==='ArrowRight'){e.preventDefault();show(page+1);}if(e.key==='ArrowLeft'){e.preventDefault();show(page-1);}if(e.key==='Tab'){const focusable=[...view.querySelectorAll('button,select')].filter(x=>!x.disabled&&!x.hidden);const first=focusable[0],last=focusable.at(-1);if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus();}else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus();}}});
 new ResizeObserver(()=>{const width=viewport.clientWidth;if(width===lastWidth)return;lastWidth=width;if(!opened||renderedPage===null)return;clearTimeout(resizeTimer);resizeTimer=setTimeout(()=>show(page,{resetScroll:false}),180);}).observe(viewport);
 document.getElementById('quran-start-mushaf')?.addEventListener('click',()=>open(Number(document.getElementById('quran-intro-number').textContent)));

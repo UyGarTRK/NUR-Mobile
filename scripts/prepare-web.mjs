@@ -52,15 +52,12 @@ await cp(resolve(root,"src/native-runtime.js"),resolve(assets,"native-runtime.js
 html=html.replace('<meta name="viewport" content="width=device-width, initial-scale=1.0">','<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">');
 html=html.replace('</head>','<script src="assets/capacitor.js"></script><script src="assets/capacitor-app.js"></script><script src="assets/capacitor-synapse.js"></script><script src="assets/capacitor-geolocation.js"></script><script src="assets/native-runtime.js"></script></head>');
 }
-const supabaseUrl=process.env.NUR_SUPABASE_URL||"",publishableKey=process.env.NUR_SUPABASE_PUBLIC_KEY||"";
-if(supabaseUrl||publishableKey){
-  const url=new URL(supabaseUrl);
-  if(url.protocol!=="https:"||! /^[a-z0-9-]+\.supabase\.co$/.test(url.hostname)||url.port||url.pathname!=="/"||url.search||url.hash||url.username||url.password||!publishableKey||publishableKey.startsWith("sb_secret_"))throw new Error("Geçersiz Supabase yayın yapılandırması");
-  if(publishableKey.split('.').length===3&&JSON.parse(Buffer.from(publishableKey.split('.')[1],'base64url').toString()).role!=="anon")throw new Error("Yalnız public/anon anahtarı kullanılabilir");
-  const config=JSON.stringify({supabaseUrl:url.origin,publishableKey}).replace(/</g,"\\u003c");
-  html=html.replace('<script src="assets/capacitor.js">',`<script>window.NUR_ACCOUNT_CONFIG=${config};</script><script src="assets/capacitor.js">`);
-  html=html.replace('connect-src ',`connect-src ${url.origin} `);
-}
+const {build}=await import('esbuild');
+await build({entryPoints:[resolve(root,'src/account/account.mjs')],outfile:resolve(assets,'account.js'),bundle:true,format:'iife',target:'chrome90',minify:true});
+await cp(resolve(root,'src/account/account.css'),resolve(assets,'account.css'));
+const accountConfig=JSON.parse(await readFile(resolve(root,'firebase/web-config.json'),'utf8'));
+await writeFile(resolve(assets,'account-config.js'),'window.NUR_FIREBASE_CONFIG='+JSON.stringify(accountConfig).replace(/</g,'\\u003c')+';');
+html=html.replace('connect-src ','connect-src https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://firestore.googleapis.com ');
 await cp(resolve(root,"node_modules/lucide/dist/umd/lucide.min.js"),resolve(assets,"lucide.min.js"));
 for(const family of ["dm-sans","noto-naskh-arabic","playfair-display"]){
   await cp(resolve(root,`node_modules/@fontsource/${family}/files`),resolve(assets,`font-${family}/files`),{recursive:true,force:true});

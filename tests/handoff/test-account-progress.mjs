@@ -1,0 +1,18 @@
+import assert from 'node:assert/strict';
+import {merge,validate,tracked} from '../../src/account/progress.mjs';
+const pack=o=>Object.fromEntries(Object.entries(o).map(([k,v])=>[k,JSON.stringify(v)]));
+const b=pack({nurQuranBookmark:{surah:1,ayah:1}}),l=pack({nurQuranBookmark:{surah:2,ayah:3}}),r=pack({nurQuranBookmark:{surah:3,ayah:4}});
+assert.deepEqual(merge(b,l,b).values,l);
+assert.deepEqual(merge(b,b,r).values,r);
+assert.equal(merge(b,l,r).conflicts.length,1);
+assert.deepEqual(merge(b,l,r,'remote').values,r);
+assert.deepEqual(merge(b,{},b).values,{});
+assert.equal(merge(b,{},r).conflicts.length,1);
+const education=merge(pack({nurEducationProgressV1:{a:1}}),pack({nurEducationProgressV1:{a:1,b:2}}),pack({nurEducationProgressV1:{a:1,c:3}}));
+assert.deepEqual(JSON.parse(education.values.nurEducationProgressV1),{a:1,b:2,c:3});
+assert.equal(education.conflicts.length,0);
+assert.throws(()=>validate({nurLocation:'{}'}));
+assert.throws(()=>validate({nurQuranNotes:'{"__proto__":{}}'}));
+assert.throws(()=>validate({nurQuranNotes:'x'}));
+assert.equal(tracked('nurNotificationSettings'),false);
+console.log('Progress: conflict, merge, deletion, invalid data and device-only boundaries passed.');

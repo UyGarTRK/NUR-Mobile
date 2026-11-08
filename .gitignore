@@ -8,3 +8,6 @@ android/build/
 keystore.properties
 local.properties
 gha-creds-*.json
+
+site/
+*.log

@@ -1,0 +1,22 @@
+#settings-profile-panel [hidden],#nur-account-dialog [hidden]{display:none!important}
+#settings-profile-panel input,#settings-profile-panel select,#settings-profile-panel button{font-family:inherit}
+#settings-profile-panel button{margin:.25rem .2rem .25rem 0}
+#nur-account-dialog{width:min(560px,calc(100vw - 32px));max-height:calc(100dvh - 40px);box-sizing:border-box;overflow:auto;border:1px solid #d8ccb3;border-radius:20px;padding:20px;background:#fbf7ed;color:#173754;font-family:inherit}
+#nur-account-dialog::backdrop{background:rgba(9,29,45,.55)}
+#nur-account-dialog #settings-profile-panel{display:block!important}
+#site-account{flex-shrink:0;max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+@media(max-width:640px){#site-account{max-width:130px;font-size:.75rem}}
+/* Profile uses the existing section cards, heading fonts and navy/gold palette. */
+#settings-profile-panel .nur-profile-heading>div{min-width:0}
+#settings-profile-panel .nur-profile-heading h3{overflow-wrap:anywhere}
+#settings-profile-panel .account-badge{display:inline-block;padding:.3rem .65rem;border:1px solid #dfcfad;border-radius:999px;background:#f5ead0;color:#785c26;font-size:.75rem;font-weight:600}
+#settings-profile-panel .account-mode-switch{display:flex;gap:.5rem;margin:1rem 0}
+#settings-profile-panel .account-mode-switch button{flex:1;margin:0;background:#fffdf7;color:#173754;border-color:#d8ccb3}
+#settings-profile-panel .account-mode-switch button[aria-pressed="true"]{background:#173754;color:#fff8e9;border-color:#d9a847}
+#settings-profile-panel button.account-secondary{background:#fffdf7;color:#173754;border-color:#d8ccb3}
+#settings-profile-panel .account-records{list-style:disc;padding-inline-start:1.25rem;font-size:.82rem;line-height:1.8;margin:.8rem 0}
+#settings-profile-panel .account-feedback{border-color:#dfcfad}
+#settings-profile-panel #account-status{margin:0;min-height:1.6em}
+#settings-profile-panel input:focus-visible,#settings-profile-panel button:focus-visible{outline:2px solid #d9a847;outline-offset:3px}
+@media(max-width:380px){#settings-profile-panel .nur-profile-actions{flex-direction:column}#settings-profile-panel .nur-profile-actions button{width:100%;margin-inline:0}}
+#settings-profile-panel .nur-profile-card h3{margin:0 0 .8rem;color:#173754;font-family:"Playfair Display",serif;font-size:1.15rem;line-height:1.4}
