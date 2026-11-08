@@ -1,6 +1,6 @@
 const fs=require('node:fs'),path=require('node:path');
 const root=path.resolve(__dirname,'..');
-const latest='https://github.com/UyGarTRK/NUR-Mobile/releases/latest/download/';
+const {createHash}=require('node:crypto');
 function validateHistory(rows){
   if(!Array.isArray(rows)||!rows.length)throw Error('Sürüm geçmişi eksik');
   const seen=new Set();
@@ -25,14 +25,15 @@ async function createHistory(){
       }catch(error){if(attempt===2||error.retryable===false||error instanceof SyntaxError)throw error;await new Promise(resolve=>setTimeout(resolve,1500*(attempt+1)));}
     }
   }
-  const manifest=await json(latest+'nur-update.json');
-  if(manifest.packageName!=='tr.com.nur.namaz'||!Number.isSafeInteger(manifest.versionCode))throw Error('Geçersiz yayımlanmış sürüm');
-  // 112 predates the history asset; its verified notes are the initial seed.
-  if(manifest.versionCode>112){
-    const archive=await json(`https://github.com/UyGarTRK/NUR-Mobile/releases/download/nur-test-${manifest.versionCode}/nur-release-history.json`);
-    history=validateHistory(archive.releases);
-    if(history[0].versionCode!==manifest.versionCode)throw Error('Sürüm geçmişi güncel değil');
-  }
+  const release=await json('https://api.github.com/repos/UyGarTRK/NUR-Mobile/releases/latest');
+  const tag=release.tag_name?.match(/^nur-test-(\d+)$/);
+  if(!tag||release.draft)throw Error('Geçersiz yayımlanmış sürüm');
+  const manifest={versionCode:Number(tag[1])};
+  const asset=release.assets?.find(a=>a.name==='nur-release-history.json'&&a.state==='uploaded');
+  // Verify the checked-in archive against GitHub's digest, without relying on download redirects.
+  const digest=rows=>'sha256:'+createHash('sha256').update(JSON.stringify({releases:rows},null,2)+'\n').digest('hex');
+  if(manifest.versionCode===versionCode)history=mergeHistory(history,{versionCode,versionName,changes:notes.changes});
+  if(history[0].versionCode!==manifest.versionCode||!asset?.digest||digest(history)!==asset.digest)throw Error('Yerel sürüm geçmişi yayımlanmış arşivle eşleşmiyor');
   if(manifest.versionCode>versionCode)throw Error('Eski paket yeniden yayımlanamaz');
   if(manifest.versionCode!==versionCode&&notes.baseVersionCode!==manifest.versionCode)throw Error('Yeni paket için release-notes.json güncellenmeli');
   const current={versionCode,versionName,changes:notes.changes};
