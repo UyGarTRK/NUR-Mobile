@@ -1,5 +1,5 @@
 // Shared by the Android shell, website and synchronization tests.
-export const keys=['nurEducationProgressV1','nurAlphabetTrainingV1','nurLetterFormsTrainingV1','nurHarakatTrainingV1','nurJoiningTrainingV1','nurQuranNotes','nurQuranBookmark','nurMushafPositionV1','nurDhikrCount','nurDhikrSelection','nurDhikrHistoryV1'];
+export const keys=['nurEducationProgressV1','nurAlphabetTrainingV1','nurLetterFormsTrainingV1','nurHarakatTrainingV1','nurJoiningTrainingV1','nurQuranNotes','nurQuranBookmark','nurMushafPositionV1','nurDhikrCount','nurDhikrSelection','nurDhikrHistoryV1','nurFastingProgressV1'];
 export const tracked=key=>keys.includes(key)||/^nurGuidedTrainingV1:[a-z0-9-]+$/.test(key);
 const plain=v=>v!==null&&typeof v==='object'&&!Array.isArray(v);
 function safe(v){if(v&&typeof v==='object')for(const k of Object.keys(v)){if(['__proto__','prototype','constructor'].includes(k))throw Error('Geçersiz kayıt alanı');safe(v[k]);}}
@@ -20,7 +20,7 @@ export function merge(base,local,remote,choice=null){
  for(const key of new Set([...Object.keys(base),...Object.keys(local),...Object.keys(remote)])){
   if(group.includes(key))continue;
   const decode=v=>v[key]===undefined?undefined:JSON.parse(v[key]);const b=decode(base),l=decode(local),r=decode(remote);let value;
-  if(['nurEducationProgressV1','nurQuranNotes'].includes(key)&&plain(l)&&plain(r)&&(b===undefined||plain(b))){value={};for(const field of new Set([...Object.keys(b||{}),...Object.keys(l),...Object.keys(r)])){const v=choose(b?.[field],l[field],r[field],key+':'+field);if(v!==undefined)value[field]=v;}}
+  if(['nurEducationProgressV1','nurQuranNotes','nurFastingProgressV1'].includes(key)&&plain(l)&&plain(r)&&(b===undefined||plain(b))){value={};for(const field of new Set([...Object.keys(b||{}),...Object.keys(l),...Object.keys(r)])){const v=choose(b?.[field],l[field],r[field],key+':'+field);if(v!==undefined)value[field]=v;}}
   else if(key==='nurDhikrHistoryV1'&&Array.isArray(l)&&Array.isArray(r)&&(b===undefined||Array.isArray(b))&&[...(b||[]),...l,...r].every(v=>typeof v.sessionId==='string')){
    const map=a=>Object.fromEntries((a||[]).map(v=>[v.sessionId,v])),bm=map(b),lm=map(l),rm=map(r);value=[];for(const id of new Set([...Object.keys(bm),...Object.keys(lm),...Object.keys(rm)])){const v=choose(bm[id],lm[id],rm[id],'Zikir oturumu:'+id);if(v!==undefined)value.push(v);}
   }else value=choose(b,l,r,key);

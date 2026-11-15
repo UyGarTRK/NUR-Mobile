@@ -1,18 +1,19 @@
 {
-  "webRevision": "2026.11.08-ortak-hesap",
+  "webRevision": "2026.11.09-oruc-takibi",
   "handoffDate": "2026-10-17",
-  "androidSourceVersionName": "0.3.12-test",
+  "androidSourceVersionName": "0.3.13-test",
   "androidSourceVersionCode": 5,
   "apkBuiltForThisHandoff": false,
   "lastInstalledApkVersion": "0.3.8-test (114)",
   "publisher": "UyGar Medya",
   "lastInstalledApkVerification": "18 Ekim 2026: Kullanıcı uygulamanın açıldığını ve sorun olmadığını bildirdi; fiziksel cihazdan doğrudan okunmadı. Yeni Peygamberler Tarihi özelliği henüz APK ile test edilmedi. İlmihal özelliği de henüz APK ile test edilmedi.",
   "sourceChangesPendingApk": true,
-  "lastDistributedApkVersion": "0.3.11-test (118)",
-  "lastDistributionCommit": "39c58029cb18d96a3d67d773e206905462339c27",
-  "lastDistributionRun": 42092672275,
+  "lastDistributedApkVersion": "0.3.12-test (123)",
+  "lastDistributionCommit": "0fbafa58240b372a12b49c1cf49defab4992577a",
+  "lastDistributionRun": 42506038615,
   "updateChannel": "public-github-releases",
-  "lastDistributionUrl": "https://github.com/UyGarTRK/NUR-Mobile/releases/download/nur-test-118/NUR-test.apk",
+  "lastDistributionUrl": "https://github.com/UyGarTRK/NUR-Mobile/releases/download/nur-test-123/NUR-test.apk",
   "pendingNotificationAudit": "Alarm migration regression tests and Android compile passed. User startup crash root cause and hotfix on-device result not confirmed; no USB device/logcat.",
-  "accountDeviceTestPending": true
+  "accountDeviceTestPending": true,
+  "lastDistributionSha256": "a2378ccd5dbc42470d053f1f1d04b71fa2922e5f2e4a97596fae2d267733413b"
 }

@@ -1,11 +1,19 @@
 {
-  "baseVersionCode": 118,
+  "baseVersionCode": 123,
   "changes": [
-    "Mushaf okuyucusuna dokunulan noktayı merkez alan iki parmakla yakınlaştırma ve tek parmakla taşıma eklendi. Küçültme başlangıç ölçüsünde duruyor.",
-    "Ortak hesap için e-posta/şifre girişi, profil kullanıcı adı ve uygulama/site arasında kişisel ilerleme eşitleme altyapısı eklendi.",
-    "Ayarlar > Profil yeni ortak hesap sistemine göre yenilendi: giriş/kayıt sekmeleri, kullanıcı adı, e-posta doğrulaması, bulut kayıtları ve şifre sıfırlama. Eski kodla giriş ve güvenlik sorusu alanları kaldırıldı."
+    "Ekstra menüsüne Oruç Takibi eklendi: günlük tür ve durum kaydı, aylık takvim, notlar ve kişisel bulut eşitlemesi.",
+    "İlmihal girişi ibadet başlıklarına ayrıldı; her başlık kendi konularını açıyor, mevcut içerikler ve kaynaklar korundu."
   ],
   "history": [
+    {
+      "versionCode": 123,
+      "versionName": "0.3.12-test",
+      "changes": [
+        "Mushaf okuyucusuna dokunulan noktayı merkez alan iki parmakla yakınlaştırma ve tek parmakla taşıma eklendi. Küçültme başlangıç ölçüsünde duruyor.",
+        "Ortak hesap için e-posta/şifre girişi, profil kullanıcı adı ve uygulama/site arasında kişisel ilerleme eşitleme altyapısı eklendi.",
+        "Ayarlar > Profil yeni ortak hesap sistemine göre yenilendi: giriş/kayıt sekmeleri, kullanıcı adı, e-posta doğrulaması, bulut kayıtları ve şifre sıfırlama. Eski kodla giriş ve güvenlik sorusu alanları kaldırıldı."
+      ]
+    },
     {
       "versionCode": 118,
       "versionName": "0.3.11-test",

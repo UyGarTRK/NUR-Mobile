@@ -40,6 +40,7 @@ const requirements=html.match(/<script type="application\/json" id="nur-native-r
 if(requirements&&!site){const silent=JSON.parse(requirements[1]).silentAudio;if(silent)await writeFile(resolve(root,"android/app/src/main/res/raw/nur_silent.wav"),Buffer.from(silent.base64,'base64'));}
 
 await cp(resolve(root,"src/quran-offline.js"),resolve(output,"quran-offline.js"));
+for(const name of ["fasting.js","fasting.css"]) await cp(resolve(root,"src",name),resolve(output,name));
 const assets=resolve(output,"assets");
 await mkdir(assets,{recursive:true});
 await cp(resolve(root,"src/mushaf"),resolve(output,"mushaf"),{recursive:true});
